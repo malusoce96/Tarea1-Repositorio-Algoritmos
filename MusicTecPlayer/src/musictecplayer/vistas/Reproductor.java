@@ -7,8 +7,8 @@
 package musictecplayer.vistas;
 
 /**
- * Prueba de modificación de mi computador
- * @author Lucia & Joseph
+ * Prueba de modificación de mi computador Joseph
+ * @author Lucia
  */
 public class Reproductor extends javax.swing.JFrame {
 
