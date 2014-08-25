@@ -13,7 +13,7 @@ package musictecplayer.administradores;
 public class HiloReproductor extends Thread {
 
     private Thread blinker;
-    final long interval = 0; //Probando 1 2 3
+    final long interval = 0;
     private volatile boolean threadSuspended = false;
 
     public void run() {
