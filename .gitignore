@@ -11,3 +11,8 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /MusicTecPlayer/nbproject/private/
+/MusicTecPlayer/build/
+/tarea1/nbproject/private/
+/tarea1/dist/
+/MusicTecPlayer/dist/
+/tarea1/
