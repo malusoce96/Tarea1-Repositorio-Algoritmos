@@ -12,6 +12,7 @@
 hs_err_pid*
 /MusicTecPlayer/nbproject/private/
 <<<<<<< HEAD
+<<<<<<< HEAD
 /MusicTecPlayer/build/
 /tarea1/nbproject/private/
 /tarea1/dist/
@@ -20,3 +21,6 @@ hs_err_pid*
 =======
 /MusicTecPlayer/build/
 >>>>>>> origin/master
+=======
+/MusicTecPlayer/build/
+>>>>>>> de4ff02e8fe603fa847b12d8db01bdd3752bb0a3
