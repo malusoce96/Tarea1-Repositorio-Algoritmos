@@ -5,6 +5,7 @@
  */
 package musictecplayer.vistas;
 
+import musictecplayer.administradores.HiloReproductor;
 import musictecplayer.constantes.Parametros;
 
 /**
@@ -15,13 +16,21 @@ public class Reproductor extends javax.swing.JFrame {
 
     private int estadoReproduccion = 0;// 0 stop, 1 pausado, 2 reproduciendo
     private int tipoBusqueda = 0;// 0 artista, 1 album, 2 genero,3 cancion 
-
+    
+    
+    private HiloReproductor hilo;
     /**
      * Creates new form Reproductor
      */
     public Reproductor() {
         initComponents();
-
+        probarReproductor();
+        
+        }
+    
+    public void probarReproductor(){
+        hilo = new HiloReproductor();
+        hilo.start();
     }
 
     public void reubicarControles() {

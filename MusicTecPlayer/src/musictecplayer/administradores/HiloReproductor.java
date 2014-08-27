@@ -12,18 +12,18 @@ package musictecplayer.administradores;
  */
 public class HiloReproductor extends Thread {
 
-    private Thread blinker;
+    private volatile boolean blinker = true;
     final long interval = 0;
     private volatile boolean threadSuspended = false;
 
     public void run() {
-        Thread thisThread = Thread.currentThread();
-        while (blinker == thisThread) {
+        
+        while (blinker == true) {
             try {
                 Thread.sleep(interval);
 
                 synchronized (this) {
-                    while (threadSuspended && blinker == thisThread) {
+                    while (threadSuspended && blinker == true) {
                         System.out.println("El hilo de reproduccion esta pausado");
                         wait();
                     }
@@ -41,7 +41,8 @@ public class HiloReproductor extends Thread {
     }
 
     public synchronized void detener() {
-        blinker = null;
+        System.out.println("DETENER HILO");
+        blinker = false;
         notify();
     }
 
