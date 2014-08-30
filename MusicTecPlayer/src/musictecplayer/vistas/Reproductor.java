@@ -5,6 +5,7 @@
  */
 package musictecplayer.vistas;
 
+import java.awt.event.WindowEvent;
 import musictecplayer.administradores.HiloReproductor;
 import musictecplayer.constantes.Parametros;
 
@@ -16,31 +17,58 @@ public class Reproductor extends javax.swing.JFrame {
 
     private int estadoReproduccion = 0;// 0 stop, 1 pausado, 2 reproduciendo
     private int tipoBusqueda = 0;// 0 artista, 1 album, 2 genero,3 cancion 
-    
-    
-    private HiloReproductor hilo;
+
+    private HiloReproductor hilo = null;
+
     /**
      * Creates new form Reproductor
      */
     public Reproductor() {
         initComponents();
         probarReproductor();
-        
-        }
-    
-    public void probarReproductor(){
+
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(WindowEvent winEvt) {
+                
+                if (hilo != null){
+                    hilo.detener();
+                }
+                
+                System.exit(0);
+            }
+        });
+
+    }
+
+    public void probarReproductor() {
         hilo = new HiloReproductor();
         hilo.start();
     }
 
     public void reubicarControles() {
         System.out.println("Reubicar");
-        int cambioY = 500;
-        int cambioX = 435;
+        int cambioY = 480; //500
+        int cambioX = 40; //390
         jLabelAnterior.setLocation(cambioX + 0, cambioY + 2);
         jLabelStop.setLocation(cambioX + 44, cambioY + 0);
         jLabelPlay.setLocation(cambioX + 92, cambioY + 2);
-        jLabelSiguiente.setLocation(cambioX + 140, cambioY + 2);
+        jLabelAleatorio.setLocation(cambioX + 140, cambioY + 2);
+        jLabelSiguiente.setLocation(cambioX + 188, cambioY + 2);
+
+        jSliderPosicionCancion.setLocation(cambioX + 3, cambioY - 23);
+        jLabelFondoAlbun1.setLocation(cambioX + 3, cambioY - 80);
+        
+        jLabelFondoAlbun2.setLocation(cambioX + 3, cambioY - 130);
+        jLabelFondoAlbun3.setLocation(cambioX + 3, cambioY - 180);
+        jLabelFondoAlbun.setLocation(cambioX + 13, cambioY - 170);
+        jLabelFondoPlaylist.setLocation(cambioX - 5, cambioY - 340);
+        jSliderVolumen.setLocation(cambioX + 200, cambioY - 150);
+        jLabelVolumen.setLocation(cambioX + 200, cambioY - 60);
+
+        System.out.println(jSliderVolumen.getLocation().toString());
+        System.out.println(jLabelVolumen.getLocation().toString());
+        //System.out.println(jLabelFondoAlbun3.getLocation().toString());
+        //System.out.println(jLabelSiguiente.getLocation().toString());
     }
 
     /**
@@ -52,7 +80,16 @@ public class Reproductor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSlider1 = new javax.swing.JSlider();
+        jLabelMenu = new javax.swing.JLabel();
+        jLabelFondoPlaylist = new javax.swing.JLabel();
+        jSliderPosicionCancion = new javax.swing.JSlider();
+        jLabelFondoMenu = new javax.swing.JLabel();
+        jSliderVolumen = new javax.swing.JSlider();
+        jLabelVolumen = new javax.swing.JLabel();
+        jLabelFondoAlbun = new javax.swing.JLabel();
+        jLabelFondoAlbun1 = new javax.swing.JLabel();
+        jLabelFondoAlbun2 = new javax.swing.JLabel();
+        jLabelFondoAlbun3 = new javax.swing.JLabel();
         jLabelCambiarTipo = new javax.swing.JLabel();
         jLabelTipoBusqueda = new javax.swing.JLabel();
         jLabelFondoTipo = new javax.swing.JLabel();
@@ -60,9 +97,10 @@ public class Reproductor extends javax.swing.JFrame {
         jTextFieldTextoBusqueda = new javax.swing.JTextField();
         jLabelBarraBusqueda = new javax.swing.JLabel();
         jLabelAnterior = new javax.swing.JLabel();
-        jLabelPlay = new javax.swing.JLabel();
+        jLabelAleatorio = new javax.swing.JLabel();
         jLabelStop = new javax.swing.JLabel();
         jLabelSiguiente = new javax.swing.JLabel();
+        jLabelPlay = new javax.swing.JLabel();
         jLabelFondo = new javax.swing.JLabel();
         jLabelFondoPrincipal = new javax.swing.JLabel();
 
@@ -70,8 +108,54 @@ public class Reproductor extends javax.swing.JFrame {
         setBackground(new java.awt.Color(0, 0, 0));
         setMinimumSize(new java.awt.Dimension(670, 600));
         getContentPane().setLayout(null);
-        getContentPane().add(jSlider1);
-        jSlider1.setBounds(440, 460, 180, 26);
+
+        jLabelMenu.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelMenu.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        jLabelMenu.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelMenu.setText("Artista");
+        getContentPane().add(jLabelMenu);
+        jLabelMenu.setBounds(40, 60, 90, 21);
+
+        jLabelFondoPlaylist.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelFondoPlaylist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoPlayList.fw.png"))); // NOI18N
+        getContentPane().add(jLabelFondoPlaylist);
+        jLabelFondoPlaylist.setBounds(35, 150, 246, 146);
+
+        jSliderPosicionCancion.setOpaque(false);
+        getContentPane().add(jSliderPosicionCancion);
+        jSliderPosicionCancion.setBounds(390, 477, 228, 26);
+
+        jLabelFondoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoOscuroAlbum.fw.png"))); // NOI18N
+        getContentPane().add(jLabelFondoMenu);
+        jLabelFondoMenu.setBounds(25, 40, 230, 57);
+
+        jSliderVolumen.setOrientation(javax.swing.JSlider.VERTICAL);
+        jSliderVolumen.setToolTipText("");
+        jSliderVolumen.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jSliderVolumen.setOpaque(false);
+        getContentPane().add(jSliderVolumen);
+        jSliderVolumen.setBounds(591, 350, 10, 90);
+
+        jLabelVolumen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/volumenSinFondo.fw.png"))); // NOI18N
+        getContentPane().add(jLabelVolumen);
+        jLabelVolumen.setBounds(590, 440, 20, 30);
+
+        jLabelFondoAlbun.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelFondoAlbun.setOpaque(true);
+        getContentPane().add(jLabelFondoAlbun);
+        jLabelFondoAlbun.setBounds(400, 330, 210, 140);
+
+        jLabelFondoAlbun1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoOscuroAlbum.fw.png"))); // NOI18N
+        getContentPane().add(jLabelFondoAlbun1);
+        jLabelFondoAlbun1.setBounds(43, 400, 230, 60);
+
+        jLabelFondoAlbun2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoOscuroAlbum.fw.png"))); // NOI18N
+        getContentPane().add(jLabelFondoAlbun2);
+        jLabelFondoAlbun2.setBounds(43, 350, 230, 60);
+
+        jLabelFondoAlbun3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoOscuroAlbum.fw.png"))); // NOI18N
+        getContentPane().add(jLabelFondoAlbun3);
+        jLabelFondoAlbun3.setBounds(43, 300, 230, 60);
 
         jLabelCambiarTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/cambiarTipoBusqueda.fw.png"))); // NOI18N
         jLabelCambiarTipo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -88,12 +172,12 @@ public class Reproductor extends javax.swing.JFrame {
         jLabelTipoBusqueda.setForeground(new java.awt.Color(255, 255, 255));
         jLabelTipoBusqueda.setText("Artista");
         getContentPane().add(jLabelTipoBusqueda);
-        jLabelTipoBusqueda.setBounds(225, 55, 90, 21);
+        jLabelTipoBusqueda.setBounds(270, 58, 90, 21);
 
         jLabelFondoTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/tipoBusqueda.fw.png"))); // NOI18N
         jLabelFondoTipo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().add(jLabelFondoTipo);
-        jLabelFondoTipo.setBounds(197, 40, 123, 56);
+        jLabelFondoTipo.setBounds(258, 40, 70, 56);
 
         jLabelIconoBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/iconobuscar.fw.png"))); // NOI18N
         jLabelIconoBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -121,18 +205,18 @@ public class Reproductor extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jLabelAnterior);
-        jLabelAnterior.setBounds(440, 490, 44, 56);
+        jLabelAnterior.setBounds(390, 502, 44, 56);
 
-        jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/play.fw.png"))); // NOI18N
-        jLabelPlay.setToolTipText("Reproducir");
-        jLabelPlay.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabelPlay.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabelAleatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/aleatorio.fw.png"))); // NOI18N
+        jLabelAleatorio.setToolTipText("Reproducir");
+        jLabelAleatorio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelAleatorio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jLabelPlayMouseReleased(evt);
+                jLabelAleatorioMouseReleased(evt);
             }
         });
-        getContentPane().add(jLabelPlay);
-        jLabelPlay.setBounds(530, 500, 48, 56);
+        getContentPane().add(jLabelAleatorio);
+        jLabelAleatorio.setBounds(530, 502, 48, 56);
 
         jLabelStop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/stop.fw.png"))); // NOI18N
         jLabelStop.setToolTipText("Detener");
@@ -143,7 +227,7 @@ public class Reproductor extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jLabelStop);
-        jLabelStop.setBounds(480, 490, 48, 59);
+        jLabelStop.setBounds(434, 500, 48, 59);
 
         jLabelSiguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/siguiente.fw.png"))); // NOI18N
         jLabelSiguiente.setToolTipText("Siguiente");
@@ -154,37 +238,36 @@ public class Reproductor extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jLabelSiguiente);
-        jLabelSiguiente.setBounds(580, 490, 45, 56);
+        jLabelSiguiente.setBounds(578, 502, 45, 56);
 
-        jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoReproductor.fw.png"))); // NOI18N
+        jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/play.fw.png"))); // NOI18N
+        jLabelPlay.setToolTipText("Reproducir");
+        jLabelPlay.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelPlay.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelPlayMouseReleased(evt);
+            }
+        });
+        getContentPane().add(jLabelPlay);
+        jLabelPlay.setBounds(482, 502, 48, 56);
+
+        jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoReproductorV2.fw.png"))); // NOI18N
         getContentPane().add(jLabelFondo);
-        jLabelFondo.setBounds(20, 20, 624, 560);
+        jLabelFondo.setBounds(10, 0, 624, 560);
 
         jLabelFondoPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondo.png"))); // NOI18N
         getContentPane().add(jLabelFondoPrincipal);
-        jLabelFondoPrincipal.setBounds(0, 0, 670, 600);
+        jLabelFondoPrincipal.setBounds(0, 0, 650, 580);
 
-        setSize(new java.awt.Dimension(686, 639));
+        setSize(new java.awt.Dimension(659, 608));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabelPlayMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPlayMouseReleased
+    private void jLabelAleatorioMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAleatorioMouseReleased
         // TODO add your handling code here:
 
-        if (estadoReproduccion == Parametros.DETENIDO) {
-            estadoReproduccion = Parametros.REPRODUCIENDO;
-            System.out.println("D-Reproducir");
-            jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
-        } else if (estadoReproduccion == Parametros.PAUSADO) {
-            System.out.println("P-Reproducir");
-            estadoReproduccion = Parametros.REPRODUCIENDO;
-            jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
-        } else if (estadoReproduccion == Parametros.REPRODUCIENDO) {
-            estadoReproduccion = Parametros.PAUSADO;
-            System.out.println("R-Pausar");
-            jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/play.fw.png"))); // NOI18N
-        }
-    }//GEN-LAST:event_jLabelPlayMouseReleased
+
+    }//GEN-LAST:event_jLabelAleatorioMouseReleased
 
     private void jLabelStopMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelStopMouseReleased
         // TODO add your handling code here:
@@ -217,6 +300,23 @@ public class Reproductor extends javax.swing.JFrame {
             jLabelTipoBusqueda.setText("Artista");
         }
     }//GEN-LAST:event_jLabelCambiarTipoMouseReleased
+
+    private void jLabelPlayMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPlayMouseReleased
+        // TODO add your handling code here:
+        if (estadoReproduccion == Parametros.DETENIDO) {
+            estadoReproduccion = Parametros.REPRODUCIENDO;
+            System.out.println("D-Reproducir");
+            jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
+        } else if (estadoReproduccion == Parametros.PAUSADO) {
+            System.out.println("P-Reproducir");
+            estadoReproduccion = Parametros.REPRODUCIENDO;
+            jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
+        } else if (estadoReproduccion == Parametros.REPRODUCIENDO) {
+            estadoReproduccion = Parametros.PAUSADO;
+            System.out.println("R-Pausar");
+            jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/play.fw.png"))); // NOI18N
+        }
+    }//GEN-LAST:event_jLabelPlayMouseReleased
 
     /**
      * @param args the command line arguments
@@ -259,18 +359,28 @@ public class Reproductor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabelAleatorio;
     private javax.swing.JLabel jLabelAnterior;
     private javax.swing.JLabel jLabelBarraBusqueda;
     private javax.swing.JLabel jLabelCambiarTipo;
     private javax.swing.JLabel jLabelFondo;
+    private javax.swing.JLabel jLabelFondoAlbun;
+    private javax.swing.JLabel jLabelFondoAlbun1;
+    private javax.swing.JLabel jLabelFondoAlbun2;
+    private javax.swing.JLabel jLabelFondoAlbun3;
+    private javax.swing.JLabel jLabelFondoMenu;
+    private javax.swing.JLabel jLabelFondoPlaylist;
     private javax.swing.JLabel jLabelFondoPrincipal;
     private javax.swing.JLabel jLabelFondoTipo;
     private javax.swing.JLabel jLabelIconoBuscar;
+    private javax.swing.JLabel jLabelMenu;
     private javax.swing.JLabel jLabelPlay;
     private javax.swing.JLabel jLabelSiguiente;
     private javax.swing.JLabel jLabelStop;
     private javax.swing.JLabel jLabelTipoBusqueda;
-    private javax.swing.JSlider jSlider1;
+    private javax.swing.JLabel jLabelVolumen;
+    private javax.swing.JSlider jSliderPosicionCancion;
+    private javax.swing.JSlider jSliderVolumen;
     private javax.swing.JTextField jTextFieldTextoBusqueda;
     // End of variables declaration//GEN-END:variables
 }
