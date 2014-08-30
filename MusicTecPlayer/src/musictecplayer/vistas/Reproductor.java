@@ -52,6 +52,7 @@ public class Reproductor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSlider1 = new javax.swing.JSlider();
         jLabelCambiarTipo = new javax.swing.JLabel();
         jLabelTipoBusqueda = new javax.swing.JLabel();
         jLabelFondoTipo = new javax.swing.JLabel();
@@ -69,6 +70,8 @@ public class Reproductor extends javax.swing.JFrame {
         setBackground(new java.awt.Color(0, 0, 0));
         setMinimumSize(new java.awt.Dimension(670, 600));
         getContentPane().setLayout(null);
+        getContentPane().add(jSlider1);
+        jSlider1.setBounds(440, 460, 180, 26);
 
         jLabelCambiarTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/cambiarTipoBusqueda.fw.png"))); // NOI18N
         jLabelCambiarTipo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -78,19 +81,19 @@ public class Reproductor extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jLabelCambiarTipo);
-        jLabelCambiarTipo.setBounds(195, 40, 61, 56);
+        jLabelCambiarTipo.setBounds(325, 40, 61, 56);
 
         jLabelTipoBusqueda.setBackground(new java.awt.Color(0, 0, 0));
         jLabelTipoBusqueda.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jLabelTipoBusqueda.setForeground(new java.awt.Color(255, 255, 255));
         jLabelTipoBusqueda.setText("Artista");
         getContentPane().add(jLabelTipoBusqueda);
-        jLabelTipoBusqueda.setBounds(280, 55, 90, 21);
+        jLabelTipoBusqueda.setBounds(225, 55, 90, 21);
 
         jLabelFondoTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/tipoBusqueda.fw.png"))); // NOI18N
         jLabelFondoTipo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().add(jLabelFondoTipo);
-        jLabelFondoTipo.setBounds(262, 40, 123, 56);
+        jLabelFondoTipo.setBounds(197, 40, 123, 56);
 
         jLabelIconoBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/iconobuscar.fw.png"))); // NOI18N
         jLabelIconoBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -267,6 +270,7 @@ public class Reproductor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelSiguiente;
     private javax.swing.JLabel jLabelStop;
     private javax.swing.JLabel jLabelTipoBusqueda;
+    private javax.swing.JSlider jSlider1;
     private javax.swing.JTextField jTextFieldTextoBusqueda;
     // End of variables declaration//GEN-END:variables
 }
