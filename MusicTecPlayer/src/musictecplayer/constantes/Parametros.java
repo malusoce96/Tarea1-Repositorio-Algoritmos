@@ -1,25 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Clase que guarda los parámetros del reproductor de música para ser utilizados
+ * en la ejecución de Reproduccion.java.
  */
 
 package musictecplayer.constantes;
 
 /**
- *
- * @author RUBEN
+ * @author Lucia  Solis
+ * @author Joseph Vega
+ * @author Miller Ruiz
  */
 public class Parametros {
+    // Constantes que evaluan el proceso del reproductor
     public final static int DETENIDO = 0;
     public final static int PAUSADO = 1;
-    public final static int REPRODUCIENDO =2;
+    public final static int REPRODUCIENDO = 2;
     
-    public final static int ARTISTA =0;
-    public final static int ALBUM =1;
-    public final static int GENERO =2;
-    public final static int CANCION =3;
-    
-
-    
+    // Constantes que evaluan el tipo de busqueda avanzada
+    public final static int ARTISTA = 0;
+    public final static int ALBUM = 1;
+    public final static int GENERO = 2;
+    public final static int CANCION = 3; 
 }

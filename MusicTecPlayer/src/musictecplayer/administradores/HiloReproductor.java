@@ -6,9 +6,9 @@
 package musictecplayer.administradores;
 
 /**
- *
- * @author Lucia
- *
+ * @author Lucia  Solis
+ * @author Joseph Vega
+ * @author Miller Ruiz
  */
 public class HiloReproductor extends Thread {
 
