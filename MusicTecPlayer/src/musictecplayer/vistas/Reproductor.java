@@ -10,8 +10,9 @@ import musictecplayer.administradores.HiloReproductor;
 import musictecplayer.constantes.Parametros;
 
 /**
- *
- * @author Lucia
+ * @author Lucia  Solis
+ * @author Joseph Vega
+ * @author Miller Ruiz
  */
 public class Reproductor extends javax.swing.JFrame {
 
