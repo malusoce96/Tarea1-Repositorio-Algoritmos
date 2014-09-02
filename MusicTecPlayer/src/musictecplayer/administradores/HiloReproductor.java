@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Clase que controla el hilo reproductor de la aplicación en el reproductor de 
+ * musica. 
  */
 package musictecplayer.administradores;
 
@@ -16,6 +15,7 @@ public class HiloReproductor extends Thread {
     final long interval = 0;
     private volatile boolean threadSuspended = false;
 
+    @Override
     public void run() {
         
         while (blinker == true) {

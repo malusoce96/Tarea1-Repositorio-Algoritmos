@@ -108,11 +108,10 @@ public class Reproductor extends javax.swing.JFrame {
         jLabelFondoPrincipal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menú Principal");
         setBackground(new java.awt.Color(0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setMaximumSize(new java.awt.Dimension(643, 569));
         setMinimumSize(new java.awt.Dimension(643, 569));
-        setPreferredSize(new java.awt.Dimension(643, 569));
         setResizable(false);
         getContentPane().setLayout(null);
 
@@ -129,13 +128,18 @@ public class Reproductor extends javax.swing.JFrame {
         jLabelMenu.setForeground(new java.awt.Color(255, 255, 255));
         jLabelMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelMenu.setText("Agregar");
+        jLabelMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelMenuMouseReleased(evt);
+            }
+        });
         getContentPane().add(jLabelMenu);
-        jLabelMenu.setBounds(52, 58, 90, 21);
+        jLabelMenu.setBounds(42, 42, 118, 50);
 
         jLabelFondoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/tipoBusqueda.fw.png"))); // NOI18N
         jLabelFondoMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().add(jLabelFondoMenu);
-        jLabelFondoMenu.setBounds(40, 40, 170, 56);
+        jLabelFondoMenu.setBounds(40, 40, 130, 56);
 
         jLabelFondoPlaylist.setBackground(new java.awt.Color(0, 0, 0));
         jLabelFondoPlaylist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoPlayList.fw.png"))); // NOI18N
@@ -144,7 +148,7 @@ public class Reproductor extends javax.swing.JFrame {
 
         jSliderPosicionCancion.setOpaque(false);
         getContentPane().add(jSliderPosicionCancion);
-        jSliderPosicionCancion.setBounds(43, 457, 228, 26);
+        jSliderPosicionCancion.setBounds(43, 457, 228, 23);
 
         jSliderVolumen.setOrientation(javax.swing.JSlider.VERTICAL);
         jSliderVolumen.setToolTipText("");
@@ -269,15 +273,16 @@ public class Reproductor extends javax.swing.JFrame {
         getContentPane().add(jLabelPlay);
         jLabelPlay.setBounds(134, 482, 48, 56);
 
+        jLabelFondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoReproductorV2.fw.png"))); // NOI18N
         getContentPane().add(jLabelFondo);
-        jLabelFondo.setBounds(10, 0, 624, 560);
+        jLabelFondo.setBounds(10, 0, 630, 560);
 
         jLabelFondoPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondo.png"))); // NOI18N
         getContentPane().add(jLabelFondoPrincipal);
         jLabelFondoPrincipal.setBounds(0, 0, 650, 580);
 
-        setSize(new java.awt.Dimension(659, 608));
+        setSize(new java.awt.Dimension(668, 609));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -336,6 +341,12 @@ public class Reproductor extends javax.swing.JFrame {
             jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/play.fw.png"))); // NOI18N
         }
     }//GEN-LAST:event_jLabelPlayMouseReleased
+
+    private void jLabelMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseReleased
+        DetalleCancion DC = new DetalleCancion();
+        this.disable();
+        DC.show();
+    }//GEN-LAST:event_jLabelMenuMouseReleased
 
     /**
      * @param args the command line arguments
