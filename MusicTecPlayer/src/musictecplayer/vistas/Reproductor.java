@@ -6,10 +6,6 @@
 package musictecplayer.vistas;
 
 import java.awt.event.WindowEvent;
-import java.io.File;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import musictecplayer.administradores.ReproductorLogico;
 import musictecplayer.constantes.Parametros;
 
@@ -53,19 +49,9 @@ public class Reproductor extends javax.swing.JFrame {
     }
 
     private void escogerArchivo() {
-        FileFilter filtro = new FileNameExtensionFilter("Archivos mp3", "mp3", "mpeg3");
-        JFileChooser selectorArchivo = new JFileChooser();
-        selectorArchivo.addChoosableFileFilter(filtro);
-
-        int opcionSelecccionada = selectorArchivo.showOpenDialog(null);
-        if (opcionSelecccionada == JFileChooser.APPROVE_OPTION) {
-            File archivoSeleccionado = selectorArchivo.getSelectedFile();
-            String cancion = archivoSeleccionado + "";
-            //String nombre = selectorArchivo.getSelectedFile().getName();
-            //reproductor.play(cancion);
-            
-            //SE AGREGA A LA LISTA
-        }
+        DetallesCancion DC = new DetallesCancion();
+        this.disable();
+        DC.show();
     }
 
     public void reubicarControles() {
@@ -158,12 +144,12 @@ public class Reproductor extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jLabelMenu);
-        jLabelMenu.setBounds(52, 58, 90, 21);
+        jLabelMenu.setBounds(42, 39, 120, 50);
 
         jLabelFondoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/tipoBusqueda.fw.png"))); // NOI18N
         jLabelFondoMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().add(jLabelFondoMenu);
-        jLabelFondoMenu.setBounds(40, 40, 170, 56);
+        jLabelFondoMenu.setBounds(40, 40, 120, 50);
 
         jLabelFondoPlaylist.setBackground(new java.awt.Color(0, 0, 0));
         jLabelFondoPlaylist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoPlayList.fw.png"))); // NOI18N
@@ -172,7 +158,7 @@ public class Reproductor extends javax.swing.JFrame {
 
         jSliderPosicionCancion.setOpaque(false);
         getContentPane().add(jSliderPosicionCancion);
-        jSliderPosicionCancion.setBounds(43, 457, 228, 26);
+        jSliderPosicionCancion.setBounds(43, 457, 228, 23);
 
         jSliderVolumen.setOrientation(javax.swing.JSlider.VERTICAL);
         jSliderVolumen.setToolTipText("");
@@ -380,7 +366,6 @@ public class Reproductor extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelPlayMouseReleased
 
     private void jLabelMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseReleased
-        // TODO add your handling code here:
         escogerArchivo();
     }//GEN-LAST:event_jLabelMenuMouseReleased
 
