@@ -116,6 +116,7 @@ public class Reproductor extends javax.swing.JFrame {
         jLabelFondoPrincipal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menú Principal");
         setBackground(new java.awt.Color(0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximumSize(new java.awt.Dimension(643, 569));
@@ -283,13 +284,14 @@ public class Reproductor extends javax.swing.JFrame {
         getContentPane().add(jLabelPlay);
         jLabelPlay.setBounds(134, 482, 48, 56);
 
+        jLabelFondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoReproductorV2.fw.png"))); // NOI18N
         getContentPane().add(jLabelFondo);
         jLabelFondo.setBounds(10, 0, 624, 560);
 
         jLabelFondoPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondo.png"))); // NOI18N
         getContentPane().add(jLabelFondoPrincipal);
-        jLabelFondoPrincipal.setBounds(0, 0, 650, 580);
+        jLabelFondoPrincipal.setBounds(0, 0, 660, 590);
 
         setSize(new java.awt.Dimension(659, 608));
         setLocationRelativeTo(null);
