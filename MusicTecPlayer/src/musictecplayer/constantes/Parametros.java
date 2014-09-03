@@ -2,6 +2,7 @@
  * Clase que guarda los parámetros del reproductor de música para ser utilizados
  * en la ejecución de Reproduccion.java.
  */
+
 package musictecplayer.constantes;
 
 /**

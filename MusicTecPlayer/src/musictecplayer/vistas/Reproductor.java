@@ -6,44 +6,52 @@
 package musictecplayer.vistas;
 
 import java.awt.event.WindowEvent;
-import musictecplayer.administradores.HiloReproductor;
+import musictecplayer.administradores.ReproductorLogico;
 import musictecplayer.constantes.Parametros;
 
 /**
- * @author Lucia  Solis
+ * @author Lucia Solis
  * @author Joseph Vega
  * @author Miller Ruiz
  */
 public class Reproductor extends javax.swing.JFrame {
 
-    private int estadoReproduccion = 0;// 0 stop, 1 pausado, 2 reproduciendo
-    private int tipoBusqueda = 0;// 0 artista, 1 album, 2 genero,3 cancion 
+    private int estadoReproduccion = Parametros.DETENIDO;// 0 stop, 1 pausado, 2 reproduciendo
+    private int tipoBusqueda = Parametros.ARTISTA;// 0 artista, 1 album, 2 genero,3 cancion 
 
-    private HiloReproductor hilo = null;
+    private String rutaCancionActual = "";
+
+    private ReproductorLogico reproductor = null;
 
     /**
      * Creates new form Reproductor
      */
     public Reproductor() {
         initComponents();
-        probarReproductor();
+        crearReproductor();
 
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(WindowEvent winEvt) {
-                
-                if (hilo != null){
-                    hilo.detener();
+
+                if (reproductor != null) {
+                    reproductor.stop();
                 }
-                
+
                 System.exit(0);
             }
         });
 
     }
 
-    public void probarReproductor() {
-        hilo = new HiloReproductor();
-        hilo.start();
+    public void crearReproductor() {
+        reproductor = new ReproductorLogico();
+        reproductor.stop();
+    }
+
+    private void escogerArchivo() {
+        DetallesCancion DC = new DetallesCancion();
+        this.disable();
+        DC.show();
     }
 
     public void reubicarControles() {
@@ -58,7 +66,7 @@ public class Reproductor extends javax.swing.JFrame {
 
         jSliderPosicionCancion.setLocation(cambioX + 3, cambioY - 23);
         jLabelFondoAlbun1.setLocation(cambioX + 3, cambioY - 80);
- 
+
         jLabelFondoAlbun2.setLocation(cambioX + 3, cambioY - 130);
         jLabelFondoAlbun3.setLocation(cambioX + 3, cambioY - 180);
         jLabelFondoAlbun.setLocation(cambioX + 13, cambioY - 170);
@@ -66,7 +74,7 @@ public class Reproductor extends javax.swing.JFrame {
         jSliderVolumen.setLocation(cambioX + 201, cambioY - 150);
         jLabelVolumen.setLocation(cambioX + 200, cambioY - 60);
 
-        System.out.println(jLabelFondoPlaylist.getLocation().toString());
+//        System.out.println(jLabelFondoPlaylist.getLocation().toString());
 //        System.out.println(jLabelStop.getLocation().toString());
 //        System.out.println(jLabelPlay.getLocation().toString());
 //        System.out.println(jLabelAleatorio.getLocation().toString());
@@ -108,10 +116,11 @@ public class Reproductor extends javax.swing.JFrame {
         jLabelFondoPrincipal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Menú Principal");
         setBackground(new java.awt.Color(0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMaximumSize(new java.awt.Dimension(643, 569));
         setMinimumSize(new java.awt.Dimension(643, 569));
+        setPreferredSize(new java.awt.Dimension(643, 569));
         setResizable(false);
         getContentPane().setLayout(null);
 
@@ -128,18 +137,19 @@ public class Reproductor extends javax.swing.JFrame {
         jLabelMenu.setForeground(new java.awt.Color(255, 255, 255));
         jLabelMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelMenu.setText("Agregar");
+        jLabelMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jLabelMenuMouseReleased(evt);
             }
         });
         getContentPane().add(jLabelMenu);
-        jLabelMenu.setBounds(42, 42, 118, 50);
+        jLabelMenu.setBounds(42, 39, 120, 50);
 
         jLabelFondoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/tipoBusqueda.fw.png"))); // NOI18N
         jLabelFondoMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().add(jLabelFondoMenu);
-        jLabelFondoMenu.setBounds(40, 40, 130, 56);
+        jLabelFondoMenu.setBounds(40, 40, 120, 50);
 
         jLabelFondoPlaylist.setBackground(new java.awt.Color(0, 0, 0));
         jLabelFondoPlaylist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoPlayList.fw.png"))); // NOI18N
@@ -273,16 +283,15 @@ public class Reproductor extends javax.swing.JFrame {
         getContentPane().add(jLabelPlay);
         jLabelPlay.setBounds(134, 482, 48, 56);
 
-        jLabelFondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoReproductorV2.fw.png"))); // NOI18N
         getContentPane().add(jLabelFondo);
-        jLabelFondo.setBounds(10, 0, 630, 560);
+        jLabelFondo.setBounds(10, 0, 624, 560);
 
         jLabelFondoPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondo.png"))); // NOI18N
         getContentPane().add(jLabelFondoPrincipal);
         jLabelFondoPrincipal.setBounds(0, 0, 650, 580);
 
-        setSize(new java.awt.Dimension(668, 609));
+        setSize(new java.awt.Dimension(659, 608));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -296,6 +305,8 @@ public class Reproductor extends javax.swing.JFrame {
     private void jLabelStopMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelStopMouseReleased
         // TODO add your handling code here:
         System.out.println("Stop");
+
+        reproductor.stop();
     }//GEN-LAST:event_jLabelStopMouseReleased
 
     private void jLabelAnteriorMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAnteriorMouseReleased
@@ -327,25 +338,35 @@ public class Reproductor extends javax.swing.JFrame {
 
     private void jLabelPlayMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPlayMouseReleased
         // TODO add your handling code here:
-        if (estadoReproduccion == Parametros.DETENIDO) {
-            estadoReproduccion = Parametros.REPRODUCIENDO;
-            System.out.println("D-Reproducir");
-            jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
-        } else if (estadoReproduccion == Parametros.PAUSADO) {
-            System.out.println("P-Reproducir");
-            estadoReproduccion = Parametros.REPRODUCIENDO;
-            jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
-        } else if (estadoReproduccion == Parametros.REPRODUCIENDO) {
-            estadoReproduccion = Parametros.PAUSADO;
-            System.out.println("R-Pausar");
-            jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/play.fw.png"))); // NOI18N
+
+        if (!rutaCancionActual.equals("")) {
+
+            if (estadoReproduccion == Parametros.DETENIDO) {
+                estadoReproduccion = Parametros.REPRODUCIENDO;
+                System.out.println("D-Reproducir");
+                jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
+
+                reproductor.play(rutaCancionActual);
+
+            } else if (estadoReproduccion == Parametros.PAUSADO) {
+                System.out.println("P-Reproducir");
+                estadoReproduccion = Parametros.REPRODUCIENDO;
+                jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
+
+                reproductor.resume();
+
+            } else if (estadoReproduccion == Parametros.REPRODUCIENDO) {
+                estadoReproduccion = Parametros.PAUSADO;
+                System.out.println("R-Pausar");
+                jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/play.fw.png"))); // NOI18N
+
+                reproductor.pause();
+            }
         }
     }//GEN-LAST:event_jLabelPlayMouseReleased
 
     private void jLabelMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseReleased
-        DetalleCancion DC = new DetalleCancion();
-        this.disable();
-        DC.show();
+        escogerArchivo();
     }//GEN-LAST:event_jLabelMenuMouseReleased
 
     /**
