@@ -128,6 +128,7 @@ public class Reproductor extends javax.swing.JFrame {
         jLabelMenu.setForeground(new java.awt.Color(255, 255, 255));
         jLabelMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelMenu.setText("Agregar");
+        jLabelMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jLabelMenuMouseReleased(evt);
@@ -194,7 +195,7 @@ public class Reproductor extends javax.swing.JFrame {
         jLabelTipoBusqueda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTipoBusqueda.setText("Artista");
         getContentPane().add(jLabelTipoBusqueda);
-        jLabelTipoBusqueda.setBounds(260, 58, 70, 21);
+        jLabelTipoBusqueda.setBounds(259, 42, 70, 50);
 
         jLabelFondoTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/tipoBusqueda.fw.png"))); // NOI18N
         jLabelFondoTipo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -344,7 +345,6 @@ public class Reproductor extends javax.swing.JFrame {
 
     private void jLabelMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseReleased
         DetalleCancion DC = new DetalleCancion();
-        this.disable();
         DC.show();
     }//GEN-LAST:event_jLabelMenuMouseReleased
 
