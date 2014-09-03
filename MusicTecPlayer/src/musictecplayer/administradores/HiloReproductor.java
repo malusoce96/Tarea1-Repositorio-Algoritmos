@@ -7,7 +7,12 @@ package musictecplayer.administradores;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javazoom.jl.player.Player;
+import musictecplayer.constantes.Parametros;
+import musictecplayer.vistas.Reproductor;
 
 /**
  * @author Lucia Solis
@@ -17,20 +22,18 @@ import javazoom.jl.player.Player;
 public class HiloReproductor extends Thread {
 
     private volatile boolean blinker = true;
-    final long interval = 0;
+    final long interval = 1000;
     private volatile boolean threadSuspended = false;
+    private Reproductor reproductor = null;
 
     /**
      * variables para reproducir
      */
-    FileInputStream FIS;
-    BufferedInputStream BIS;
+    private Player player = null;
 
-    public long pauseLocation;
-    public long songTotalLen;
-    public String fileLocation;
-
-    public Player player;
+    public HiloReproductor(Reproductor reproductor) {
+        this.reproductor = reproductor;
+    }
 
     public void run() {
 
@@ -47,9 +50,21 @@ public class HiloReproductor extends Thread {
             } catch (InterruptedException e) {
             }
             //
+            if (reproductor.getEstadoReproduccion() == Parametros.REPRODUCIENDO) {
+                try {
+                    int posicionCancion = reproductor.getReproductor().getFIS().available();
+                    long songTotalLen = reproductor.getReproductor().getSongTotalLen();
+                    reproductor.getjSliderPosicionCancion().setValue((int) (songTotalLen - posicionCancion));
+                    System.out.println("Actualizando estado");
+                    if (reproductor.getReproductor().getPlayer().isComplete()) {
+                        reproductor.finalizarReproduccion();
+                    }
+                } catch (IOException ex) {
+                    System.out.println("Error al actualizar estado de la cancion");
+                    reproductor.finalizarReproduccion();
+                }
 
-            //Codigo a ejecutar
-            System.out.println("Se esta ejecutando la cancion");
+            }
         }
 
         //
@@ -64,17 +79,20 @@ public class HiloReproductor extends Thread {
 
     public synchronized void pausar() {
 
-        threadSuspended = !threadSuspended;
+        threadSuspended = true;
 
         if (!threadSuspended) {
             notify();
         }
     }
-    
-    public synchronized void detenerCancion(){
-        
+
+    public synchronized void continuar() {
+
+        threadSuspended = false;
+
+        if (!threadSuspended) {
+            notify();
+        }
     }
-    
-    
 
 }

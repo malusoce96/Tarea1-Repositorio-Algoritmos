@@ -6,6 +6,14 @@
 package musictecplayer.vistas;
 
 import java.awt.event.WindowEvent;
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import musictecplayer.administradores.HiloReproductor;
 import musictecplayer.administradores.ReproductorLogico;
 import musictecplayer.constantes.Parametros;
 
@@ -23,6 +31,8 @@ public class Reproductor extends javax.swing.JFrame {
 
     private ReproductorLogico reproductor = null;
 
+    private HiloReproductor hiloReproductor = null;
+
     /**
      * Creates new form Reproductor
      */
@@ -30,11 +40,41 @@ public class Reproductor extends javax.swing.JFrame {
         initComponents();
         crearReproductor();
 
+//        jSliderPosicionCancion.setPaintTicks(true);
+//        jSliderPosicionCancion.setMajorTickSpacing(50);
+//        jSliderPosicionCancion.setMinorTickSpacing(10);
+        jSliderPosicionCancion.setPaintLabels(true);
+        
+        jLabelVolumen.setVisible(false);
+        jSliderVolumen.setVisible(false);
+//
+        jSliderPosicionCancion.addChangeListener(
+                new ChangeListener() {  // clase interna anónima
+
+                    @Override
+                    public void stateChanged(ChangeEvent ce) {
+
+                        if (estadoReproduccion == Parametros.PAUSADO || estadoReproduccion == Parametros.DETENIDO) {
+
+                            System.out.println("VALOR: " + jSliderPosicionCancion.getValue());
+                            //reproductor.pause();
+                            reproductor.setPauseLocation(reproductor.getSongTotalLen() - jSliderPosicionCancion.getValue());
+                            //reproductor.resume();
+                        }
+                    }
+
+                } // fin de la clase interna anónima
+
+        ); // fin de la llamada a addChangeListener
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(WindowEvent winEvt) {
 
                 if (reproductor != null) {
                     reproductor.stop();
+                }
+
+                if (hiloReproductor != null) {
+                    hiloReproductor.detener();
                 }
 
                 System.exit(0);
@@ -46,12 +86,55 @@ public class Reproductor extends javax.swing.JFrame {
     public void crearReproductor() {
         reproductor = new ReproductorLogico();
         reproductor.stop();
+
+        hiloReproductor = new HiloReproductor(this);
+        hiloReproductor.start();
+        hiloReproductor.pausar();
+
+    }
+
+    public ReproductorLogico getReproductor() {
+        return reproductor;
+    }
+
+    public JSlider getjSliderPosicionCancion() {
+        return jSliderPosicionCancion;
+    }
+
+    public int getEstadoReproduccion() {
+        return estadoReproduccion;
     }
 
     private void escogerArchivo() {
         DetallesCancion DC = new DetallesCancion();
         this.disable();
         DC.show();
+
+        FileFilter filtro = new FileNameExtensionFilter("Archivos mp3", "mp3", "mpeg3");
+        JFileChooser selectorArchivo = new JFileChooser();
+        selectorArchivo.addChoosableFileFilter(filtro);
+
+        int opcionSelecccionada = selectorArchivo.showOpenDialog(null);
+        if (opcionSelecccionada == JFileChooser.APPROVE_OPTION) {
+            File archivoSeleccionado = selectorArchivo.getSelectedFile();
+            String cancion = archivoSeleccionado + "";
+            //String nombre = selectorArchivo.getSelectedFile().getName();
+            //reproductor.play(cancion);
+            rutaCancionActual = cancion;
+        }
+
+    }
+
+    public void finalizarReproduccion() {
+        System.out.println("Stop");
+
+        reproductor.stop();
+
+        estadoReproduccion = Parametros.DETENIDO;
+        hiloReproductor.pausar();
+        jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/play.fw.png"))); // NOI18N
+        jSliderPosicionCancion.setValue(0);
+
     }
 
     public void reubicarControles() {
@@ -157,9 +240,10 @@ public class Reproductor extends javax.swing.JFrame {
         getContentPane().add(jLabelFondoPlaylist);
         jLabelFondoPlaylist.setBounds(35, 140, 246, 146);
 
+        jSliderPosicionCancion.setValue(0);
         jSliderPosicionCancion.setOpaque(false);
         getContentPane().add(jSliderPosicionCancion);
-        jSliderPosicionCancion.setBounds(43, 457, 228, 23);
+        jSliderPosicionCancion.setBounds(43, 457, 228, 26);
 
         jSliderVolumen.setOrientation(javax.swing.JSlider.VERTICAL);
         jSliderVolumen.setToolTipText("");
@@ -241,7 +325,7 @@ public class Reproductor extends javax.swing.JFrame {
         jLabelAnterior.setBounds(42, 482, 44, 56);
 
         jLabelAleatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/aleatorio.fw.png"))); // NOI18N
-        jLabelAleatorio.setToolTipText("Reproducir");
+        jLabelAleatorio.setToolTipText("Modo aleatorio");
         jLabelAleatorio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelAleatorio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -306,9 +390,8 @@ public class Reproductor extends javax.swing.JFrame {
 
     private void jLabelStopMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelStopMouseReleased
         // TODO add your handling code here:
-        System.out.println("Stop");
+        finalizarReproduccion();
 
-        reproductor.stop();
     }//GEN-LAST:event_jLabelStopMouseReleased
 
     private void jLabelAnteriorMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAnteriorMouseReleased
@@ -349,13 +432,24 @@ public class Reproductor extends javax.swing.JFrame {
                 jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
 
                 reproductor.play(rutaCancionActual);
+                hiloReproductor.continuar();
 
+                System.out.println("Longitud: " + reproductor.getSongTotalLen());
+
+                jSliderPosicionCancion.setMaximum((int) reproductor.getSongTotalLen());
+                jSliderPosicionCancion.setValue((int) reproductor.getPauseLocation());
+
+                //reproductor.resume();
             } else if (estadoReproduccion == Parametros.PAUSADO) {
                 System.out.println("P-Reproducir");
                 estadoReproduccion = Parametros.REPRODUCIENDO;
                 jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
 
                 reproductor.resume();
+                hiloReproductor.continuar();
+
+                jSliderPosicionCancion.setMaximum((int) reproductor.getSongTotalLen());
+                jSliderPosicionCancion.setValue((int) reproductor.getPauseLocation());
 
             } else if (estadoReproduccion == Parametros.REPRODUCIENDO) {
                 estadoReproduccion = Parametros.PAUSADO;
@@ -363,6 +457,7 @@ public class Reproductor extends javax.swing.JFrame {
                 jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/play.fw.png"))); // NOI18N
 
                 reproductor.pause();
+                hiloReproductor.pausar();
             }
         }
     }//GEN-LAST:event_jLabelPlayMouseReleased
@@ -385,16 +480,21 @@ public class Reproductor extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Reproductor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Reproductor.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Reproductor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Reproductor.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Reproductor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Reproductor.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Reproductor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Reproductor.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

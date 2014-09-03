@@ -20,15 +20,54 @@ public class ReproductorLogico {
     FileInputStream FIS = null;
     BufferedInputStream BIS = null;
 
-    public long pauseLocation = 0;
-    public long songTotalLen = 0;
-    public String fileLocation = null;
+    private long pauseLocation = 0;
+    private long songTotalLen = 0;
+    private String fileLocation = null;
 
-    public Player player = null;
+    private Player player = null;
+    
+    
 
     public ReproductorLogico() {
 
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    
+    public long getPauseLocation() {
+        return pauseLocation;
+    }
+
+    public void setPauseLocation(long pauseLocation) {
+        this.pauseLocation = pauseLocation;
+    }
+
+    public long getSongTotalLen() {
+        return songTotalLen;
+    }
+
+    public void setSongTotalLen(long songTotalLen) {
+        this.songTotalLen = songTotalLen;
+    }
+
+    public String getFileLocation() {
+        return fileLocation;
+    }
+
+    public void setFileLocation(String fileLocation) {
+        this.fileLocation = fileLocation;
+    }
+
+    public FileInputStream getFIS() {
+        return FIS;
+    }
+    
+    
+    
+    
 
     public void stop() {
         if (player != null) {
@@ -55,7 +94,7 @@ public class ReproductorLogico {
                 pauseLocation = FIS.available();
                 player.close();
             } catch (IOException ex) {
-                System.out.println("Error al pausar");
+                System.out.println("Error al pausar: pausar");
             } catch (Exception ex) {
                 System.out.println("Error inesperado: pausar");
             }
@@ -97,6 +136,8 @@ public class ReproductorLogico {
                 } catch (JavaLayerException ex) {
                     System.out.println("Error en el hilo reproductor: play");
                 }
+                
+                System.out.println("Termino el hilo de PLAY");
             }
         }.start();
 
@@ -136,7 +177,11 @@ public class ReproductorLogico {
                 } catch (JavaLayerException ex) {
                     System.out.println("Error en el hilo reproductor: play");
                 }
+                
+                System.out.println("Termino el hilo de RESUME");
             }
+            
+            
         }.start();
     }
 }
