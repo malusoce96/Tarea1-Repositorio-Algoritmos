@@ -32,14 +32,14 @@ public class Estructuras {
     /*
     Este es el metetodo de insercion , es insercion al final
     */
-    public Estructuras InsertEnd(String nombre, String artista, String genero, String album, int tiempo, String portada, String path){
+    public Estructuras InsertEnd(String nombre, String artista, String genero, String album, int año, String portada, String path){
         if (empty()){
-            NodoCancion cancion = new NodoCancion(nombre,artista,genero,album,tiempo,portada,path);
+            NodoCancion cancion = new NodoCancion(nombre,artista,genero,album,año,portada,path);
             First = cancion;
             Last= cancion;
         }
         else{
-            NodoCancion cancion = new NodoCancion(nombre,artista,genero,album,tiempo,portada,path);
+            NodoCancion cancion = new NodoCancion(nombre,artista,genero,album,año,portada,path);
             Last.next=cancion;
             cancion.prev=Last;
             Last=cancion;
@@ -52,7 +52,7 @@ public class NodoCancion {
     String artista;
     String genero;
     String album;
-    int tiempo;
+    int año;
     String portada;
     String path;
     NodoCancion next;
@@ -61,12 +61,12 @@ public class NodoCancion {
     metodo constructor .
     */
 
-    public NodoCancion(String nombre, String artista, String genero, String album, int tiempo, String portada, String path) {
+    public NodoCancion(String nombre, String artista, String genero, String album, int año, String portada, String path) {
         this.nombre = nombre;
         this.artista = artista;
         this.genero = genero;
         this.album = album;
-        this.tiempo = tiempo;
+        this.año = año;
         this.portada = portada;
         this.path = path;
         this.next = null;
@@ -90,8 +90,8 @@ public class NodoCancion {
         this.album = album;
     }
 
-    public void setTiempo(int tiempo) {
-        this.tiempo = tiempo;
+    public void setTiempo(int año) {
+        this.año = año;
     }
 
     public void setPortada(String portada) {
