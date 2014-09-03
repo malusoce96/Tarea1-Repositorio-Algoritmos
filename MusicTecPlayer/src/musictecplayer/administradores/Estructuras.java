@@ -101,4 +101,19 @@ public class NodoCancion {
     public void setPath(String path) {
         this.path = path;
     } 
+    public String getNombre(){
+        return nombre;
+    }
+    public String getArtista(){
+        return artista;
+    }
+    public String getAlbum(){
+        return album;
+    }
+    public String getGenero(){
+        return genero;
+    }
+    public String getPortada(){
+        return portada;
+    }
 }
