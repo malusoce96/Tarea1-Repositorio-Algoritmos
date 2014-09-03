@@ -47,7 +47,7 @@ public class Estructuras {
         return this;
     }
 }
-public class NodoCancion {
+class NodoCancion {
     String nombre;
     String artista;
     String genero;
