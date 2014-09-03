@@ -6,7 +6,11 @@
 package musictecplayer.vistas;
 
 import java.awt.event.WindowEvent;
-import musictecplayer.administradores.HiloReproductor;
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import musictecplayer.administradores.ReproductorLogico;
 import musictecplayer.constantes.Parametros;
 
 /**
@@ -18,21 +22,23 @@ public class Reproductor extends javax.swing.JFrame {
 
     private int estadoReproduccion = 0;// 0 stop, 1 pausado, 2 reproduciendo
     private int tipoBusqueda = 0;// 0 artista, 1 album, 2 genero,3 cancion 
+    
+    private String rutaCancionActual = null;
 
-    private HiloReproductor hilo = null;
+    private ReproductorLogico reproductor = null;
 
     /**
      * Creates new form Reproductor
      */
     public Reproductor() {
         initComponents();
-        probarReproductor();
+        crearReproductor();
 
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(WindowEvent winEvt) {
                 
-                if (hilo != null){
-                    hilo.detener();
+                if (reproductor != null){
+                    reproductor.stop();
                 }
                 
                 System.exit(0);
@@ -41,9 +47,23 @@ public class Reproductor extends javax.swing.JFrame {
 
     }
 
-    public void probarReproductor() {
-        hilo = new HiloReproductor();
-        hilo.start();
+    public void crearReproductor() {
+        reproductor = new ReproductorLogico();
+        reproductor.stop();
+    }
+    
+    private void escogerArchivo(){
+        FileFilter filtro = new FileNameExtensionFilter("Archivos mp3","mp3", "mpeg3");
+        JFileChooser selectorArchivo = new JFileChooser();
+        selectorArchivo.addChoosableFileFilter(filtro);
+        
+        int opcionSelecccionada = selectorArchivo.showOpenDialog(null);
+        if (opcionSelecccionada == JFileChooser.APPROVE_OPTION){
+            File archivoSeleccionado = selectorArchivo.getSelectedFile();
+            String cancion = archivoSeleccionado + "";
+            //String nombre = selectorArchivo.getSelectedFile().getName();
+            reproductor.play(cancion);
+        }
     }
 
     public void reubicarControles() {
@@ -66,7 +86,7 @@ public class Reproductor extends javax.swing.JFrame {
         jSliderVolumen.setLocation(cambioX + 201, cambioY - 150);
         jLabelVolumen.setLocation(cambioX + 200, cambioY - 60);
 
-        System.out.println(jLabelFondoPlaylist.getLocation().toString());
+//        System.out.println(jLabelFondoPlaylist.getLocation().toString());
 //        System.out.println(jLabelStop.getLocation().toString());
 //        System.out.println(jLabelPlay.getLocation().toString());
 //        System.out.println(jLabelAleatorio.getLocation().toString());
@@ -129,6 +149,12 @@ public class Reproductor extends javax.swing.JFrame {
         jLabelMenu.setForeground(new java.awt.Color(255, 255, 255));
         jLabelMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelMenu.setText("Agregar");
+        jLabelMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelMenuMouseReleased(evt);
+            }
+        });
         getContentPane().add(jLabelMenu);
         jLabelMenu.setBounds(52, 58, 90, 21);
 
@@ -325,6 +351,7 @@ public class Reproductor extends javax.swing.JFrame {
         if (estadoReproduccion == Parametros.DETENIDO) {
             estadoReproduccion = Parametros.REPRODUCIENDO;
             System.out.println("D-Reproducir");
+            
             jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
         } else if (estadoReproduccion == Parametros.PAUSADO) {
             System.out.println("P-Reproducir");
@@ -336,6 +363,11 @@ public class Reproductor extends javax.swing.JFrame {
             jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/play.fw.png"))); // NOI18N
         }
     }//GEN-LAST:event_jLabelPlayMouseReleased
+
+    private void jLabelMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseReleased
+        // TODO add your handling code here:
+        escogerArchivo();
+    }//GEN-LAST:event_jLabelMenuMouseReleased
 
     /**
      * @param args the command line arguments
