@@ -72,48 +72,79 @@ class NodoCancion {
         this.next = null;
         this.prev = null;
     }
-   
 
-    public void setNomnre(String nombre) {
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getArtista() {
+        return artista;
     }
 
     public void setArtista(String artista) {
         this.artista = artista;
     }
 
+    public String getGenero() {
+        return genero;
+    }
+
     public void setGenero(String genero) {
         this.genero = genero;
+    }
+
+    public String getAlbum() {
+        return album;
     }
 
     public void setAlbum(String album) {
         this.album = album;
     }
 
-    public void setTiempo(int año) {
+    public int getAño() {
+        return año;
+    }
+
+    public void setAño(int año) {
         this.año = año;
+    }
+
+    public String getPortada() {
+        return portada;
     }
 
     public void setPortada(String portada) {
         this.portada = portada;
     }
 
+    public String getPath() {
+        return path;
+    }
+
     public void setPath(String path) {
         this.path = path;
-    } 
-    public String getNombre(){
-        return nombre;
     }
-    public String getArtista(){
-        return artista;
+
+    public NodoCancion getNext() {
+        return next;
     }
-    public String getAlbum(){
-        return album;
+
+    public void setNext(NodoCancion next) {
+        this.next = next;
     }
-    public String getGenero(){
-        return genero;
+
+    public NodoCancion getPrev() {
+        return prev;
     }
-    public String getPortada(){
-        return portada;
+
+    public void setPrev(NodoCancion prev) {
+        this.prev = prev;
     }
+   
+
+
 }
