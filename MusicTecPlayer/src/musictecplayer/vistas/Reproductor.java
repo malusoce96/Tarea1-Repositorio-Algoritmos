@@ -6,10 +6,6 @@
 package musictecplayer.vistas;
 
 import java.awt.event.WindowEvent;
-import java.io.File;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import musictecplayer.administradores.ReproductorLogico;
 import musictecplayer.constantes.Parametros;
 
@@ -53,20 +49,9 @@ public class Reproductor extends javax.swing.JFrame {
     }
 
     private void escogerArchivo() {
-        FileFilter filtro = new FileNameExtensionFilter("Archivos mp3", "mp3", "mpeg3");
-        JFileChooser selectorArchivo = new JFileChooser();
-        selectorArchivo.addChoosableFileFilter(filtro);
-
-        int opcionSelecccionada = selectorArchivo.showOpenDialog(null);
-        if (opcionSelecccionada == JFileChooser.APPROVE_OPTION) {
-            File archivoSeleccionado = selectorArchivo.getSelectedFile();
-            String cancion = archivoSeleccionado + "";
-            //String nombre = selectorArchivo.getSelectedFile().getName();
-            //reproductor.play(cancion);
-
-            //SE AGREGA A LA LISTA
-            rutaCancionActual = cancion;
-        }
+        DetallesCancion DC = new DetallesCancion();
+        this.disable();
+        DC.show();
     }
 
     public void reubicarControles() {
@@ -131,6 +116,7 @@ public class Reproductor extends javax.swing.JFrame {
         jLabelFondoPrincipal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menú Principal");
         setBackground(new java.awt.Color(0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximumSize(new java.awt.Dimension(643, 569));
@@ -159,12 +145,12 @@ public class Reproductor extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jLabelMenu);
-        jLabelMenu.setBounds(52, 58, 90, 21);
+        jLabelMenu.setBounds(42, 39, 120, 50);
 
         jLabelFondoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/tipoBusqueda.fw.png"))); // NOI18N
         jLabelFondoMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().add(jLabelFondoMenu);
-        jLabelFondoMenu.setBounds(40, 40, 170, 56);
+        jLabelFondoMenu.setBounds(40, 40, 120, 50);
 
         jLabelFondoPlaylist.setBackground(new java.awt.Color(0, 0, 0));
         jLabelFondoPlaylist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoPlayList.fw.png"))); // NOI18N
@@ -173,7 +159,7 @@ public class Reproductor extends javax.swing.JFrame {
 
         jSliderPosicionCancion.setOpaque(false);
         getContentPane().add(jSliderPosicionCancion);
-        jSliderPosicionCancion.setBounds(43, 457, 228, 26);
+        jSliderPosicionCancion.setBounds(43, 457, 228, 23);
 
         jSliderVolumen.setOrientation(javax.swing.JSlider.VERTICAL);
         jSliderVolumen.setToolTipText("");
@@ -298,13 +284,14 @@ public class Reproductor extends javax.swing.JFrame {
         getContentPane().add(jLabelPlay);
         jLabelPlay.setBounds(134, 482, 48, 56);
 
+        jLabelFondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoReproductorV2.fw.png"))); // NOI18N
         getContentPane().add(jLabelFondo);
         jLabelFondo.setBounds(10, 0, 624, 560);
 
         jLabelFondoPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondo.png"))); // NOI18N
         getContentPane().add(jLabelFondoPrincipal);
-        jLabelFondoPrincipal.setBounds(0, 0, 650, 580);
+        jLabelFondoPrincipal.setBounds(0, 0, 660, 590);
 
         setSize(new java.awt.Dimension(659, 608));
         setLocationRelativeTo(null);
@@ -312,43 +299,26 @@ public class Reproductor extends javax.swing.JFrame {
 
     private void jLabelAleatorioMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAleatorioMouseReleased
         // TODO add your handling code here
+        System.out.println("Aleatorio");
 
-        if (rutaCancionActual.equals(Parametros.SIN_ASIGNAR) == false) {
-            System.out.println("Aleatorio");
-        }
 
     }//GEN-LAST:event_jLabelAleatorioMouseReleased
 
     private void jLabelStopMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelStopMouseReleased
         // TODO add your handling code here:
+        System.out.println("Stop");
 
-        if (rutaCancionActual.equals(Parametros.SIN_ASIGNAR) == false) {
-            System.out.println("Stop");
-
-            reproductor.stop();
-
-            estadoReproduccion = Parametros.PAUSADO;
-            
-            jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/play.fw.png"))); // NOI18N
-
-        }
-
+        reproductor.stop();
     }//GEN-LAST:event_jLabelStopMouseReleased
 
     private void jLabelAnteriorMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAnteriorMouseReleased
         // TODO add your handling code here:
-
-        if (rutaCancionActual.equals(Parametros.SIN_ASIGNAR) == false) {
-
-            System.out.println("Anterior");
-        }
+        System.out.println("Anterior");
     }//GEN-LAST:event_jLabelAnteriorMouseReleased
 
     private void jLabelSiguienteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSiguienteMouseReleased
         // TODO add your handling code here:
-        if (rutaCancionActual.equals(Parametros.SIN_ASIGNAR) == false) {
-            System.out.println("Siguiente");
-        }
+        System.out.println("Siguiente");
     }//GEN-LAST:event_jLabelSiguienteMouseReleased
 
     private void jLabelCambiarTipoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCambiarTipoMouseReleased
@@ -371,7 +341,7 @@ public class Reproductor extends javax.swing.JFrame {
     private void jLabelPlayMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPlayMouseReleased
         // TODO add your handling code here:
 
-        if (rutaCancionActual.equals(Parametros.SIN_ASIGNAR) == false) {
+        if (!rutaCancionActual.equals("")) {
 
             if (estadoReproduccion == Parametros.DETENIDO) {
                 estadoReproduccion = Parametros.REPRODUCIENDO;
@@ -398,7 +368,6 @@ public class Reproductor extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelPlayMouseReleased
 
     private void jLabelMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseReleased
-        // TODO add your handling code here:
         escogerArchivo();
     }//GEN-LAST:event_jLabelMenuMouseReleased
 
