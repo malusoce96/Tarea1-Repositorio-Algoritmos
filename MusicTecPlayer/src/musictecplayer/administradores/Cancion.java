@@ -8,9 +8,9 @@ package musictecplayer.administradores;
 
 /**
  *
- * @author LUCIA
  * @author MILLER
  * @author JOSEPH
+ * @author LUCIA
  */
 public class Cancion {
     
