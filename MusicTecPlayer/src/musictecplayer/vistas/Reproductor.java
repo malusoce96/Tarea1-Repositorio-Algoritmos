@@ -63,8 +63,9 @@ public class Reproductor extends javax.swing.JFrame {
             String cancion = archivoSeleccionado + "";
             //String nombre = selectorArchivo.getSelectedFile().getName();
             //reproductor.play(cancion);
-            
+
             //SE AGREGA A LA LISTA
+            rutaCancionActual = cancion;
         }
     }
 
@@ -311,26 +312,43 @@ public class Reproductor extends javax.swing.JFrame {
 
     private void jLabelAleatorioMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAleatorioMouseReleased
         // TODO add your handling code here
-        System.out.println("Aleatorio");
 
+        if (rutaCancionActual.equals(Parametros.SIN_ASIGNAR) == false) {
+            System.out.println("Aleatorio");
+        }
 
     }//GEN-LAST:event_jLabelAleatorioMouseReleased
 
     private void jLabelStopMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelStopMouseReleased
         // TODO add your handling code here:
-        System.out.println("Stop");
 
-        reproductor.stop();
+        if (rutaCancionActual.equals(Parametros.SIN_ASIGNAR) == false) {
+            System.out.println("Stop");
+
+            reproductor.stop();
+
+            estadoReproduccion = Parametros.PAUSADO;
+            
+            jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/play.fw.png"))); // NOI18N
+
+        }
+
     }//GEN-LAST:event_jLabelStopMouseReleased
 
     private void jLabelAnteriorMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAnteriorMouseReleased
         // TODO add your handling code here:
-        System.out.println("Anterior");
+
+        if (rutaCancionActual.equals(Parametros.SIN_ASIGNAR) == false) {
+
+            System.out.println("Anterior");
+        }
     }//GEN-LAST:event_jLabelAnteriorMouseReleased
 
     private void jLabelSiguienteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSiguienteMouseReleased
         // TODO add your handling code here:
-        System.out.println("Siguiente");
+        if (rutaCancionActual.equals(Parametros.SIN_ASIGNAR) == false) {
+            System.out.println("Siguiente");
+        }
     }//GEN-LAST:event_jLabelSiguienteMouseReleased
 
     private void jLabelCambiarTipoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCambiarTipoMouseReleased
@@ -353,7 +371,7 @@ public class Reproductor extends javax.swing.JFrame {
     private void jLabelPlayMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPlayMouseReleased
         // TODO add your handling code here:
 
-        if (!rutaCancionActual.equals("")) {
+        if (rutaCancionActual.equals(Parametros.SIN_ASIGNAR) == false) {
 
             if (estadoReproduccion == Parametros.DETENIDO) {
                 estadoReproduccion = Parametros.REPRODUCIENDO;

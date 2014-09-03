@@ -21,4 +21,6 @@ public class Parametros {
     public final static int ALBUM = 1;
     public final static int GENERO = 2;
     public final static int CANCION = 3; 
+    
+    public final static String SIN_ASIGNAR = ""; 
 }

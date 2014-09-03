@@ -4,10 +4,11 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
-
 
 /**
  * @author Lucia Solis
@@ -15,9 +16,6 @@ import javazoom.jl.player.Player;
  * @author Miller Ruiz
  */
 public class ReproductorLogico {
-    
-    
-    
 
     FileInputStream FIS = null;
     BufferedInputStream BIS = null;
@@ -29,20 +27,26 @@ public class ReproductorLogico {
     public Player player = null;
 
     public ReproductorLogico() {
-        
-       
+
     }
-    
-    
-    
 
     public void stop() {
         if (player != null) {
-            player.close();
 
+            player.close();
             pauseLocation = 0;
             songTotalLen = 0;
+//            try {
+//                FIS.close();
+//                BIS.close();
+//
+//            } catch (IOException ex) {
+//                System.out.println("Error al leer archivo: stop");
+//            } catch (Exception ex) {
+//                System.out.println("Error inesperado: stop");
+//            }
         }
+
     }
 
     public void pause() {
@@ -52,6 +56,8 @@ public class ReproductorLogico {
                 player.close();
             } catch (IOException ex) {
                 System.out.println("Error al pausar");
+            } catch (Exception ex) {
+                System.out.println("Error inesperado: pausar");
             }
         }
     }
@@ -67,17 +73,6 @@ public class ReproductorLogico {
 
             fileLocation = ruta + "";
 
-            new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        player.play();
-                    } catch (JavaLayerException ex) {
-                        System.out.println("Error en el hilo reproductor: play");
-                    }
-                }
-            }.start();
-
         } catch (FileNotFoundException ex) {
 
             System.out.println("Error al cargar archivo: play");
@@ -89,32 +84,33 @@ public class ReproductorLogico {
         } catch (IOException ex) {
 
             System.out.println("Error al leer archivo: play");
-        
+
         } catch (Exception ex) {
             System.out.println("Error inesperado: play");
         }
+
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    player.play();
+                } catch (JavaLayerException ex) {
+                    System.out.println("Error en el hilo reproductor: play");
+                }
+            }
+        }.start();
 
     }
 
     public void resume() {
         try {
+
             FIS = new FileInputStream(fileLocation);
             BIS = new BufferedInputStream(FIS);
 
             player = new Player(BIS);
 
             FIS.skip(songTotalLen - pauseLocation);
-
-            new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        player.play();
-                    } catch (JavaLayerException ex) {
-                        System.out.println("Error en el hilo reproductor: play");
-                    }
-                }
-            }.start();
 
         } catch (FileNotFoundException ex) {
 
@@ -131,5 +127,16 @@ public class ReproductorLogico {
         } catch (Exception ex) {
             System.out.println("Error inesperado: continuar");
         }
+
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    player.play();
+                } catch (JavaLayerException ex) {
+                    System.out.println("Error en el hilo reproductor: play");
+                }
+            }
+        }.start();
     }
 }
