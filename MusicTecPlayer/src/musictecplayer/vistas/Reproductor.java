@@ -14,16 +14,16 @@ import musictecplayer.administradores.ReproductorLogico;
 import musictecplayer.constantes.Parametros;
 
 /**
- * @author Lucia  Solis
+ * @author Lucia Solis
  * @author Joseph Vega
  * @author Miller Ruiz
  */
 public class Reproductor extends javax.swing.JFrame {
 
-    private int estadoReproduccion = 0;// 0 stop, 1 pausado, 2 reproduciendo
-    private int tipoBusqueda = 0;// 0 artista, 1 album, 2 genero,3 cancion 
-    
-    private String rutaCancionActual = null;
+    private int estadoReproduccion = Parametros.DETENIDO;// 0 stop, 1 pausado, 2 reproduciendo
+    private int tipoBusqueda = Parametros.ARTISTA;// 0 artista, 1 album, 2 genero,3 cancion 
+
+    private String rutaCancionActual = "";
 
     private ReproductorLogico reproductor = null;
 
@@ -36,11 +36,11 @@ public class Reproductor extends javax.swing.JFrame {
 
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(WindowEvent winEvt) {
-                
-                if (reproductor != null){
+
+                if (reproductor != null) {
                     reproductor.stop();
                 }
-                
+
                 System.exit(0);
             }
         });
@@ -51,18 +51,20 @@ public class Reproductor extends javax.swing.JFrame {
         reproductor = new ReproductorLogico();
         reproductor.stop();
     }
-    
-    private void escogerArchivo(){
-        FileFilter filtro = new FileNameExtensionFilter("Archivos mp3","mp3", "mpeg3");
+
+    private void escogerArchivo() {
+        FileFilter filtro = new FileNameExtensionFilter("Archivos mp3", "mp3", "mpeg3");
         JFileChooser selectorArchivo = new JFileChooser();
         selectorArchivo.addChoosableFileFilter(filtro);
-        
+
         int opcionSelecccionada = selectorArchivo.showOpenDialog(null);
-        if (opcionSelecccionada == JFileChooser.APPROVE_OPTION){
+        if (opcionSelecccionada == JFileChooser.APPROVE_OPTION) {
             File archivoSeleccionado = selectorArchivo.getSelectedFile();
             String cancion = archivoSeleccionado + "";
             //String nombre = selectorArchivo.getSelectedFile().getName();
-            reproductor.play(cancion);
+            //reproductor.play(cancion);
+            
+            //SE AGREGA A LA LISTA
         }
     }
 
@@ -78,7 +80,7 @@ public class Reproductor extends javax.swing.JFrame {
 
         jSliderPosicionCancion.setLocation(cambioX + 3, cambioY - 23);
         jLabelFondoAlbun1.setLocation(cambioX + 3, cambioY - 80);
- 
+
         jLabelFondoAlbun2.setLocation(cambioX + 3, cambioY - 130);
         jLabelFondoAlbun3.setLocation(cambioX + 3, cambioY - 180);
         jLabelFondoAlbun.setLocation(cambioX + 13, cambioY - 170);
@@ -317,6 +319,8 @@ public class Reproductor extends javax.swing.JFrame {
     private void jLabelStopMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelStopMouseReleased
         // TODO add your handling code here:
         System.out.println("Stop");
+
+        reproductor.stop();
     }//GEN-LAST:event_jLabelStopMouseReleased
 
     private void jLabelAnteriorMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAnteriorMouseReleased
@@ -348,19 +352,30 @@ public class Reproductor extends javax.swing.JFrame {
 
     private void jLabelPlayMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPlayMouseReleased
         // TODO add your handling code here:
-        if (estadoReproduccion == Parametros.DETENIDO) {
-            estadoReproduccion = Parametros.REPRODUCIENDO;
-            System.out.println("D-Reproducir");
-            
-            jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
-        } else if (estadoReproduccion == Parametros.PAUSADO) {
-            System.out.println("P-Reproducir");
-            estadoReproduccion = Parametros.REPRODUCIENDO;
-            jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
-        } else if (estadoReproduccion == Parametros.REPRODUCIENDO) {
-            estadoReproduccion = Parametros.PAUSADO;
-            System.out.println("R-Pausar");
-            jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/play.fw.png"))); // NOI18N
+
+        if (!rutaCancionActual.equals("")) {
+
+            if (estadoReproduccion == Parametros.DETENIDO) {
+                estadoReproduccion = Parametros.REPRODUCIENDO;
+                System.out.println("D-Reproducir");
+                jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
+
+                reproductor.play(rutaCancionActual);
+
+            } else if (estadoReproduccion == Parametros.PAUSADO) {
+                System.out.println("P-Reproducir");
+                estadoReproduccion = Parametros.REPRODUCIENDO;
+                jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
+
+                reproductor.resume();
+
+            } else if (estadoReproduccion == Parametros.REPRODUCIENDO) {
+                estadoReproduccion = Parametros.PAUSADO;
+                System.out.println("R-Pausar");
+                jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/play.fw.png"))); // NOI18N
+
+                reproductor.pause();
+            }
         }
     }//GEN-LAST:event_jLabelPlayMouseReleased
 
