@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.Iterator;
+import java.util.Random;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
@@ -48,7 +49,8 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
     public static ListaDoblementeEnlazada listaCanciones = new ListaDoblementeEnlazada();
 
     JPopupMenu popupMenuListaTotalCanciones;
-    JMenuItem menuItemAgregarAPlaylist, menuItemEliminar, menuItemModificar;
+    JPopupMenu popupMenuListaPlaylist;
+    JMenuItem menuItemAgregarAPlaylist, menuItemEliminar, menuItemModificar, menuItemVerMetaData, menuItemBorrarPlaylist;
 
     /**
      * Creates new form Reproductor
@@ -111,6 +113,12 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
 
         popupMenuListaTotalCanciones = new JPopupMenu();
         popupMenuListaTotalCanciones.add(menuItemAgregarAPlaylist = new JMenuItem("Agregar a la lista Reproducción"));
+        popupMenuListaTotalCanciones.add(menuItemEliminar = new JMenuItem("Eliminar"));
+        popupMenuListaTotalCanciones.add(menuItemModificar = new JMenuItem("Modificar"));
+        popupMenuListaTotalCanciones.add(menuItemVerMetaData = new JMenuItem("Ver información"));
+
+        popupMenuListaPlaylist = new JPopupMenu();
+        popupMenuListaPlaylist.add(menuItemBorrarPlaylist = new JMenuItem("Limpiar lista de reproducción"));
 
         jListListaCanciones.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent me) {
@@ -125,7 +133,26 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
         }
         );
 
+        jListListaCancionesPlaylist.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                // if right mouse button clicked (or me.isPopupTrigger())
+                if (SwingUtilities.isRightMouseButton(me)
+                        && !jListListaCancionesPlaylist.isSelectionEmpty()
+                        && jListListaCancionesPlaylist.locationToIndex(me.getPoint())
+                        == jListListaCancionesPlaylist.getSelectedIndex()) {
+                    popupMenuListaPlaylist.show(jListListaCancionesPlaylist, me.getX(), me.getY());
+                }
+            }
+        }
+        );
+
         menuItemAgregarAPlaylist.addActionListener(this);
+        menuItemEliminar.addActionListener(this);
+        menuItemModificar.addActionListener(this);
+        menuItemVerMetaData.addActionListener(this);
+        menuItemBorrarPlaylist.addActionListener(this);
+
+        menuItemBorrarPlaylist.addActionListener(this);
 
         DefaultListModel modeloListaPlayList = new DefaultListModel();
 
@@ -457,6 +484,13 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
         // TODO add your handling code here
         System.out.println("Aleatorio");
 
+        if (jListListaCancionesPlaylist.getSelectedIndex() < 0) {
+            return;
+        }
+
+        finalizarReproduccion();
+
+        reproduccirAleatorioCancion();
 
     }//GEN-LAST:event_jLabelAleatorioMouseReleased
 
@@ -469,11 +503,30 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
     private void jLabelAnteriorMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAnteriorMouseReleased
         // TODO add your handling code here:
         System.out.println("Anterior");
+
+        if (jListListaCancionesPlaylist.getSelectedIndex() < 0) {
+            return;
+        }
+
+        finalizarReproduccion();
+
+        reproduccirAnteriorCancion();
+
+
     }//GEN-LAST:event_jLabelAnteriorMouseReleased
 
     private void jLabelSiguienteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSiguienteMouseReleased
         // TODO add your handling code here:
         System.out.println("Siguiente");
+
+        if (jListListaCancionesPlaylist.getSelectedIndex() < 0) {
+            return;
+        }
+
+        finalizarReproduccion();
+
+        reproduccirSiguienteCancion();
+
     }//GEN-LAST:event_jLabelSiguienteMouseReleased
 
     private void jLabelCambiarTipoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCambiarTipoMouseReleased
@@ -496,8 +549,69 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
     private void jLabelPlayMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPlayMouseReleased
         // TODO add your handling code here:
 
-        if ((jListListaCancionesPlaylist.getModel().getSize()) > 0) {
-            
+        if (jListListaCancionesPlaylist.getSelectedIndex() < 0) {
+            return;
+        }
+
+        reproduccirPlayList();
+
+
+    }//GEN-LAST:event_jLabelPlayMouseReleased
+
+    public void reproduccirSiguienteCancion() {
+        int selectedIndex = jListListaCancionesPlaylist.getSelectedIndex();
+        if (selectedIndex == jListListaCancionesPlaylist.getModel().getSize() - 1) {
+            jListListaCancionesPlaylist.setSelectedIndex(0);
+
+        } else {
+            jListListaCancionesPlaylist.setSelectedIndex(selectedIndex + 1);
+        }
+
+        reproduccirPlayList();
+    }
+
+    public void reproduccirAleatorioCancion() {
+
+        Random r = new Random(System.currentTimeMillis());;
+        int Low = 0;
+        int High = jListListaCancionesPlaylist.getModel().getSize();
+        //int indiceActual = jListListaCancionesPlaylist.getSelectedIndex();
+
+        if (jListListaCancionesPlaylist.getSelectedIndex() >= 0) {
+
+            int numeroAletorio;
+
+            if (High > 0) {
+                numeroAletorio = r.nextInt(High - Low) + Low;
+            } else {
+                numeroAletorio = 0;
+            }
+
+//        while (indiceActual == numeroAletorio){
+//            numeroAletorio = r.nextInt(High - Low) + Low;
+//        }
+            System.out.println("Aleatorio: " + numeroAletorio);
+
+            jListListaCancionesPlaylist.setSelectedIndex(numeroAletorio);
+
+            reproduccirPlayList();
+        }
+    }
+
+    public void reproduccirAnteriorCancion() {
+        int selectedIndex = jListListaCancionesPlaylist.getSelectedIndex();
+        if (selectedIndex == 0) {
+            jListListaCancionesPlaylist.setSelectedIndex(jListListaCancionesPlaylist.getModel().getSize() - 1);
+
+        } else {
+            jListListaCancionesPlaylist.setSelectedIndex(selectedIndex - 1);
+        }
+
+        reproduccirPlayList();
+    }
+
+    public void reproduccirPlayList() {
+        if ((jListListaCancionesPlaylist.getModel().getSize()) > 0 && jListListaCancionesPlaylist.getSelectedIndex() >= 0) {
 
             Object nombreCancionActual = jListListaCancionesPlaylist.getSelectedValue();
             Cancion cancionObtenida = (Cancion) listaCanciones.getCancion((String) nombreCancionActual);
@@ -544,8 +658,11 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
 
             }
         }
+    }
 
-    }//GEN-LAST:event_jLabelPlayMouseReleased
+    public void rotarPlayList() {
+
+    }
 
     private void jLabelMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseReleased
         escogerArchivo();
@@ -633,6 +750,30 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
             // add
             DefaultListModel modeloLista = (DefaultListModel) jListListaCancionesPlaylist.getModel();
             modeloLista.addElement(jListListaCanciones.getSelectedValue());
+        } else if (ae.getSource() == menuItemEliminar) {
+
+            int indiceSeleccionado = jListListaCanciones.getSelectedIndex();
+
+            String nombreCancionSeleccionada = (String) jListListaCanciones.getSelectedValue();
+
+            System.out.println("Eliminar: " + indiceSeleccionado);
+
+            listaCanciones.removerPrimeraConcidencia(nombreCancionSeleccionada);
+
+            jListListaCancionesPlaylist.removeAll();
+
+            DefaultListModel modeloListaCancionesPlaylist = new DefaultListModel();
+            jListListaCancionesPlaylist.setModel(modeloListaCancionesPlaylist);
+
+            actulizarListaCanciones();
+        } else if (ae.getSource() == menuItemBorrarPlaylist) {
+            jListListaCancionesPlaylist.removeAll();
+            DefaultListModel modeloListaCancionesPlaylist = new DefaultListModel();
+            jListListaCancionesPlaylist.setModel(modeloListaCancionesPlaylist);
+        
+        } else if (ae.getSource() == menuItemModificar) {
+            
         }
+
     }
 }

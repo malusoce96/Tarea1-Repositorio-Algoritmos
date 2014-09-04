@@ -117,6 +117,17 @@ public class ListaDoblementeEnlazada {
         }
         return null;
     }
+    
+    public boolean removerPrimeraConcidencia(String nombre) {
+        Iterator elements = getIteradorLista();
+        while (elements.hasNext()) {
+            if (nombre.equals(((Cancion)elements.next()).getNombre())) {
+                elements.remove();
+                return true;
+            }
+        }
+        return false;
+    }
 
     public boolean removerPrimeraConcidencia(Object datos) {
         Iterator elements = getIteradorLista();
