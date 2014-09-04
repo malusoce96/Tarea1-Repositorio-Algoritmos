@@ -20,13 +20,14 @@ import musictecplayer.administradores.Cancion;
 public class DetallesCancion extends javax.swing.JFrame {
     /**
      * Variables Globales: 
-     * SelectorArchivos: guarda las características de la canción buscada.
-     *  SelectorFotos: uarda las características de la portada buscada.
-     *  ListaMusica: Almacena la dirección de la canción por agregar.
+     * @var SelectorArchivos: guarda las características de la canción buscada.
+     * @var SelectorFotos: uarda las características de la portada buscada.
+     * @var ListaMusica: Almacena la dirección de la canción por agregar.
      */
     JFileChooser SelectorArchivos = new JFileChooser(); 
     JFileChooser SelectorFotos = new JFileChooser(); 
     String DireccionMusica;
+    String DireccionFoto;
     
     /**
      * Método constructor de la clase
@@ -68,14 +69,14 @@ public class DetallesCancion extends javax.swing.JFrame {
         jLabelAlbum = new javax.swing.JLabel();
         jLabelAño = new javax.swing.JLabel();
         jLabelGenero = new javax.swing.JLabel();
-        jLabelAutor = new javax.swing.JLabel();
+        jLabelComentario = new javax.swing.JLabel();
         jLabelArtista = new javax.swing.JLabel();
         jLabelNumeroCancion = new javax.swing.JLabel();
         jLabelNumeroDisco = new javax.swing.JLabel();
         jTextFieldNombre = new javax.swing.JTextField();
         jTextFieldArtista = new javax.swing.JTextField();
         jTextFieldAlbum = new javax.swing.JTextField();
-        jTextFieldAutor = new javax.swing.JTextField();
+        jTextFieldComentario = new javax.swing.JTextField();
         jTextFieldGenero = new javax.swing.JTextField();
         jLabelTitulo1 = new javax.swing.JLabel();
         jLabelTitulo2 = new javax.swing.JLabel();
@@ -154,9 +155,9 @@ public class DetallesCancion extends javax.swing.JFrame {
         getContentPane().add(jLabelGenero);
         jLabelGenero.setBounds(10, 193, 90, 21);
 
-        jLabelAutor.setText("Autor:");
-        getContentPane().add(jLabelAutor);
-        jLabelAutor.setBounds(10, 148, 90, 21);
+        jLabelComentario.setText("Comentario:");
+        getContentPane().add(jLabelComentario);
+        jLabelComentario.setBounds(10, 148, 90, 21);
 
         jLabelArtista.setText("Artista/Grupo:");
         getContentPane().add(jLabelArtista);
@@ -177,8 +178,8 @@ public class DetallesCancion extends javax.swing.JFrame {
         jTextFieldArtista.setBounds(100, 55, 300, 25);
         getContentPane().add(jTextFieldAlbum);
         jTextFieldAlbum.setBounds(100, 100, 300, 25);
-        getContentPane().add(jTextFieldAutor);
-        jTextFieldAutor.setBounds(100, 145, 300, 25);
+        getContentPane().add(jTextFieldComentario);
+        jTextFieldComentario.setBounds(100, 145, 300, 25);
         getContentPane().add(jTextFieldGenero);
         jTextFieldGenero.setBounds(100, 190, 300, 25);
 
@@ -272,11 +273,11 @@ public class DetallesCancion extends javax.swing.JFrame {
         
         //Condiciona si fue seleccionado algún archivo
         if (Seleccion == JFileChooser.APPROVE_OPTION) {
-            String fichero = SelectorFotos.getSelectedFile().getAbsolutePath();
+            DireccionFoto = SelectorFotos.getSelectedFile().getAbsolutePath();
             
             //Inserta la imagen en la etiqueta
             try{
-               ImageIcon icon = new ImageIcon(fichero);
+               ImageIcon icon = new ImageIcon(DireccionFoto);
                Icon icono = new ImageIcon(icon.getImage()
                        .getScaledInstance(200, 200, Image.SCALE_DEFAULT));
                jLabelPortada.setIcon(icono);
@@ -326,10 +327,10 @@ public class DetallesCancion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelAceptar;
     private javax.swing.JLabel jLabelAlbum;
     private javax.swing.JLabel jLabelArtista;
-    private javax.swing.JLabel jLabelAutor;
     private javax.swing.JLabel jLabelAño;
     private javax.swing.JLabel jLabelBuscar;
     private javax.swing.JLabel jLabelCancelar;
+    private javax.swing.JLabel jLabelComentario;
     private javax.swing.JLabel jLabelFondoPrincipal;
     private javax.swing.JLabel jLabelGenero;
     private javax.swing.JLabel jLabelNombre;
@@ -341,7 +342,7 @@ public class DetallesCancion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelTitulo2;
     private javax.swing.JTextField jTextFieldAlbum;
     private javax.swing.JTextField jTextFieldArtista;
-    private javax.swing.JTextField jTextFieldAutor;
+    private javax.swing.JTextField jTextFieldComentario;
     private javax.swing.JTextField jTextFieldGenero;
     private javax.swing.JTextField jTextFieldNombre;
     // End of variables declaration//GEN-END:variables
