@@ -429,7 +429,7 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
         jSliderPosicionCancion.setValue(0);
         jSliderPosicionCancion.setOpaque(false);
         getContentPane().add(jSliderPosicionCancion);
-        jSliderPosicionCancion.setBounds(43, 457, 228, 26);
+        jSliderPosicionCancion.setBounds(43, 457, 228, 23);
 
         jSliderVolumen.setOrientation(javax.swing.JSlider.VERTICAL);
         jSliderVolumen.setToolTipText("");

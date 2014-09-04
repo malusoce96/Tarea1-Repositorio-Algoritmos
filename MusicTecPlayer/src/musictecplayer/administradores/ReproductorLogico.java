@@ -1,78 +1,124 @@
+/**
+ * @author Lucia Solis Ceciliano  
+ * @author Joseph Vega Vargas
+ * @author Miller Ruiz Urbina
+ */
+
 package musictecplayer.administradores;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
 /**
- * @author Lucia Solis
- * @author Joseph Vega
- * @author Miller Ruiz
+ * Clase que tiene los controles del reproductor y maneja todas las opciones 
+ * para reproducir la música.
  */
 public class ReproductorLogico {
-
+    /**
+     * Variables Globales:
+     * 
+     */
     FileInputStream FIS = null;
     BufferedInputStream BIS = null;
-
+    
+    /**
+     * Variables Globales:
+     * 
+     */
     private long pauseLocation = 0;
     private long songTotalLen = 0;
     private String fileLocation = null;
-
+    
+    /**
+     * Variables Globales:
+     * 
+     */
     private Player player = null;
-    
-    
 
+    /**
+     * Método constructor de la clase.
+     */
     public ReproductorLogico() {
-
     }
 
+    /**
+     * Devuelve lo que tiene en reproducción.
+     * @return player
+     */
     public Player getPlayer() {
         return player;
     }
-
     
+    /**
+     * Devuelve la posición donde quedo la pausa de la pista.
+     * @return pauseLocation
+     */
     public long getPauseLocation() {
         return pauseLocation;
     }
 
+    /**
+     * Edita indirectamente la posición donde quedo la pausa de la pista.
+     * @param pauseLocation 
+     */
     public void setPauseLocation(long pauseLocation) {
         this.pauseLocation = pauseLocation;
     }
 
+    /**
+     * Devuelve la posición total de la pista.
+     * @return songTotalLen
+     */
     public long getSongTotalLen() {
         return songTotalLen;
     }
 
+    /**
+     * Edita indirectamente la posición total de la pista.
+     * @param songTotalLen 
+     */
     public void setSongTotalLen(long songTotalLen) {
         this.songTotalLen = songTotalLen;
     }
 
+    /**
+     * Devuelve la dirección de la pista.
+     * @return fileLocation
+     */
     public String getFileLocation() {
         return fileLocation;
     }
 
+    /**
+     * Edita indirectamente la dirección de la pista.
+     * @param fileLocation 
+     */
     public void setFileLocation(String fileLocation) {
         this.fileLocation = fileLocation;
     }
 
+    /**
+     * Devuelve una opción de la ejecución del reproductor
+     * @return 
+     */
     public FileInputStream getFIS() {
         return FIS;
     }
     
-    
-    
-    
-
+    /**
+     * Detiene la reproducción de la pieza y reinicia todas las configuraciones
+     * al inicio.
+     */
     public void stop() {
+        //Condiciona si existe algo en reproducción
         if (player != null) {
 
-            player.close();
+            player.close(); //Cierra la pieza
+            //Inicializa los controles
             pauseLocation = 0;
             songTotalLen = 0;
 //            try {
@@ -88,19 +134,24 @@ public class ReproductorLogico {
 
     }
 
+    /**
+     * Detiene la reproducción momentaneamente para luego pueda ser ejecutada.
+     */
     public void pause() {
+        //Condiciona si existe algo en reproducción
         if (player != null) {
             try {
                 pauseLocation = FIS.available();
                 player.close();
             } catch (IOException ex) {
                 System.out.println("Error al pausar: pausar");
-            } catch (Exception ex) {
-                System.out.println("Error inesperado: pausar");
             }
         }
     }
-
+    /**
+     * dsfjgdhljñgkh
+     * @param ruta 
+     */
     public void play(String ruta) {
         try {
             FIS = new FileInputStream(ruta);
@@ -124,8 +175,6 @@ public class ReproductorLogico {
 
             System.out.println("Error al leer archivo: play");
 
-        } catch (Exception ex) {
-            System.out.println("Error inesperado: play");
         }
 
         new Thread() {
@@ -165,8 +214,6 @@ public class ReproductorLogico {
 
             System.out.println("Error al leer archivo: continuar");
 
-        } catch (Exception ex) {
-            System.out.println("Error inesperado: continuar");
         }
 
         new Thread() {
