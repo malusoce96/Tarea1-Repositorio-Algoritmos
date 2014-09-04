@@ -1,3 +1,9 @@
+/**
+ * @author Lucia Solis Ceciliano
+ * @author Joseph Vega Vargas
+ * @author Miller Ruiz Urbina
+ */
+
 package musictecplayer.vistas;
 
 import java.awt.HeadlessException;
@@ -11,50 +17,53 @@ import musictecplayer.administradores.Cancion;
 import musictecplayer.constantes.Parametros;
 
 /**
- * @author Lucia Solis Ceciliano
- * @author Joseph Vega Vargas
- * @author Miller Ruiz Urbina
- *
- * Frame que podrá agregar y modificar las propiedades de una canción mp3 y
- * permitirá agregarlos a una lista para su uso en el reproductor.
+ * Frame que permite agregar y modificar las propiedades de una canción y 
+ * agregarlos a una lista.
  */
 public class DetallesCancion extends javax.swing.JFrame {
 
     /**
      * Variables Globales:
-     *
-     * @var SelectorArchivos: guarda las características de la canción buscada.
-     * @var SelectorFotos: uarda las características de la portada buscada.
-     * @var ListaMusica: Almacena la dirección de la canción por agregar.
+     * Guardan las características del archivo buscado.
      */
     JFileChooser SelectorArchivos = new JFileChooser();
     JFileChooser SelectorFotos = new JFileChooser();
+    
+    /**
+     * Variables Globales:
+     * Almacenan la dirección del archivo por agregar.
+     */
     String DireccionMusica;
     String DireccionFoto;
     
+    /**
+     * Variables Globales:
+     * Asocia con el frame de Reproductor.java.
+     */
     Reproductor reproductor;
 
     /**
-     * Método constructor de la clase
+     * Método constructor de la clase.
+     * @param reproductor
      */
     public DetallesCancion(Reproductor reproductor) {
         initComponents();
-        this.reproductor = reproductor;
+        this.reproductor = reproductor; //
     }
 
     /**
-     * Método que busca la canción en el sistema y almacena la dirección en una
-     * variable.
+     * Busca la canción en el sistema y almacena su dirección.
      */
     public void BuscarCanción() {
+        //Filtra los datos a buscar y los asigna al selector.
         FileNameExtensionFilter Filtro = new FileNameExtensionFilter("Archivos "
-                + "MP3", "mp3", "mp3"); //Filtra los datos a buscar
+                + "MP3", "mp3", "mp3"); 
         SelectorArchivos.setFileFilter(Filtro);
 
-        //Ejecuta el explorador de archivos con el Filtro de música
+        //Ejecuta el explorador de archivos con el Filtro de música.
         int seleccion = SelectorArchivos.showOpenDialog(this);
 
-        //Condiciona si fue seleccionado algún archivo
+        //Condiciona si fue seleccionado algún archivo.
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             DireccionMusica = SelectorArchivos.getSelectedFile().getAbsolutePath();
             jTextFieldNombre.setText(SelectorArchivos.getSelectedFile()
@@ -62,6 +71,24 @@ public class DetallesCancion extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Crea un mensaje de error en la interfaz gráfica
+     * @param mensaje
+     * @param titulo 
+     */
+    public void mostrarMensajeError(String mensaje, String titulo) {
+        JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.ERROR_MESSAGE);
+    }
+
+    /**
+     * Crea un mensaje de información en la interfaz gráfica
+     * @param mensaje
+     * @param titulo 
+     */
+    public void mostrarMensajeInformacion(String mensaje, String titulo) {
+        JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -101,7 +128,7 @@ public class DetallesCancion extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jLabelAceptar);
-        jLabelAceptar.setBounds(405, 234, 115, 51);
+        jLabelAceptar.setBounds(122, 234, 113, 51);
 
         jLabelCancelar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jLabelCancelar.setForeground(new java.awt.Color(255, 255, 255));
@@ -113,11 +140,11 @@ public class DetallesCancion extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jLabelCancelar);
-        jLabelCancelar.setBounds(520, 234, 115, 51);
+        jLabelCancelar.setBounds(234, 234, 113, 51);
 
         jLabelOpcion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoOscuroAlbum.fw.png"))); // NOI18N
         getContentPane().add(jLabelOpcion);
-        jLabelOpcion.setBounds(405, 230, 230, 60);
+        jLabelOpcion.setBounds(120, 230, 230, 60);
 
         jLabelBuscar.setBackground(new java.awt.Color(0, 0, 0));
         jLabelBuscar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -128,44 +155,43 @@ public class DetallesCancion extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jLabelBuscar);
-        jLabelBuscar.setBounds(422, 14, 23, 26);
+        jLabelBuscar.setBounds(372, 32, 23, 26);
 
         jLabelPortada.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabelPortada);
-        jLabelPortada.setBounds(420, 12, 200, 200);
+        jLabelPortada.setBounds(370, 30, 250, 250);
 
         jLabelNombre.setText("Nombre:");
         getContentPane().add(jLabelNombre);
-        jLabelNombre.setBounds(10, 40, 90, 21);
+        jLabelNombre.setBounds(11, 20, 100, 20);
 
         jLabelAlbum.setText("Álbum:");
         getContentPane().add(jLabelAlbum);
-        jLabelAlbum.setBounds(10, 130, 90, 21);
+        jLabelAlbum.setBounds(11, 120, 100, 20);
 
-        jLabelAño.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelAño.setText("Año:");
         getContentPane().add(jLabelAño);
-        jLabelAño.setBounds(10, 230, 50, 14);
+        jLabelAño.setBounds(11, 220, 100, 20);
 
         jLabelGenero.setText("Género:");
         getContentPane().add(jLabelGenero);
-        jLabelGenero.setBounds(10, 180, 90, 21);
+        jLabelGenero.setBounds(11, 170, 100, 20);
 
         jLabelArtista.setText("Artista/Grupo:");
         getContentPane().add(jLabelArtista);
-        jLabelArtista.setBounds(10, 90, 90, 21);
+        jLabelArtista.setBounds(11, 70, 100, 20);
         getContentPane().add(jTextFieldNombre);
-        jTextFieldNombre.setBounds(100, 40, 300, 25);
+        jTextFieldNombre.setBounds(10, 40, 337, 25);
         getContentPane().add(jTextFieldArtista);
-        jTextFieldArtista.setBounds(100, 90, 300, 25);
+        jTextFieldArtista.setBounds(10, 90, 337, 25);
         getContentPane().add(jTextFieldAlbum);
-        jTextFieldAlbum.setBounds(100, 130, 300, 25);
+        jTextFieldAlbum.setBounds(10, 140, 337, 25);
         getContentPane().add(jTextFieldGenero);
-        jTextFieldGenero.setBounds(100, 180, 300, 25);
+        jTextFieldGenero.setBounds(10, 190, 337, 25);
 
         jFormattedTextFieldYear.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         getContentPane().add(jFormattedTextFieldYear);
-        jFormattedTextFieldYear.setBounds(100, 220, 50, 25);
+        jFormattedTextFieldYear.setBounds(10, 240, 80, 25);
 
         jLabelFondoPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondo.png"))); // NOI18N
         getContentPane().add(jLabelFondoPrincipal);
@@ -176,28 +202,22 @@ public class DetallesCancion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Método de jLabelCancelar que cierra la ventana y vuelve al menú principal
-     *
+     * Cierra la ventana y vuelve al menú principal.
      * @param evt
      */
     private void jLabelCancelarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCancelarMouseReleased
-        
         super.enable();
         this.dispose();
-        
     }//GEN-LAST:event_jLabelCancelarMouseReleased
 
     /**
-     * Método de jLabelAceptar que almacena la canción y sus propiedades en la
-     * lista y cierra luego la ventana para volver al menú principal.
-     *
+     * Almacena la canción en la clase y cierra luego la ventana para volver al 
+     * menú principal.
      * @param evt
      */
     private void jLabelAceptarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAceptarMouseReleased
-        //Cancion Ca = new Cancion("", "", "", "", "", ""); //Instancia de la clase
-
         try {
-
+            //Asigna en variables los jTextField
             String nombreCancion = jTextFieldNombre.getText().trim();
             String nombreAlbum = jTextFieldAlbum.getText().trim();
             String nombreArtista = jTextFieldArtista.getText().trim();
@@ -206,46 +226,47 @@ public class DetallesCancion extends javax.swing.JFrame {
             //String rutaImagenCancion = DireccionFoto.trim();
             String rutaCancion = DireccionMusica.trim();
 
-            if (nombreAlbum.equals(Parametros.SIN_ASIGNAR) || nombreArtista.equals(Parametros.SIN_ASIGNAR)
+            //Condiciona si los datos están bien scritos
+            if (nombreAlbum.equals(Parametros.SIN_ASIGNAR) 
+                    || nombreArtista.equals(Parametros.SIN_ASIGNAR)
                     || nombreCancion.equals(Parametros.SIN_ASIGNAR)
                     || nombreGenero.equals(Parametros.SIN_ASIGNAR)
-                    || year.equals(Parametros.SIN_ASIGNAR) || rutaCancion.equals(Parametros.SIN_ASIGNAR)) {
+                    || year.equals(Parametros.SIN_ASIGNAR) 
+                    || rutaCancion.equals(Parametros.SIN_ASIGNAR)
+                    
+                    || year.length() != 4) {
 
-                mostrarMensajeError("Por favor completar todos los datos", "MusicTECPlayer");
-
+                mostrarMensajeError("Por favor completar todos los datos", 
+                        "MusicTECPlayer");
             } else {
-
-                Cancion nuevaCancion = new Cancion(nombreCancion, nombreArtista, nombreGenero, nombreAlbum, year, rutaCancion, Parametros.SIN_ASIGNAR);
+                //Instancia a la clase para almacenar los datos.
+                Cancion nuevaCancion = new Cancion(nombreCancion, nombreArtista, 
+                        nombreGenero, nombreAlbum, year, rutaCancion, 
+                        Parametros.SIN_ASIGNAR);
                 
+                //Funciones que se le asignan al frame Reproductor.java.
                 Reproductor.listaCanciones.agregarAlInicio(nuevaCancion);
-                
                 reproductor.actulizarListaCanciones();
                 
-                
-                JOptionPane.showMessageDialog(null, "La canción fue agregada "
-                        + "correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+                mostrarMensajeInformacion("La canción fue agregada "
+                        + "correctamente", "Correcto");
 
                 //Método de cierre de la ventana
                 jLabelCancelarMouseReleased(evt);
             }
-
-            //LLama al procedimiento de cada variable para asignar datos
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(null, "Error en el registro de los "
-                    + "datos", "Error", JOptionPane.ERROR_MESSAGE);
+            mostrarMensajeError("Error en el registro de los datos", "Error");
         }
-
-
     }//GEN-LAST:event_jLabelAceptarMouseReleased
 
     /**
-     * Método del jLabelBuscar que busca la portada para la canción en el
-     * sistema y almacena la foto en una etiqueta.
-     *
+     * Busca la portada en el sistema y almacena su dirección.
      * @param evt
      */
     private void jLabelBuscarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBuscarMouseReleased
-        FileNameExtensionFilter Filtro = new FileNameExtensionFilter("JPG / PNG", "jpg", "png"); //Filtra los datos a buscar
+        //Filtra los datos a buscar y los asigna al selector.
+        FileNameExtensionFilter Filtro =new FileNameExtensionFilter("jpg / png", 
+                "jpg", "png");
         SelectorFotos.setFileFilter(Filtro);
 
         //Ejecuta el explorador de archivos con el Filtro de imágenes
@@ -267,14 +288,6 @@ public class DetallesCancion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabelBuscarMouseReleased
 
-    public void mostrarMensajeError(String mensaje, String titulo) {
-        JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.ERROR_MESSAGE);
-    }
-
-    public void mostrarMensajeInformacion(String mensaje, String titulo) {
-        JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
-    }
-
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -287,22 +300,13 @@ public class DetallesCancion extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DetallesCancion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DetallesCancion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DetallesCancion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(DetallesCancion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Reproductor().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Reproductor().setVisible(true);
         });
     }
 
