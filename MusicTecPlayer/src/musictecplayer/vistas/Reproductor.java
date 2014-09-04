@@ -186,6 +186,64 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
         jListListaCanciones.setModel(modeloListaCanciones);
     }
 
+    public void actulizarListaCancionesSegun(String tipoBusqueda, String valorABuscar) {
+        Iterator elements = listaCanciones.getIteradorLista();
+        jListListaCanciones.removeAll();
+
+        DefaultListModel modeloListaCanciones = new DefaultListModel();
+
+        if (tipoBusqueda.equals(Parametros.BUSQUEDA_POR_ALBUM)) {
+
+            while (elements.hasNext()) {
+                Object objetoActual = elements.next();
+                Cancion cancionActual = (Cancion) (objetoActual);
+                String nombreCancionActual = cancionActual.getNombre();
+                String nombreAlbum = cancionActual.getAlbum();
+                if (nombreAlbum.toUpperCase().contains(valorABuscar.toUpperCase())){
+                    modeloListaCanciones.addElement(nombreCancionActual);
+                }
+            }
+
+        } else if (tipoBusqueda.equals(Parametros.BUSQUEDA_POR_ARTISTA)) {
+
+            while (elements.hasNext()) {
+                Object objetoActual = elements.next();
+                Cancion cancionActual = (Cancion) (objetoActual);
+                String nombreCancionActual = cancionActual.getNombre();
+                String nombreArtista = cancionActual.getArtista();
+                if (nombreArtista.toUpperCase().contains(valorABuscar.toUpperCase())){
+                    modeloListaCanciones.addElement(nombreCancionActual);
+                }
+            }
+
+        } else if (tipoBusqueda.equals(Parametros.BUSQUEDA_POR_CANCION)) {
+
+            while (elements.hasNext()) {
+                Object objetoActual = elements.next();
+                Cancion cancionActual = (Cancion) (objetoActual);
+                String nombreCancionActual = cancionActual.getNombre();
+                
+                if (nombreCancionActual.toUpperCase().contains(valorABuscar.toUpperCase())){
+                    modeloListaCanciones.addElement(nombreCancionActual);
+                }
+            }
+
+        } else if (tipoBusqueda.equals(Parametros.BUSQUEDA_POR_GENERO)) {
+
+            while (elements.hasNext()) {
+                Object objetoActual = elements.next();
+                Cancion cancionActual = (Cancion) (objetoActual);
+                String nombreCancionActual = cancionActual.getNombre();
+                String nombreGenero = cancionActual.getGenero();
+                if (nombreGenero.toUpperCase().contains(valorABuscar.toUpperCase())){
+                    modeloListaCanciones.addElement(nombreCancionActual);
+                }
+            }
+        }
+
+        jListListaCanciones.setModel(modeloListaCanciones);
+    }
+
     public ReproductorLogico getReproductor() {
         return reproductor;
     }
@@ -692,7 +750,21 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
 
     private void jLabelIconoBuscarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelIconoBuscarMouseReleased
         // TODO add your handling code here:
+        buscarCanciones();
     }//GEN-LAST:event_jLabelIconoBuscarMouseReleased
+
+    public void buscarCanciones() {
+        String tipoBusqueda = jLabelTipoBusqueda.getText();
+        String valorABuscar = jTextFieldTextoBusqueda.getText().trim();
+        if (valorABuscar.equals(Parametros.SIN_ASIGNAR)) {
+            //finalizarReproduccion();
+            actulizarListaCanciones();
+
+        } else {
+
+            actulizarListaCancionesSegun(tipoBusqueda, valorABuscar);
+        }
+    }
 
     /**
      * @param args the command line arguments

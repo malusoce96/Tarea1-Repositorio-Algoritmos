@@ -29,6 +29,13 @@ public class Parametros {
     public final static int GENERO = 2;
     public final static int CANCION = 3; 
     
+
+    public final static String BUSQUEDA_POR_ARTISTA = "Artista";
+    public final static String BUSQUEDA_POR_ALBUM = "Álbum";
+    public final static String BUSQUEDA_POR_GENERO = "Género";
+    public final static String BUSQUEDA_POR_CANCION = "Canción"; 
+    
+    
     /**
      * Constantes Globales:
      * Sin_Asignar: Guardará algún dato relevante del proyecto.
