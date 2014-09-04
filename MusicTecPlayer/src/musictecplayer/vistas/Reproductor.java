@@ -229,7 +229,7 @@ public class Reproductor extends javax.swing.JFrame {
         jSliderPosicionCancion.setValue(0);
         jSliderPosicionCancion.setOpaque(false);
         getContentPane().add(jSliderPosicionCancion);
-        jSliderPosicionCancion.setBounds(43, 457, 228, 23);
+        jSliderPosicionCancion.setBounds(43, 457, 228, 26);
 
         jSliderVolumen.setOrientation(javax.swing.JSlider.VERTICAL);
         jSliderVolumen.setToolTipText("");
