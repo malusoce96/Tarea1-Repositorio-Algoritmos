@@ -204,6 +204,23 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
         DC.show();
     }
 
+    private void modificarCancion() {
+
+        if (jListListaCanciones.getSelectedIndex() < 0) {
+            return;
+        }
+
+        Object nombreCancionActual = jListListaCanciones.getSelectedValue();
+        Cancion cancionObtenida = (Cancion) listaCanciones.getCancion((String) nombreCancionActual);
+
+        if (cancionObtenida != null) {
+            ModificarCancion DC = new ModificarCancion(this, cancionObtenida);
+
+            DC.setVisible(true);
+        }
+
+    }
+
     public void finalizarReproduccion() {
         System.out.println("Stop");
 
@@ -767,13 +784,18 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
 
             actulizarListaCanciones();
         } else if (ae.getSource() == menuItemBorrarPlaylist) {
-            jListListaCancionesPlaylist.removeAll();
-            DefaultListModel modeloListaCancionesPlaylist = new DefaultListModel();
-            jListListaCancionesPlaylist.setModel(modeloListaCancionesPlaylist);
-        
+            limpiarPlaylist();
         } else if (ae.getSource() == menuItemModificar) {
-            
+            modificarCancion();
+            System.out.println("Se desea modificar");
         }
 
+    }
+
+    public void limpiarPlaylist() {
+        jListListaCancionesPlaylist.removeAll();
+        DefaultListModel modeloListaCancionesPlaylist = new DefaultListModel();
+        jListListaCancionesPlaylist.setModel(modeloListaCancionesPlaylist);
+        finalizarReproduccion();
     }
 }

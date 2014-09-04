@@ -181,8 +181,10 @@ public class DetallesCancion extends javax.swing.JFrame {
      * @param evt
      */
     private void jLabelCancelarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCancelarMouseReleased
-        this.hide();
+        
         super.enable();
+        this.dispose();
+        
     }//GEN-LAST:event_jLabelCancelarMouseReleased
 
     /**

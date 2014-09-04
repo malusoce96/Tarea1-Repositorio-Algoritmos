@@ -31,35 +31,28 @@ public class ModificarCancion extends javax.swing.JFrame {
     JFileChooser SelectorFotos = new JFileChooser();
     String DireccionMusica;
     String DireccionFoto;
-    
+
+    Cancion cancionActual;
+
     Reproductor reproductor;
 
     /**
      * Método constructor de la clase
      */
-    public ModificarCancion(Reproductor reproductor) {
+    public ModificarCancion(Reproductor reproductor, Cancion cancionActual) {
         initComponents();
         this.reproductor = reproductor;
-    }
 
-    /**
-     * Método que busca la canción en el sistema y almacena la dirección en una
-     * variable.
-     */
-    public void BuscarCanción() {
-        FileNameExtensionFilter Filtro = new FileNameExtensionFilter("Archivos "
-                + "MP3", "mp3", "mp3"); //Filtra los datos a buscar
-        SelectorArchivos.setFileFilter(Filtro);
+        jTextFieldNombre.setText(cancionActual.getNombre());
+        jTextFieldAlbum.setText(cancionActual.getAlbum());
+        jTextFieldArtista.setText(cancionActual.getArtista());
+        jFormattedTextFieldYear.setText(cancionActual.getAño());
+        jTextFieldGenero.setText(cancionActual.getGenero());
+            //String rutaImagenCancion = DireccionFoto.trim();
+        //String rutaCancion = DireccionMusica.trim();
+        
+        this.cancionActual = cancionActual;
 
-        //Ejecuta el explorador de archivos con el Filtro de música
-        int seleccion = SelectorArchivos.showOpenDialog(this);
-
-        //Condiciona si fue seleccionado algún archivo
-        if (seleccion == JFileChooser.APPROVE_OPTION) {
-            DireccionMusica = SelectorArchivos.getSelectedFile().getAbsolutePath();
-            jTextFieldNombre.setText(SelectorArchivos.getSelectedFile()
-                    .getName());
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -181,8 +174,9 @@ public class ModificarCancion extends javax.swing.JFrame {
      * @param evt
      */
     private void jLabelCancelarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCancelarMouseReleased
-        this.hide();
+
         super.enable();
+        this.dispose();
     }//GEN-LAST:event_jLabelCancelarMouseReleased
 
     /**
@@ -202,26 +196,32 @@ public class ModificarCancion extends javax.swing.JFrame {
             String year = jFormattedTextFieldYear.getText().trim();
             String nombreGenero = jTextFieldGenero.getText().trim();
             //String rutaImagenCancion = DireccionFoto.trim();
-            String rutaCancion = DireccionMusica.trim();
+            
 
             if (nombreAlbum.equals(Parametros.SIN_ASIGNAR) || nombreArtista.equals(Parametros.SIN_ASIGNAR)
                     || nombreCancion.equals(Parametros.SIN_ASIGNAR)
                     || nombreGenero.equals(Parametros.SIN_ASIGNAR)
-                    || year.equals(Parametros.SIN_ASIGNAR) || rutaCancion.equals(Parametros.SIN_ASIGNAR)) {
+                    || year.equals(Parametros.SIN_ASIGNAR)) {
 
                 mostrarMensajeError("Por favor completar todos los datos", "MusicTECPlayer");
 
             } else {
 
-                Cancion nuevaCancion = new Cancion(nombreCancion, nombreArtista, nombreGenero, nombreAlbum, year, rutaCancion, Parametros.SIN_ASIGNAR);
+                cancionActual.setNombre(nombreCancion);
+                cancionActual.setAlbum(nombreAlbum);
+                cancionActual.setArtista(nombreArtista);
+                cancionActual.setAño(year);
+                cancionActual.setGenero(nombreGenero);
                 
-                Reproductor.listaCanciones.agregarAlInicio(nuevaCancion);
+                //FALTA LO DE LA FOTO
                 
+
                 reproductor.actulizarListaCanciones();
+
+                JOptionPane.showMessageDialog(null, "La canción actualizada correctamente",
+                        "MusicTECPlayer", JOptionPane.INFORMATION_MESSAGE);
                 
-                
-                JOptionPane.showMessageDialog(null, "La canción fue agregada "
-                        + "correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+                reproductor.limpiarPlaylist();
 
                 //Método de cierre de la ventana
                 jLabelCancelarMouseReleased(evt);
@@ -229,8 +229,8 @@ public class ModificarCancion extends javax.swing.JFrame {
 
             //LLama al procedimiento de cada variable para asignar datos
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(null, "Error en el registro de los "
-                    + "datos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al modificar datos"
+                    , "Error", JOptionPane.ERROR_MESSAGE);
         }
 
 
