@@ -414,6 +414,11 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
 
         jLabelIconoBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/iconobuscar.fw.png"))); // NOI18N
         jLabelIconoBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelIconoBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelIconoBuscarMouseReleased(evt);
+            }
+        });
         getContentPane().add(jLabelIconoBuscar);
         jLabelIconoBuscar.setBounds(410, 55, 23, 26);
 
@@ -684,6 +689,10 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
     private void jLabelMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseReleased
         escogerArchivo();
     }//GEN-LAST:event_jLabelMenuMouseReleased
+
+    private void jLabelIconoBuscarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelIconoBuscarMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabelIconoBuscarMouseReleased
 
     /**
      * @param args the command line arguments
