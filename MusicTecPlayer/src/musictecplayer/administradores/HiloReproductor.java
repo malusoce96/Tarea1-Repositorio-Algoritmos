@@ -1,42 +1,45 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package musictecplayer.administradores;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javazoom.jl.player.Player;
 import musictecplayer.constantes.Parametros;
 import musictecplayer.vistas.Reproductor;
 
 /**
- * @author Lucia Solis
- * @author Joseph Vega
- * @author Miller Ruiz
+ * @author Lucia Solis Ceciliano
+ * @author Joseph Vega Vargas
+ * @author Miller Ruiz Urbina
+ * 
+ * Clase que va a controlar el hilo reproductor de la musica en tiempo real
  */
 public class HiloReproductor extends Thread {
-
+    /**
+     * Variables Globales:
+     * @var blinker
+     * @var interval
+     * @var threadSuspended
+     * @var reproductor
+     * @var player 
+     */
     private volatile boolean blinker = true;
     final long interval = 1000;
     private volatile boolean threadSuspended = false;
     private Reproductor reproductor = null;
-
-    /**
-     * variables para reproducir
-     */
+    
     private Player player = null;
 
+    /**
+     * Método constructor de la clase
+     * @param reproductor 
+     */
     public HiloReproductor(Reproductor reproductor) {
         this.reproductor = reproductor;
     }
 
+    /**
+     * Método que controla si esta pausado o no el reproductor
+     */
     public void run() {
-
         while (blinker == true) {
             try {
                 Thread.sleep(interval);
@@ -71,12 +74,18 @@ public class HiloReproductor extends Thread {
         System.out.println("Se ha detenido el hilo");
     }
 
+    /**
+     * Método que detiene los procesos del reproductor
+     */
     public synchronized void detener() {
         System.out.println("DETENER HILO");
         blinker = false;
         notify();
     }
 
+    /**
+     * Método que pausa los procesos del reproductor
+     */
     public synchronized void pausar() {
 
         threadSuspended = true;
@@ -86,6 +95,9 @@ public class HiloReproductor extends Thread {
         }
     }
 
+    /**
+     * Método que continua los procesos del reproductor
+     */
     public synchronized void continuar() {
 
         threadSuspended = false;
