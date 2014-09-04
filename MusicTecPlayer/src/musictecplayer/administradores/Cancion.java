@@ -84,13 +84,23 @@ public class Cancion {
         this.año = año;
     }
 
-    public String getPath() {
+    public String getRutaCancion() {
         return rutaCancion;
     }
 
-    public void setPath(String path) {
-        this.rutaCancion = path;
+    public String getRutaImagen() {
+        return rutaImagen;
     }
+
+    public void setRutaCancion(String rutaCancion) {
+        this.rutaCancion = rutaCancion;
+    }
+
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
+    }
+
+
 
     @Override
     public String toString() {

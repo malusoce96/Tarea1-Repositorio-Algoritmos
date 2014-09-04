@@ -5,6 +5,8 @@
  */
 package musictecplayer.vistas;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
@@ -13,6 +15,8 @@ import java.util.Iterator;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
@@ -30,7 +34,7 @@ import musictecplayer.constantes.Parametros;
  * @author Joseph Vega
  * @author Miller Ruiz
  */
-public class Reproductor extends javax.swing.JFrame {
+public class Reproductor extends javax.swing.JFrame implements ActionListener {
 
     private int estadoReproduccion = Parametros.DETENIDO;// 0 stop, 1 pausado, 2 reproduciendo
     private int tipoBusqueda = Parametros.ARTISTA;// 0 artista, 1 album, 2 genero,3 cancion 
@@ -43,25 +47,27 @@ public class Reproductor extends javax.swing.JFrame {
 
     public static ListaDoblementeEnlazada listaCanciones = new ListaDoblementeEnlazada();
 
+    JPopupMenu popupMenuListaTotalCanciones;
+    JMenuItem menuItemAgregarAPlaylist, menuItemEliminar, menuItemModificar;
+
     /**
      * Creates new form Reproductor
      */
     public Reproductor() {
         initComponents();
         crearReproductor();
-        
-        jListListaCanciones.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                if (SwingUtilities.isRightMouseButton(e)) {
-                    JList list = (JList) e.getSource();
-                    int row = list.locationToIndex(e.getPoint());
-                    list.setSelectedIndex(row);
-                    System.out.println("row+ " + row);
-                }
-            }
 
-        });
-
+//        jListListaCanciones.addMouseListener(new MouseAdapter() {
+//            public void mousePressed(MouseEvent e) {
+//                if (SwingUtilities.isRightMouseButton(e)) {
+//                    JList list = (JList) e.getSource();
+//                    int row = list.locationToIndex(e.getPoint());
+//                    list.setSelectedIndex(row);
+//                    System.out.println("row+ " + row);
+//                }
+//            }
+//
+//        });
 //        jSliderPosicionCancion.setPaintTicks(true);
 //        jSliderPosicionCancion.setMajorTickSpacing(50);
 //        jSliderPosicionCancion.setMinorTickSpacing(10);
@@ -102,6 +108,28 @@ public class Reproductor extends javax.swing.JFrame {
                 System.exit(0);
             }
         });
+
+        popupMenuListaTotalCanciones = new JPopupMenu();
+        popupMenuListaTotalCanciones.add(menuItemAgregarAPlaylist = new JMenuItem("Agregar a la lista Reproducción"));
+
+        jListListaCanciones.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                // if right mouse button clicked (or me.isPopupTrigger())
+                if (SwingUtilities.isRightMouseButton(me)
+                        && !jListListaCanciones.isSelectionEmpty()
+                        && jListListaCanciones.locationToIndex(me.getPoint())
+                        == jListListaCanciones.getSelectedIndex()) {
+                    popupMenuListaTotalCanciones.show(jListListaCanciones, me.getX(), me.getY());
+                }
+            }
+        }
+        );
+
+        menuItemAgregarAPlaylist.addActionListener(this);
+
+        DefaultListModel modeloListaPlayList = new DefaultListModel();
+
+        jListListaCancionesPlaylist.setModel(modeloListaPlayList);
 
     }
 
@@ -242,7 +270,7 @@ public class Reproductor extends javax.swing.JFrame {
         jScrollPaneListaCanciones.setViewportView(jListListaCanciones);
 
         getContentPane().add(jScrollPaneListaCanciones);
-        jScrollPaneListaCanciones.setBounds(50, 180, 220, 90);
+        jScrollPaneListaCanciones.setBounds(310, 140, 310, 400);
 
         jListListaCancionesPlaylist.setBackground(new java.awt.Color(0, 0, 0));
         jListListaCancionesPlaylist.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
@@ -250,7 +278,7 @@ public class Reproductor extends javax.swing.JFrame {
         jScrollPaneListaCancionesReproduccion.setViewportView(jListListaCancionesPlaylist);
 
         getContentPane().add(jScrollPaneListaCancionesReproduccion);
-        jScrollPaneListaCancionesReproduccion.setBounds(320, 140, 300, 380);
+        jScrollPaneListaCancionesReproduccion.setBounds(50, 180, 220, 90);
 
         jLabelPlaylist.setBackground(new java.awt.Color(0, 0, 0));
         jLabelPlaylist.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
@@ -468,42 +496,55 @@ public class Reproductor extends javax.swing.JFrame {
     private void jLabelPlayMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPlayMouseReleased
         // TODO add your handling code here:
 
-        if (!rutaCancionActual.equals("")) {
+        if ((jListListaCancionesPlaylist.getModel().getSize()) > 0) {
+            
 
-            if (estadoReproduccion == Parametros.DETENIDO) {
-                estadoReproduccion = Parametros.REPRODUCIENDO;
-                System.out.println("D-Reproducir");
-                jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
+            Object nombreCancionActual = jListListaCancionesPlaylist.getSelectedValue();
+            Cancion cancionObtenida = (Cancion) listaCanciones.getCancion((String) nombreCancionActual);
 
-                reproductor.play(rutaCancionActual);
-                hiloReproductor.continuar();
+            if (cancionObtenida != null) {
+                rutaCancionActual = cancionObtenida.getRutaCancion();
 
-                System.out.println("Longitud: " + reproductor.getSongTotalLen());
+                if (!rutaCancionActual.equals("")) {
 
-                jSliderPosicionCancion.setMaximum((int) reproductor.getSongTotalLen());
-                jSliderPosicionCancion.setValue((int) reproductor.getPauseLocation());
+                    if (estadoReproduccion == Parametros.DETENIDO) {
+                        estadoReproduccion = Parametros.REPRODUCIENDO;
+                        System.out.println("D-Reproducir");
+                        jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
 
-                //reproductor.resume();
-            } else if (estadoReproduccion == Parametros.PAUSADO) {
-                System.out.println("P-Reproducir");
-                estadoReproduccion = Parametros.REPRODUCIENDO;
-                jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
+                        reproductor.play(rutaCancionActual);
+                        hiloReproductor.continuar();
 
-                reproductor.resume();
-                hiloReproductor.continuar();
+                        System.out.println("Longitud: " + reproductor.getSongTotalLen());
 
-                jSliderPosicionCancion.setMaximum((int) reproductor.getSongTotalLen());
-                jSliderPosicionCancion.setValue((int) reproductor.getPauseLocation());
+                        jSliderPosicionCancion.setMaximum((int) reproductor.getSongTotalLen());
+                        jSliderPosicionCancion.setValue((int) reproductor.getPauseLocation());
 
-            } else if (estadoReproduccion == Parametros.REPRODUCIENDO) {
-                estadoReproduccion = Parametros.PAUSADO;
-                System.out.println("R-Pausar");
-                jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/play.fw.png"))); // NOI18N
+                        //reproductor.resume();
+                    } else if (estadoReproduccion == Parametros.PAUSADO) {
+                        System.out.println("P-Reproducir");
+                        estadoReproduccion = Parametros.REPRODUCIENDO;
+                        jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/pause.fw.png"))); // NOI18N
 
-                reproductor.pause();
-                hiloReproductor.pausar();
+                        reproductor.resume();
+                        hiloReproductor.continuar();
+
+                        jSliderPosicionCancion.setMaximum((int) reproductor.getSongTotalLen());
+                        jSliderPosicionCancion.setValue((int) reproductor.getPauseLocation());
+
+                    } else if (estadoReproduccion == Parametros.REPRODUCIENDO) {
+                        estadoReproduccion = Parametros.PAUSADO;
+                        System.out.println("R-Pausar");
+                        jLabelPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/play.fw.png"))); // NOI18N
+
+                        reproductor.pause();
+                        hiloReproductor.pausar();
+                    }
+                }
+
             }
         }
+
     }//GEN-LAST:event_jLabelPlayMouseReleased
 
     private void jLabelMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseReleased
@@ -585,4 +626,13 @@ public class Reproductor extends javax.swing.JFrame {
     private javax.swing.JSlider jSliderVolumen;
     private javax.swing.JTextField jTextFieldTextoBusqueda;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        if (ae.getSource() == menuItemAgregarAPlaylist) {
+            // add
+            DefaultListModel modeloLista = (DefaultListModel) jListListaCancionesPlaylist.getModel();
+            modeloLista.addElement(jListListaCanciones.getSelectedValue());
+        }
+    }
 }

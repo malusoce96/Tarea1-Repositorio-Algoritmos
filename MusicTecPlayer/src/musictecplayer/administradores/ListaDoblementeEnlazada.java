@@ -105,8 +105,18 @@ public class ListaDoblementeEnlazada {
         }
         return false;
     }
-    
-    
+
+    public Object getCancion(String nombre) {
+        Iterator elements = getIteradorLista();
+        while (elements.hasNext()) {
+            Object nodoActual = elements.next();
+            Cancion cancionActual = (Cancion)(nodoActual);
+            if (cancionActual.getNombre().equals(nombre)) {
+                return cancionActual;
+            }
+        }
+        return null;
+    }
 
     public boolean removerPrimeraConcidencia(Object datos) {
         Iterator elements = getIteradorLista();
@@ -246,7 +256,6 @@ public class ListaDoblementeEnlazada {
 //        
 //        System.out.println("La lista actual es: \n");
 //        System.out.println(lista.toString());
-        
 //        System.out.println("Testing ListOfObjects...");
 //        ListaDoblementeEnlazada list = new ListaDoblementeEnlazada();
 //        System.out.println("empty list: " + list);
