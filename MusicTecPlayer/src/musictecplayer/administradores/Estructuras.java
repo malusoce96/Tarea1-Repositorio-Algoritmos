@@ -46,7 +46,150 @@ public class Estructuras {
         }
         return this;
     }
+
+    /**
+    *Metodo que busca por artista
+    *Para  hacer el algoritmo se necesitan una nueva lista donde se van acumular los resultados de la busqueda
+    *un puntero auxiliar para hacer las iteracione y recorrer la lista
+    *luego genera un ciclo while donde se va a recorrer la lista e ir buscando cuales de los nodos cumplen con lo buscado
+    *si el nodo no contiene lo buscado solo sigue adelante, al final se tendra una lista con los nodos que contengan lo que se busca
+    */
+
+    public Estructuras buscarArtista(String search){
+        Estructuras listaArtista = new Estructuras ();
+        NodoCancion prev = null;
+        NodoCancion here = First;
+        while (here != Last){
+            if (here.artista==search){
+                listaArtista.InsertEnd(here.nombre, here.artista, here.genero, here.album, here.año, here.portada, here.path);
+                here = here.next;
+            }
+            else{
+                here=here.next;
+            }
+         
+        }
+        return listaArtista;
+       
+       
+    }
+    
+    /**
+    *Metodo que busca por album
+    *Para  hacer el algoritmo se necesitan una nueva lista donde se van acumular los resultados de la busqueda
+    *un puntero auxiliar para hacer las iteracione y recorrer la lista
+    *luego genera un ciclo while donde se va a recorrer la lista e ir buscando cuales de los nodos cumplen con lo buscado
+    *si el nodo no contiene lo buscado solo sigue adelante, al final se tendra una lista con los nodos que contengan lo que se busca
+    */
+    
+    public Estructuras buscarAlbum(String search){
+        Estructuras listaAlbum = new Estructuras ();
+        NodoCancion prev = null;
+        NodoCancion here = First;
+        while (here != Last){
+            if (here.album == search){
+                listaAlbum.InsertEnd(here.nombre, here.artista, here.genero, here.album, here.año, here.portada, here.path);
+                here = here.next;
+            }
+            else{
+                here=here.next;
+            }
+         
+        }
+        return listaAlbum;
+       
+       
+    }
+    
+    /**
+    *Metodo que busca por genero
+    *Para  hacer el algoritmo se necesitan una nueva lista donde se van acumular los resultados de la busqueda
+    *un puntero auxiliar para hacer las iteracione y recorrer la lista
+    *luego genera un ciclo while donde se va a recorrer la lista e ir buscando cuales de los nodos cumplen con lo buscado
+    *si el nodo no contiene lo buscado solo sigue adelante, al final se tendra una lista con los nodos que contengan lo que se busca
+    */
+    
+    public Estructuras buscarGenero(String search){
+        Estructuras listaGenero = new Estructuras ();
+        NodoCancion prev = null;
+        NodoCancion here = First;
+        while (here != Last){
+            if (here.genero == search){
+                listaGenero.InsertEnd(here.nombre, here.artista, here.genero, here.album, here.año, here.portada, here.path);
+                here = here.next;
+            }
+            else{
+                here=here.next;
+            }
+         
+        }
+        return listaGenero;
+       
+       
+    }
+    
+    /**
+    *Metodo que busca por nombre
+    *Para  hacer el algoritmo se necesitan una nueva lista donde se van acumular los resultados de la busqueda
+    *un puntero auxiliar para hacer las iteracione y recorrer la lista
+    *luego genera un ciclo while donde se va a recorrer la lista e ir buscando cuales de los nodos cumplen con lo buscado
+    *si el nodo no contiene lo buscado solo sigue adelante, al final se tendra una lista con los nodos que contengan lo que se busca
+    */
+    
+    public Estructuras buscarNombre(String search){
+        Estructuras listaNombre = new Estructuras ();
+        NodoCancion prev = null;
+        NodoCancion here = First;
+        while (here != Last){
+            if (here.nombre == search){
+                listaNombre.InsertEnd(here.nombre, here.artista, here.genero, here.album, here.año, here.portada, here.path);
+                here = here.next;
+            }
+            else{
+                here=here.next;
+            }
+         
+        }
+        return listaNombre;
+       
+       
+    }
+   
+    /**
+    *Metodo delete
+    *En este metodo hace una busqueda por nombre que cuando encuentra el nodo con el nombre buscado
+    *se ajustan los punteros al siguiente y al anterior para eliminar y asi el recolector de basura destruye el 
+    *nodo.
+    */
+    
+    public boolean delete(String name){
+        NodoCancion prev = null;
+        NodoCancion here = First;
+        while(here!=Last){
+            if (here.nombre==name){
+                if(prev==null){
+                    First = here.next;
+                    First.prev=null;
+                }
+                else{
+                    prev.next = here.next;
+                    NodoCancion temp = here.next;
+                    temp.prev=prev;
+                }
+                return true;
+                }
+            prev=here;
+            here=here.next;
+            }
+        if (name==Last.nombre){
+            Last=here.prev;
+            return true;
+        }
+        return false;
+    }
 }
+
+
 class NodoCancion {
     String nombre;
     String artista;
