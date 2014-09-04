@@ -1,7 +1,3 @@
-/**
- * Frame que podrá agregar y modificar las propiedades o caracteristicas de una
- * cancion y permitira agregarlos a una lista.
- */
 package musictecplayer.vistas;
 
 import java.awt.HeadlessException;
@@ -14,36 +10,49 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import musictecplayer.administradores.Cancion;
 
 /**
- * @author Lucia  Solis
- * @author Joseph Vega
- * @author Miller Ruiz
+ * @author Lucia Solis Ceciliano  
+ * @author Joseph Vega Vargas
+ * @author Miller Ruiz Urbina
+ * 
+ * Frame que podrá agregar y modificar las propiedades de una canción mp3 y 
+ * permitirá agregarlos a una lista para su uso en el reproductor.
  */
 public class DetallesCancion extends javax.swing.JFrame {
+    /**
+     * Variables Globales: 
+     * @var SelectorArchivos: guarda las características de la canción buscada.
+     * @var SelectorFotos: uarda las características de la portada buscada.
+     * @var ListaMusica: Almacena la dirección de la canción por agregar.
+     */
+    JFileChooser SelectorArchivos = new JFileChooser(); 
+    JFileChooser SelectorFotos = new JFileChooser(); 
+    String DireccionMusica;
     
-    JFileChooser fileChooser = new JFileChooser(); 
-    String ListaMusica;
-    
+    /**
+     * Método constructor de la clase
+     */
     public DetallesCancion() {
         initComponents();
-        reubicarcontroles();
     }
     
+    /**
+     * Método que busca la canción en el sistema y almacena la dirección en una
+     * variable.
+     */
     public void BuscarCanción(){
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo "
-                + "MP3", "mp3", "mp3"); 
-        fileChooser.setFileFilter(filtro); 
-
-        int seleccion = fileChooser.showOpenDialog(this); 
+        FileNameExtensionFilter Filtro = new FileNameExtensionFilter("Archivos "
+                + "MP3", "mp3", "mp3"); //Filtra los datos a buscar
+        SelectorArchivos.setFileFilter(Filtro); 
         
+        //Ejecuta el explorador de archivos con el Filtro de música
+        int seleccion = SelectorArchivos.showOpenDialog(this); 
+        
+        //Condiciona si fue seleccionado algún archivo
         if (seleccion == JFileChooser.APPROVE_OPTION) {
-            ListaMusica = fileChooser.getSelectedFile().getAbsolutePath();
-            //jLabelPortada.setIcon(fileChooser.getSelectedFile().);
-            jTextFieldNombre.setText(fileChooser.getSelectedFile().getName());
+            DireccionMusica = SelectorArchivos.getSelectedFile().getAbsolutePath();
+            jTextFieldNombre.setText(SelectorArchivos.getSelectedFile()
+                    .getName());
         }
-    }
-    
-    public void reubicarcontroles(){
-        System.out.println("Reubicar");
     }
     
     @SuppressWarnings("unchecked")
@@ -183,7 +192,7 @@ public class DetallesCancion extends javax.swing.JFrame {
         getContentPane().add(jLabelTitulo2);
         jLabelTitulo2.setBounds(300, 260, 15, 21);
 
-        jFormattedTextFieldAño.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        jFormattedTextFieldAño.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         getContentPane().add(jFormattedTextFieldAño);
         jFormattedTextFieldAño.setBounds(50, 260, 50, 25);
 
@@ -210,54 +219,74 @@ public class DetallesCancion extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(659, 348));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * Método de jLabelCancelar que cierra la ventana y vuelve al menú principal
+     * @param evt 
+     */
     private void jLabelCancelarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCancelarMouseReleased
         this.hide();
         super.enable();
     }//GEN-LAST:event_jLabelCancelarMouseReleased
 
+    /**
+     * Método de jLabelAceptar que almacena la canción y sus propiedades en la 
+     * lista y cierra luego la ventana para volver al menú principal.
+     * @param evt 
+     */
     private void jLabelAceptarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAceptarMouseReleased
-        Cancion Ca = new Cancion("","","","","","");
+        Cancion Ca = new Cancion("","","","","",""); //Instancia de la clase
+        
         try{
+            //LLama al procedimiento de cada variable para asignar datos
             Ca.setAlbum(jTextFieldAlbum.getText());
             Ca.setArtista(jTextFieldArtista.getText());
             Ca.setAño(jFormattedTextFieldAño.getText());
             Ca.setGenero(jTextFieldGenero.getText());
             Ca.setNombre(jTextFieldNombre.getText());
             
-            JOptionPane.showMessageDialog(null, "Canción agregada correctamente",
-                    "Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "La canción fue agregada "
+                   +"correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+            
+        } catch(HeadlessException e){
+            JOptionPane.showMessageDialog(null, "Error en el registro de los "
+                    + "datos","Error",JOptionPane.ERROR_MESSAGE);
         }
-        catch(HeadlessException e){
-            JOptionPane.showMessageDialog(null, "Error de registro","Erorr",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+        
+        //Método de cierre de la ventana
         jLabelCancelarMouseReleased(evt);
     }//GEN-LAST:event_jLabelAceptarMouseReleased
 
+    /**
+     * Método del jLabelBuscar que busca la portada para la canción en el 
+     * sistema y almacena la foto en una etiqueta.
+     * @param evt 
+     */
     private void jLabelBuscarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBuscarMouseReleased
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("JPG y PNG",
-                "jpg","png"); 
-        fileChooser.setFileFilter(filtro); 
+        FileNameExtensionFilter Filtro = new FileNameExtensionFilter("JPG / PNG"
+                ,"jpg","png"); //Filtra los datos a buscar
+        SelectorFotos.setFileFilter(Filtro); 
 
-        int seleccion = fileChooser.showOpenDialog(this); 
+        //Ejecuta el explorador de archivos con el Filtro de imágenes
+        int Seleccion = SelectorFotos.showOpenDialog(this); 
         
-        if (seleccion == JFileChooser.APPROVE_OPTION) {
-            String fichero = fileChooser.getSelectedFile().getAbsolutePath();
+        //Condiciona si fue seleccionado algún archivo
+        if (Seleccion == JFileChooser.APPROVE_OPTION) {
+            String fichero = SelectorFotos.getSelectedFile().getAbsolutePath();
             
+            //Inserta la imagen en la etiqueta
             try{
                ImageIcon icon = new ImageIcon(fichero);
                Icon icono = new ImageIcon(icon.getImage()
                        .getScaledInstance(200, 200, Image.SCALE_DEFAULT));
-               jLabelPortada.setText(null);
-               jLabelPortada.setIcon( icono );
-            }catch(Exception ex){
+               jLabelPortada.setIcon(icono);
+               
+            } catch(Exception ex){
             }
         }
     }//GEN-LAST:event_jLabelBuscarMouseReleased
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -280,7 +309,6 @@ public class DetallesCancion extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {

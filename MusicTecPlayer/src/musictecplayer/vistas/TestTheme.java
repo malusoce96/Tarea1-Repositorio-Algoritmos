@@ -1,22 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package musictecplayer.vistas;
 
 import javax.swing.plaf.*;
 import javax.swing.plaf.metal.*;
-import javax.swing.*;
-import javax.swing.border.*;
-import java.awt.*;
  
 /**
- * This class describes a theme using "primary" colors.
- * You can change the colors to anything else you want.
- *
- * 1.9 07/26/04
+ * @author Lucia Solis Ceciliano  
+ * @author Joseph Vega Vargas
+ * @author Miller Ruiz Urbina
  */
 public class TestTheme extends DefaultMetalTheme {
  
@@ -29,5 +19,4 @@ public class TestTheme extends DefaultMetalTheme {
     protected ColorUIResource getPrimary1() { return primary1; }
     protected ColorUIResource getPrimary2() { return primary2; }
     protected ColorUIResource getPrimary3() { return primary3; }
- 
 }
