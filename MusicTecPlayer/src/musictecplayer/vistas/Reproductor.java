@@ -52,6 +52,8 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
     JPopupMenu popupMenuListaPlaylist;
     JMenuItem menuItemAgregarAPlaylist, menuItemEliminar, menuItemModificar, menuItemVerMetaData, menuItemBorrarPlaylist;
 
+    int modoVista = Parametros.MODO_LISTA;
+
     /**
      * Creates new form Reproductor
      */
@@ -199,7 +201,7 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
                 Cancion cancionActual = (Cancion) (objetoActual);
                 String nombreCancionActual = cancionActual.getNombre();
                 String nombreAlbum = cancionActual.getAlbum();
-                if (nombreAlbum.toUpperCase().contains(valorABuscar.toUpperCase())){
+                if (nombreAlbum.toUpperCase().contains(valorABuscar.toUpperCase())) {
                     modeloListaCanciones.addElement(nombreCancionActual);
                 }
             }
@@ -211,7 +213,7 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
                 Cancion cancionActual = (Cancion) (objetoActual);
                 String nombreCancionActual = cancionActual.getNombre();
                 String nombreArtista = cancionActual.getArtista();
-                if (nombreArtista.toUpperCase().contains(valorABuscar.toUpperCase())){
+                if (nombreArtista.toUpperCase().contains(valorABuscar.toUpperCase())) {
                     modeloListaCanciones.addElement(nombreCancionActual);
                 }
             }
@@ -222,8 +224,8 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
                 Object objetoActual = elements.next();
                 Cancion cancionActual = (Cancion) (objetoActual);
                 String nombreCancionActual = cancionActual.getNombre();
-                
-                if (nombreCancionActual.toUpperCase().contains(valorABuscar.toUpperCase())){
+
+                if (nombreCancionActual.toUpperCase().contains(valorABuscar.toUpperCase())) {
                     modeloListaCanciones.addElement(nombreCancionActual);
                 }
             }
@@ -235,7 +237,7 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
                 Cancion cancionActual = (Cancion) (objetoActual);
                 String nombreCancionActual = cancionActual.getNombre();
                 String nombreGenero = cancionActual.getGenero();
-                if (nombreGenero.toUpperCase().contains(valorABuscar.toUpperCase())){
+                if (nombreGenero.toUpperCase().contains(valorABuscar.toUpperCase())) {
                     modeloListaCanciones.addElement(nombreCancionActual);
                 }
             }
@@ -331,6 +333,7 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
         jListListaCanciones = new javax.swing.JList();
         jScrollPaneListaCancionesReproduccion = new javax.swing.JScrollPane();
         jListListaCancionesPlaylist = new javax.swing.JList();
+        jLabelModoVista = new javax.swing.JLabel();
         jLabelPlaylist = new javax.swing.JLabel();
         jLabelMenu = new javax.swing.JLabel();
         jLabelFondoMenu = new javax.swing.JLabel();
@@ -381,6 +384,15 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
 
         getContentPane().add(jScrollPaneListaCancionesReproduccion);
         jScrollPaneListaCancionesReproduccion.setBounds(50, 180, 220, 90);
+
+        jLabelModoVista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/modoNombre.fw.png"))); // NOI18N
+        jLabelModoVista.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelModoVistaMouseReleased(evt);
+            }
+        });
+        getContentPane().add(jLabelModoVista);
+        jLabelModoVista.setBounds(590, 120, 34, 14);
 
         jLabelPlaylist.setBackground(new java.awt.Color(0, 0, 0));
         jLabelPlaylist.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
@@ -753,6 +765,17 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
         buscarCanciones();
     }//GEN-LAST:event_jLabelIconoBuscarMouseReleased
 
+    private void jLabelModoVistaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelModoVistaMouseReleased
+        // TODO add your handling code here:
+        if (modoVista == Parametros.MODO_LISTA) {
+            modoVista = Parametros.MODO_CARATULAS;
+            jLabelModoVista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/modoCaratulas.fw.png"))); // NOI18N
+        } else {
+            modoVista = Parametros.MODO_LISTA;
+            jLabelModoVista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/modoNombre.fw.png"))); // NOI18N
+        }
+    }//GEN-LAST:event_jLabelModoVistaMouseReleased
+
     public void buscarCanciones() {
         String tipoBusqueda = jLabelTipoBusqueda.getText();
         String valorABuscar = jTextFieldTextoBusqueda.getText().trim();
@@ -827,6 +850,7 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jLabelFondoTipo;
     private javax.swing.JLabel jLabelIconoBuscar;
     private javax.swing.JLabel jLabelMenu;
+    private javax.swing.JLabel jLabelModoVista;
     private javax.swing.JLabel jLabelPlay;
     private javax.swing.JLabel jLabelPlaylist;
     private javax.swing.JLabel jLabelSiguiente;

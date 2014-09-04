@@ -29,6 +29,8 @@ public class Parametros {
     public final static int GENERO = 2;
     public final static int CANCION = 3; 
     
+    public final static int MODO_LISTA = 0;
+    public final static int MODO_CARATULAS = 1;
 
     public final static String BUSQUEDA_POR_ARTISTA = "Artista";
     public final static String BUSQUEDA_POR_ALBUM = "Álbum";
@@ -40,5 +42,7 @@ public class Parametros {
      * Constantes Globales:
      * Sin_Asignar: Guardará algún dato relevante del proyecto.
      */
-    public final static String SIN_ASIGNAR = ""; 
+    public final static String SIN_ASIGNAR = "";
+    
+    
 }
