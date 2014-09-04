@@ -11,7 +11,7 @@ package musictecplayer.constantes;
 public class Parametros {
     /**
      * Constantes Globales:
-     * @Final Detenido, Pausado, Reproduciendo:  Constantes que evaluan el 
+     * Detenido, Pausado, Reproduciendo:  Constantes que evaluan el 
      * proceso del reproductor en el momento.
      */
     public final static int DETENIDO = 0;
@@ -19,8 +19,9 @@ public class Parametros {
     public final static int REPRODUCIENDO = 2;
     
     /**
+    
      * Constantes Globales:
-     * @Final Artista, Album, Genero, Cancion: Constantes que evaluan el tipo de 
+     * Artista, Album, Genero, Cancion: Constantes que evaluan el tipo de 
      * busqueda avanzada.
      */
     public final static int ARTISTA = 0;
@@ -30,7 +31,7 @@ public class Parametros {
     
     /**
      * Constantes Globales:
-     * @Final Sin_Asignar: Guardará algún dato relevante del proyecto.
+     * Sin_Asignar: Guardará algún dato relevante del proyecto.
      */
     public final static String SIN_ASIGNAR = ""; 
 }

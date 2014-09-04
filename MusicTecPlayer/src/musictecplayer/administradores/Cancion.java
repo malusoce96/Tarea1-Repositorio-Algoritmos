@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package musictecplayer.administradores;
 
 /**
@@ -13,7 +12,7 @@ package musictecplayer.administradores;
  * @author LUCIA
  */
 public class Cancion {
-    
+
     private String nombre;
     private String artista;
     private String genero;
@@ -21,6 +20,16 @@ public class Cancion {
     private String año;
     private String path;
 
+    /**
+     * Cancion
+     *
+     * @param nombre:
+     * @param artista
+     * @param genero
+     * @param album
+     * @param año
+     * @param path
+     */
     public Cancion(String nombre, String artista, String genero, String album, String año, String path) {
         this.nombre = nombre;
         this.artista = artista;
@@ -29,8 +38,6 @@ public class Cancion {
         this.año = año;
         this.path = path;
     }
-    
-    
 
     public String getNombre() {
         return nombre;
@@ -72,8 +79,6 @@ public class Cancion {
         this.año = año;
     }
 
-
-
     public String getPath() {
         return path;
     }
@@ -81,7 +86,17 @@ public class Cancion {
     public void setPath(String path) {
         this.path = path;
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        String resultado = "";
+        resultado += "Nodo:\n"
+                + nombre + "\n"
+                + artista + "\n"
+                + album + "\n"
+                + año + "\n"
+                + path + "\n";
+        return resultado;
+    }
+
 }

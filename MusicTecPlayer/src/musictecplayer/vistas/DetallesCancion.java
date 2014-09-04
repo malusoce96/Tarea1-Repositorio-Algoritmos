@@ -20,9 +20,9 @@ import musictecplayer.administradores.Cancion;
 public class DetallesCancion extends javax.swing.JFrame {
     /**
      * Variables Globales: 
-     * @var SelectorArchivos: guarda las características de la canción buscada.
-     * @var SelectorFotos: uarda las características de la portada buscada.
-     * @var ListaMusica: Almacena la dirección de la canción por agregar.
+     * SelectorArchivos: guarda las características de la canción buscada.
+     *  SelectorFotos: uarda las características de la portada buscada.
+     *  ListaMusica: Almacena la dirección de la canción por agregar.
      */
     JFileChooser SelectorArchivos = new JFileChooser(); 
     JFileChooser SelectorFotos = new JFileChooser(); 
