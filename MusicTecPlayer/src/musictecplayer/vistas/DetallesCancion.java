@@ -4,6 +4,10 @@
  */
 package musictecplayer.vistas;
 
+import java.awt.HeadlessException;
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -25,14 +29,16 @@ public class DetallesCancion extends javax.swing.JFrame {
     }
     
     public void BuscarCanción(){
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo MP3", "mp3", "mp3"); 
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo "
+                + "MP3", "mp3", "mp3"); 
         fileChooser.setFileFilter(filtro); 
 
         int seleccion = fileChooser.showOpenDialog(this); 
         
         if (seleccion == JFileChooser.APPROVE_OPTION) {
-            ListaMusica = fileChooser.getSelectedFile().getName();
-            JOptionPane.showMessageDialog(null, ListaMusica);
+            ListaMusica = fileChooser.getSelectedFile().getAbsolutePath();
+            //jLabelPortada.setIcon(fileChooser.getSelectedFile().);
+            jTextFieldNombre.setText(fileChooser.getSelectedFile().getName());
         }
     }
     
@@ -110,6 +116,11 @@ public class DetallesCancion extends javax.swing.JFrame {
         jLabelBuscar.setBackground(new java.awt.Color(0, 0, 0));
         jLabelBuscar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/iconobuscar.fw.png"))); // NOI18N
+        jLabelBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelBuscarMouseReleased(evt);
+            }
+        });
         getContentPane().add(jLabelBuscar);
         jLabelBuscar.setBounds(422, 14, 23, 26);
 
@@ -145,7 +156,7 @@ public class DetallesCancion extends javax.swing.JFrame {
         jLabelNumeroCancion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelNumeroCancion.setText("Número Canción: ");
         getContentPane().add(jLabelNumeroCancion);
-        jLabelNumeroCancion.setBounds(130, 240, 95, 14);
+        jLabelNumeroCancion.setBounds(125, 240, 105, 14);
 
         jLabelNumeroDisco.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelNumeroDisco.setText("Número Disco:");
@@ -213,15 +224,37 @@ public class DetallesCancion extends javax.swing.JFrame {
             Ca.setAño(jFormattedTextFieldAño.getText());
             Ca.setGenero(jTextFieldGenero.getText());
             Ca.setNombre(jTextFieldNombre.getText());
-        }
-        catch(Exception e){
             
+            JOptionPane.showMessageDialog(null, "Canción agregada correctamente",
+                    "Correcto",JOptionPane.INFORMATION_MESSAGE);
         }
-        JOptionPane.showMessageDialog(null, "" + Ca.getAlbum() + "\n" +
-                Ca.getArtista() + "\n" + Ca.getAño() + "\n" + Ca.getGenero()  + 
-                "\n" + Ca.getNombre());
+        catch(HeadlessException e){
+            JOptionPane.showMessageDialog(null, "Error de registro","Erorr",
+                    JOptionPane.ERROR_MESSAGE);
+        }
         jLabelCancelarMouseReleased(evt);
     }//GEN-LAST:event_jLabelAceptarMouseReleased
+
+    private void jLabelBuscarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBuscarMouseReleased
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("JPG y PNG",
+                "jpg","png"); 
+        fileChooser.setFileFilter(filtro); 
+
+        int seleccion = fileChooser.showOpenDialog(this); 
+        
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            String fichero = fileChooser.getSelectedFile().getAbsolutePath();
+            
+            try{
+               ImageIcon icon = new ImageIcon(fichero);
+               Icon icono = new ImageIcon(icon.getImage()
+                       .getScaledInstance(200, 200, Image.SCALE_DEFAULT));
+               jLabelPortada.setText(null);
+               jLabelPortada.setIcon( icono );
+            }catch(Exception ex){
+            }
+        }
+    }//GEN-LAST:event_jLabelBuscarMouseReleased
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

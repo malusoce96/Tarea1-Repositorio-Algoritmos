@@ -99,6 +99,9 @@
           <Image iconType="3" name="/musictecplayer/vistas/img/iconobuscar.fw.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelBuscarMouseReleased"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="422" y="14" width="-1" height="-1"/>
@@ -187,7 +190,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="130" y="240" width="95" height="-1"/>
+          <AbsoluteConstraints x="125" y="240" width="105" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
