@@ -5,15 +5,23 @@
  */
 package musictecplayer.vistas;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.Iterator;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JList;
 import javax.swing.JSlider;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import musictecplayer.administradores.Cancion;
 import musictecplayer.administradores.HiloReproductor;
+import musictecplayer.administradores.ListaDoblementeEnlazada;
 import musictecplayer.administradores.ReproductorLogico;
 import musictecplayer.constantes.Parametros;
 
@@ -33,18 +41,32 @@ public class Reproductor extends javax.swing.JFrame {
 
     private HiloReproductor hiloReproductor = null;
 
+    public static ListaDoblementeEnlazada listaCanciones = new ListaDoblementeEnlazada();
+
     /**
      * Creates new form Reproductor
      */
     public Reproductor() {
         initComponents();
         crearReproductor();
+        
+        jListListaCanciones.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    JList list = (JList) e.getSource();
+                    int row = list.locationToIndex(e.getPoint());
+                    list.setSelectedIndex(row);
+                    System.out.println("row+ " + row);
+                }
+            }
+
+        });
 
 //        jSliderPosicionCancion.setPaintTicks(true);
 //        jSliderPosicionCancion.setMajorTickSpacing(50);
 //        jSliderPosicionCancion.setMinorTickSpacing(10);
         jSliderPosicionCancion.setPaintLabels(true);
-        
+
         jLabelVolumen.setVisible(false);
         jSliderVolumen.setVisible(false);
 //
@@ -93,6 +115,22 @@ public class Reproductor extends javax.swing.JFrame {
 
     }
 
+    public void actulizarListaCanciones() {
+        Iterator elements = listaCanciones.getIteradorLista();
+        jListListaCanciones.removeAll();
+
+        DefaultListModel modeloListaCanciones = new DefaultListModel();
+
+        while (elements.hasNext()) {
+            Object objetoActual = elements.next();
+            Cancion cancionActual = (Cancion) (objetoActual);
+            String nombre = cancionActual.getNombre();
+            modeloListaCanciones.addElement(nombre);
+        }
+
+        jListListaCanciones.setModel(modeloListaCanciones);
+    }
+
     public ReproductorLogico getReproductor() {
         return reproductor;
     }
@@ -106,7 +144,7 @@ public class Reproductor extends javax.swing.JFrame {
     }
 
     private void escogerArchivo() {
-        DetallesCancion DC = new DetallesCancion();
+        DetallesCancion DC = new DetallesCancion(this);
         DC.BuscarCanción();
         DC.show();
     }
@@ -159,6 +197,10 @@ public class Reproductor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPaneListaCanciones = new javax.swing.JScrollPane();
+        jListListaCanciones = new javax.swing.JList();
+        jScrollPaneListaCancionesReproduccion = new javax.swing.JScrollPane();
+        jListListaCancionesPlaylist = new javax.swing.JList();
         jLabelPlaylist = new javax.swing.JLabel();
         jLabelMenu = new javax.swing.JLabel();
         jLabelFondoMenu = new javax.swing.JLabel();
@@ -193,6 +235,22 @@ public class Reproductor extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(643, 569));
         setResizable(false);
         getContentPane().setLayout(null);
+
+        jListListaCanciones.setBackground(new java.awt.Color(0, 0, 0));
+        jListListaCanciones.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        jListListaCanciones.setForeground(new java.awt.Color(255, 255, 255));
+        jScrollPaneListaCanciones.setViewportView(jListListaCanciones);
+
+        getContentPane().add(jScrollPaneListaCanciones);
+        jScrollPaneListaCanciones.setBounds(50, 180, 220, 90);
+
+        jListListaCancionesPlaylist.setBackground(new java.awt.Color(0, 0, 0));
+        jListListaCancionesPlaylist.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        jListListaCancionesPlaylist.setForeground(new java.awt.Color(255, 255, 255));
+        jScrollPaneListaCancionesReproduccion.setViewportView(jListListaCancionesPlaylist);
+
+        getContentPane().add(jScrollPaneListaCancionesReproduccion);
+        jScrollPaneListaCancionesReproduccion.setBounds(320, 140, 300, 380);
 
         jLabelPlaylist.setBackground(new java.awt.Color(0, 0, 0));
         jLabelPlaylist.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
@@ -519,6 +577,10 @@ public class Reproductor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelStop;
     private javax.swing.JLabel jLabelTipoBusqueda;
     private javax.swing.JLabel jLabelVolumen;
+    private javax.swing.JList jListListaCanciones;
+    private javax.swing.JList jListListaCancionesPlaylist;
+    private javax.swing.JScrollPane jScrollPaneListaCanciones;
+    private javax.swing.JScrollPane jScrollPaneListaCancionesReproduccion;
     private javax.swing.JSlider jSliderPosicionCancion;
     private javax.swing.JSlider jSliderVolumen;
     private javax.swing.JTextField jTextFieldTextoBusqueda;

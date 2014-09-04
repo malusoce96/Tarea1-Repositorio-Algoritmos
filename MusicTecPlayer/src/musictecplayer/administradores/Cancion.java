@@ -18,26 +18,31 @@ public class Cancion {
     private String genero;
     private String album;
     private String año;
-    private String path;
+    private String rutaCancion;
+    private String rutaImagen;
 
     /**
      * Cancion
-     *
-     * @param nombre:
+     * 
+     * @param nombre
      * @param artista
      * @param genero
      * @param album
      * @param año
-     * @param path
+     * @param rutaCancion
+     * @param rutaImagen 
      */
-    public Cancion(String nombre, String artista, String genero, String album, String año, String path) {
+    public Cancion(String nombre, String artista, String genero, String album, String año, String rutaCancion, String rutaImagen) {
         this.nombre = nombre;
         this.artista = artista;
         this.genero = genero;
         this.album = album;
         this.año = año;
-        this.path = path;
+        this.rutaCancion = rutaCancion;
+        this.rutaImagen = rutaImagen;
     }
+
+
 
     public String getNombre() {
         return nombre;
@@ -80,11 +85,11 @@ public class Cancion {
     }
 
     public String getPath() {
-        return path;
+        return rutaCancion;
     }
 
     public void setPath(String path) {
-        this.path = path;
+        this.rutaCancion = path;
     }
 
     @Override
@@ -95,7 +100,7 @@ public class Cancion {
                 + artista + "\n"
                 + album + "\n"
                 + año + "\n"
-                + path + "\n";
+                + rutaCancion + "\n";
         return resultado;
     }
 

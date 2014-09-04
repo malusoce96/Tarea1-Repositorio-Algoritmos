@@ -221,31 +221,31 @@ public class ListaDoblementeEnlazada {
     // A test program for the ListOfObjects class...
     public static void main(String args[]) {
 
-        System.out.println("Probando lista de canciones");
-
-        ListaDoblementeEnlazada lista = new ListaDoblementeEnlazada();
-        System.out.println(lista.toString());
-        Cancion nuevaCancion = new Cancion("lucy", "The Beatles", "terror", "hola", "1987", "");
-        //System.out.println("Cancion insertada: \n" + nuevaCancion.toString());
-
-        lista.agregarAlInicio(nuevaCancion);
-
-        nuevaCancion = new Cancion("dancing", "Benito", "bailable", "hola", "1987", "");
-
-        lista.agregarAlInicio(nuevaCancion);
-
-        nuevaCancion = new Cancion("pachanga", "Benito", "bailable", "hola", "1987", "");
-
-        lista.agregarAlInicio(nuevaCancion);
-
-        System.out.println("La lista actual es: \n");
-        System.out.println(lista.toString());
-        System.out.println("Contiene: " + lista.contiene(nuevaCancion));
-        
-        lista.removerPrimeraConcidencia(nuevaCancion);
-        
-        System.out.println("La lista actual es: \n");
-        System.out.println(lista.toString());
+//        System.out.println("Probando lista de canciones");
+//
+//        ListaDoblementeEnlazada lista = new ListaDoblementeEnlazada();
+//        System.out.println(lista.toString());
+//        Cancion nuevaCancion = new Cancion("lucy", "The Beatles", "terror", "hola", "1987", "");
+//        //System.out.println("Cancion insertada: \n" + nuevaCancion.toString());
+//
+//        lista.agregarAlInicio(nuevaCancion);
+//
+//        nuevaCancion = new Cancion("dancing", "Benito", "bailable", "hola", "1987", "");
+//
+//        lista.agregarAlInicio(nuevaCancion);
+//
+//        nuevaCancion = new Cancion("pachanga", "Benito", "bailable", "hola", "1987", "");
+//
+//        lista.agregarAlInicio(nuevaCancion);
+//
+//        System.out.println("La lista actual es: \n");
+//        System.out.println(lista.toString());
+//        System.out.println("Contiene: " + lista.contiene(nuevaCancion));
+//        
+//        lista.removerPrimeraConcidencia(nuevaCancion);
+//        
+//        System.out.println("La lista actual es: \n");
+//        System.out.println(lista.toString());
         
 //        System.out.println("Testing ListOfObjects...");
 //        ListaDoblementeEnlazada list = new ListaDoblementeEnlazada();
