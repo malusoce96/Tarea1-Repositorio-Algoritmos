@@ -4,10 +4,10 @@
  */
 package musictecplayer.vistas;
 
-import java.io.File;
-import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import musictecplayer.administradores.Cancion;
 
 /**
  * @author Lucia  Solis
@@ -17,30 +17,27 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class DetallesCancion extends javax.swing.JFrame {
     
     JFileChooser fileChooser = new JFileChooser(); 
-    String[] ListaMusica = new String[15];
+    String ListaMusica;
     
     public DetallesCancion() {
         initComponents();
         reubicarcontroles();
     }
     
+    public void BuscarCanción(){
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo MP3", "mp3", "mp3"); 
+        fileChooser.setFileFilter(filtro); 
+
+        int seleccion = fileChooser.showOpenDialog(this); 
+        
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            ListaMusica = fileChooser.getSelectedFile().getName();
+            JOptionPane.showMessageDialog(null, ListaMusica);
+        }
+    }
+    
     public void reubicarcontroles(){
         System.out.println("Reubicar");
-        
-        /*jLabelAceptar.setLocation(cambioX + 2, cambioY + 2);
-        jLabelCancelar
-        jLabelExaminar
-        jLabelExaminar1
-        jLabelFondoAceptar
-        jLabelFondoCancelar
-        jLabelFondoExaminar
-        jLabelFondoOpcion1
-        jLabelFondoOpcion2
-        jLabelFondoPrincipal
-        jLabelImagen
-        jLabelOpcion1
-        jLabelOpcion2
-        jPanelGeneral;*/
     }
     
     @SuppressWarnings("unchecked")
@@ -52,27 +49,26 @@ public class DetallesCancion extends javax.swing.JFrame {
         jLabelOpcion = new javax.swing.JLabel();
         jLabelBuscar = new javax.swing.JLabel();
         jLabelPortada = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
-        jFormattedTextField4 = new javax.swing.JFormattedTextField();
-        jFormattedTextField5 = new javax.swing.JFormattedTextField();
+        jLabelNombre = new javax.swing.JLabel();
+        jLabelAlbum = new javax.swing.JLabel();
+        jLabelAño = new javax.swing.JLabel();
+        jLabelGenero = new javax.swing.JLabel();
+        jLabelAutor = new javax.swing.JLabel();
+        jLabelArtista = new javax.swing.JLabel();
+        jLabelNumeroCancion = new javax.swing.JLabel();
+        jLabelNumeroDisco = new javax.swing.JLabel();
+        jTextFieldNombre = new javax.swing.JTextField();
+        jTextFieldArtista = new javax.swing.JTextField();
+        jTextFieldAlbum = new javax.swing.JTextField();
+        jTextFieldAutor = new javax.swing.JTextField();
+        jTextFieldGenero = new javax.swing.JTextField();
+        jLabelTitulo1 = new javax.swing.JLabel();
+        jLabelTitulo2 = new javax.swing.JLabel();
+        jFormattedTextFieldAño = new javax.swing.JFormattedTextField();
+        jFormattedTextFieldNumeroCancion2 = new javax.swing.JFormattedTextField();
+        jFormattedTextFieldNumeroDisco1 = new javax.swing.JFormattedTextField();
+        jFormattedTextFieldNumeroCancion1 = new javax.swing.JFormattedTextField();
+        jFormattedTextFieldNumeroDisco2 = new javax.swing.JFormattedTextField();
         jLabelFondoPrincipal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -87,6 +83,11 @@ public class DetallesCancion extends javax.swing.JFrame {
         jLabelAceptar.setForeground(new java.awt.Color(255, 255, 255));
         jLabelAceptar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelAceptar.setText("Aceptar");
+        jLabelAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelAceptarMouseReleased(evt);
+            }
+        });
         getContentPane().add(jLabelAceptar);
         jLabelAceptar.setBounds(400, 234, 115, 51);
 
@@ -94,6 +95,11 @@ public class DetallesCancion extends javax.swing.JFrame {
         jLabelCancelar.setForeground(new java.awt.Color(255, 255, 255));
         jLabelCancelar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelCancelar.setText("Cancelar");
+        jLabelCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelCancelarMouseReleased(evt);
+            }
+        });
         getContentPane().add(jLabelCancelar);
         jLabelCancelar.setBounds(515, 234, 115, 51);
 
@@ -105,91 +111,117 @@ public class DetallesCancion extends javax.swing.JFrame {
         jLabelBuscar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/iconobuscar.fw.png"))); // NOI18N
         getContentPane().add(jLabelBuscar);
-        jLabelBuscar.setBounds(432, 12, 23, 26);
+        jLabelBuscar.setBounds(432, 14, 23, 26);
 
         jLabelPortada.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabelPortada);
-        jLabelPortada.setBounds(430, 10, 200, 200);
+        jLabelPortada.setBounds(430, 12, 200, 200);
 
-        jLabel5.setText("Nombre:");
-        getContentPane().add(jLabel5);
-        jLabel5.setBounds(10, 13, 41, 14);
+        jLabelNombre.setText("Nombre:");
+        getContentPane().add(jLabelNombre);
+        jLabelNombre.setBounds(10, 13, 90, 21);
 
-        jLabel7.setText("Álbum:");
-        getContentPane().add(jLabel7);
-        jLabel7.setBounds(10, 103, 33, 14);
+        jLabelAlbum.setText("Álbum:");
+        getContentPane().add(jLabelAlbum);
+        jLabelAlbum.setBounds(10, 103, 90, 21);
 
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Año:");
-        getContentPane().add(jLabel8);
-        jLabel8.setBounds(90, 240, 50, 14);
+        jLabelAño.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelAño.setText("Año:");
+        getContentPane().add(jLabelAño);
+        jLabelAño.setBounds(50, 240, 50, 14);
 
-        jLabel9.setText("Género:");
-        getContentPane().add(jLabel9);
-        jLabel9.setBounds(10, 193, 39, 14);
+        jLabelGenero.setText("Género:");
+        getContentPane().add(jLabelGenero);
+        jLabelGenero.setBounds(10, 193, 90, 21);
 
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/cambiarTipoBusqueda.fw.png"))); // NOI18N
-        getContentPane().add(jLabel10);
-        jLabel10.setBounds(10, 234, 61, 56);
+        jLabelAutor.setText("Autor:");
+        getContentPane().add(jLabelAutor);
+        jLabelAutor.setBounds(10, 148, 90, 21);
 
-        jLabel11.setText("Autor:");
-        getContentPane().add(jLabel11);
-        jLabel11.setBounds(10, 148, 31, 14);
+        jLabelArtista.setText("Artista/Grupo:");
+        getContentPane().add(jLabelArtista);
+        jLabelArtista.setBounds(10, 57, 90, 21);
 
-        jLabel12.setText("Artista/Grupo:");
-        getContentPane().add(jLabel12);
-        jLabel12.setBounds(10, 57, 69, 14);
+        jLabelNumeroCancion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelNumeroCancion.setText("Número Canción: ");
+        getContentPane().add(jLabelNumeroCancion);
+        jLabelNumeroCancion.setBounds(130, 240, 95, 14);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Número Canción: ");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(170, 240, 95, 14);
+        jLabelNumeroDisco.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelNumeroDisco.setText("Número Disco:");
+        getContentPane().add(jLabelNumeroDisco);
+        jLabelNumeroDisco.setBounds(260, 240, 95, 14);
+        getContentPane().add(jTextFieldNombre);
+        jTextFieldNombre.setBounds(100, 10, 320, 25);
+        getContentPane().add(jTextFieldArtista);
+        jTextFieldArtista.setBounds(100, 55, 320, 25);
+        getContentPane().add(jTextFieldAlbum);
+        jTextFieldAlbum.setBounds(100, 100, 320, 25);
+        getContentPane().add(jTextFieldAutor);
+        jTextFieldAutor.setBounds(100, 145, 320, 25);
+        getContentPane().add(jTextFieldGenero);
+        jTextFieldGenero.setBounds(100, 190, 320, 25);
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Número Disco:");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(280, 240, 95, 14);
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(90, 10, 330, 20);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(90, 55, 330, 20);
-        getContentPane().add(jTextField3);
-        jTextField3.setBounds(90, 100, 330, 20);
-        getContentPane().add(jTextField4);
-        jTextField4.setBounds(90, 145, 330, 20);
-        getContentPane().add(jTextField5);
-        jTextField5.setBounds(90, 190, 330, 20);
+        jLabelTitulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTitulo1.setText("de");
+        getContentPane().add(jLabelTitulo1);
+        jLabelTitulo1.setBounds(170, 260, 15, 21);
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("de");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(200, 260, 15, 14);
+        jLabelTitulo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTitulo2.setText("de");
+        getContentPane().add(jLabelTitulo2);
+        jLabelTitulo2.setBounds(300, 260, 15, 21);
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("de");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(320, 260, 15, 14);
+        jFormattedTextFieldAño.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        getContentPane().add(jFormattedTextFieldAño);
+        jFormattedTextFieldAño.setBounds(50, 260, 50, 25);
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-        getContentPane().add(jFormattedTextField1);
-        jFormattedTextField1.setBounds(90, 260, 50, 20);
-        getContentPane().add(jFormattedTextField2);
-        jFormattedTextField2.setBounds(220, 260, 35, 20);
-        getContentPane().add(jFormattedTextField3);
-        jFormattedTextField3.setBounds(280, 260, 35, 20);
-        getContentPane().add(jFormattedTextField4);
-        jFormattedTextField4.setBounds(160, 260, 35, 20);
-        getContentPane().add(jFormattedTextField5);
-        jFormattedTextField5.setBounds(340, 260, 35, 20);
+        jFormattedTextFieldNumeroCancion2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        getContentPane().add(jFormattedTextFieldNumeroCancion2);
+        jFormattedTextFieldNumeroCancion2.setBounds(190, 260, 35, 25);
+
+        jFormattedTextFieldNumeroDisco1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        getContentPane().add(jFormattedTextFieldNumeroDisco1);
+        jFormattedTextFieldNumeroDisco1.setBounds(260, 260, 35, 25);
+
+        jFormattedTextFieldNumeroCancion1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        getContentPane().add(jFormattedTextFieldNumeroCancion1);
+        jFormattedTextFieldNumeroCancion1.setBounds(130, 260, 35, 25);
+
+        jFormattedTextFieldNumeroDisco2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        getContentPane().add(jFormattedTextFieldNumeroDisco2);
+        jFormattedTextFieldNumeroDisco2.setBounds(320, 260, 35, 25);
 
         jLabelFondoPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondo.png"))); // NOI18N
         getContentPane().add(jLabelFondoPrincipal);
-        jLabelFondoPrincipal.setBounds(0, 0, 650, 350);
+        jLabelFondoPrincipal.setBounds(0, 0, 660, 350);
 
         setSize(new java.awt.Dimension(659, 348));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabelCancelarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCancelarMouseReleased
+        this.hide();
+        super.enable();
+    }//GEN-LAST:event_jLabelCancelarMouseReleased
+
+    private void jLabelAceptarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAceptarMouseReleased
+        Cancion Ca = new Cancion("","","","","","");
+        try{
+            Ca.setAlbum(jTextFieldAlbum.getText());
+            Ca.setArtista(jTextFieldArtista.getText());
+            Ca.setAño(jFormattedTextFieldAño.getText());
+            Ca.setGenero(jTextFieldGenero.getText());
+            Ca.setNombre(jTextFieldNombre.getText());
+        }
+        catch(Exception e){
+            
+        }
+        JOptionPane.showMessageDialog(null, "" + Ca.getAlbum() + "\n" +
+                Ca.getArtista() + "\n" + Ca.getAño() + "\n" + Ca.getGenero()  + 
+                "\n" + Ca.getNombre());
+        jLabelCancelarMouseReleased(evt);
+    }//GEN-LAST:event_jLabelAceptarMouseReleased
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -225,32 +257,31 @@ public class DetallesCancion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
-    private javax.swing.JFormattedTextField jFormattedTextField4;
-    private javax.swing.JFormattedTextField jFormattedTextField5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JFormattedTextField jFormattedTextFieldAño;
+    private javax.swing.JFormattedTextField jFormattedTextFieldNumeroCancion1;
+    private javax.swing.JFormattedTextField jFormattedTextFieldNumeroCancion2;
+    private javax.swing.JFormattedTextField jFormattedTextFieldNumeroDisco1;
+    private javax.swing.JFormattedTextField jFormattedTextFieldNumeroDisco2;
     private javax.swing.JLabel jLabelAceptar;
+    private javax.swing.JLabel jLabelAlbum;
+    private javax.swing.JLabel jLabelArtista;
+    private javax.swing.JLabel jLabelAutor;
+    private javax.swing.JLabel jLabelAño;
     private javax.swing.JLabel jLabelBuscar;
     private javax.swing.JLabel jLabelCancelar;
     private javax.swing.JLabel jLabelFondoPrincipal;
+    private javax.swing.JLabel jLabelGenero;
+    private javax.swing.JLabel jLabelNombre;
+    private javax.swing.JLabel jLabelNumeroCancion;
+    private javax.swing.JLabel jLabelNumeroDisco;
     private javax.swing.JLabel jLabelOpcion;
     private javax.swing.JLabel jLabelPortada;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JLabel jLabelTitulo1;
+    private javax.swing.JLabel jLabelTitulo2;
+    private javax.swing.JTextField jTextFieldAlbum;
+    private javax.swing.JTextField jTextFieldArtista;
+    private javax.swing.JTextField jTextFieldAutor;
+    private javax.swing.JTextField jTextFieldGenero;
+    private javax.swing.JTextField jTextFieldNombre;
     // End of variables declaration//GEN-END:variables
 }
