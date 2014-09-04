@@ -89,7 +89,7 @@ public class DetallesCancion extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jLabelAceptar);
-        jLabelAceptar.setBounds(400, 234, 115, 51);
+        jLabelAceptar.setBounds(405, 234, 115, 51);
 
         jLabelCancelar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jLabelCancelar.setForeground(new java.awt.Color(255, 255, 255));
@@ -101,21 +101,21 @@ public class DetallesCancion extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jLabelCancelar);
-        jLabelCancelar.setBounds(515, 234, 115, 51);
+        jLabelCancelar.setBounds(520, 234, 115, 51);
 
         jLabelOpcion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoOscuroAlbum.fw.png"))); // NOI18N
         getContentPane().add(jLabelOpcion);
-        jLabelOpcion.setBounds(400, 230, 230, 60);
+        jLabelOpcion.setBounds(405, 230, 230, 60);
 
         jLabelBuscar.setBackground(new java.awt.Color(0, 0, 0));
         jLabelBuscar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/iconobuscar.fw.png"))); // NOI18N
         getContentPane().add(jLabelBuscar);
-        jLabelBuscar.setBounds(432, 14, 23, 26);
+        jLabelBuscar.setBounds(422, 14, 23, 26);
 
         jLabelPortada.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabelPortada);
-        jLabelPortada.setBounds(430, 12, 200, 200);
+        jLabelPortada.setBounds(420, 12, 200, 200);
 
         jLabelNombre.setText("Nombre:");
         getContentPane().add(jLabelNombre);
@@ -152,15 +152,15 @@ public class DetallesCancion extends javax.swing.JFrame {
         getContentPane().add(jLabelNumeroDisco);
         jLabelNumeroDisco.setBounds(260, 240, 95, 14);
         getContentPane().add(jTextFieldNombre);
-        jTextFieldNombre.setBounds(100, 10, 320, 25);
+        jTextFieldNombre.setBounds(100, 10, 300, 25);
         getContentPane().add(jTextFieldArtista);
-        jTextFieldArtista.setBounds(100, 55, 320, 25);
+        jTextFieldArtista.setBounds(100, 55, 300, 25);
         getContentPane().add(jTextFieldAlbum);
-        jTextFieldAlbum.setBounds(100, 100, 320, 25);
+        jTextFieldAlbum.setBounds(100, 100, 300, 25);
         getContentPane().add(jTextFieldAutor);
-        jTextFieldAutor.setBounds(100, 145, 320, 25);
+        jTextFieldAutor.setBounds(100, 145, 300, 25);
         getContentPane().add(jTextFieldGenero);
-        jTextFieldGenero.setBounds(100, 190, 320, 25);
+        jTextFieldGenero.setBounds(100, 190, 300, 25);
 
         jLabelTitulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTitulo1.setText("de");

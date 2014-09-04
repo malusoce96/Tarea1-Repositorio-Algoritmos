@@ -107,22 +107,8 @@ public class Reproductor extends javax.swing.JFrame {
 
     private void escogerArchivo() {
         DetallesCancion DC = new DetallesCancion();
-        this.disable();
+        DC.BuscarCanción();
         DC.show();
-
-        FileFilter filtro = new FileNameExtensionFilter("Archivos mp3", "mp3", "mpeg3");
-        JFileChooser selectorArchivo = new JFileChooser();
-        selectorArchivo.addChoosableFileFilter(filtro);
-
-        int opcionSelecccionada = selectorArchivo.showOpenDialog(null);
-        if (opcionSelecccionada == JFileChooser.APPROVE_OPTION) {
-            File archivoSeleccionado = selectorArchivo.getSelectedFile();
-            String cancion = archivoSeleccionado + "";
-            //String nombre = selectorArchivo.getSelectedFile().getName();
-            //reproductor.play(cancion);
-            rutaCancionActual = cancion;
-        }
-
     }
 
     public void finalizarReproduccion() {
@@ -228,12 +214,12 @@ public class Reproductor extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jLabelMenu);
-        jLabelMenu.setBounds(42, 39, 120, 50);
+        jLabelMenu.setBounds(42, 45, 120, 50);
 
         jLabelFondoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/tipoBusqueda.fw.png"))); // NOI18N
         jLabelFondoMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().add(jLabelFondoMenu);
-        jLabelFondoMenu.setBounds(40, 40, 120, 50);
+        jLabelFondoMenu.setBounds(40, 40, 123, 60);
 
         jLabelFondoPlaylist.setBackground(new java.awt.Color(0, 0, 0));
         jLabelFondoPlaylist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/fondoPlayList.fw.png"))); // NOI18N
@@ -243,7 +229,7 @@ public class Reproductor extends javax.swing.JFrame {
         jSliderPosicionCancion.setValue(0);
         jSliderPosicionCancion.setOpaque(false);
         getContentPane().add(jSliderPosicionCancion);
-        jSliderPosicionCancion.setBounds(43, 457, 228, 26);
+        jSliderPosicionCancion.setBounds(43, 457, 228, 23);
 
         jSliderVolumen.setOrientation(javax.swing.JSlider.VERTICAL);
         jSliderVolumen.setToolTipText("");
