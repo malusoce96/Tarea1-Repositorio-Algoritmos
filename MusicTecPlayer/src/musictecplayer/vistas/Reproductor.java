@@ -57,6 +57,8 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
     JMenuItem menuItemAgregarAPlaylist, menuItemEliminar, menuItemModificar, menuItemVerMetaData, menuItemBorrarPlaylist;
 
     int modoVista = Parametros.MODO_LISTA;
+    
+    JPanel panelPrincipal = new JPanel();
 
     /**
      * Creates new form Reproductor
@@ -65,7 +67,7 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
         initComponents();
         crearReproductor();
         
-        JPanel panelPrincipal = new JPanel();
+        
         
         panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
 
@@ -208,6 +210,9 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
             Cancion cancionActual = (Cancion) (objetoActual);
             String nombre = cancionActual.getNombre();
             modeloListaCanciones.addElement(nombre);
+            
+            
+            
         }
 
         jListListaCanciones.setModel(modeloListaCanciones);
@@ -798,9 +803,11 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
         if (modoVista == Parametros.MODO_LISTA) {
             modoVista = Parametros.MODO_CARATULAS;
             jLabelModoVista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/modoCaratulas.fw.png"))); // NOI18N
+            jScrollPaneCancionesConCaratula.setVisible(true);
         } else {
             modoVista = Parametros.MODO_LISTA;
             jLabelModoVista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/modoNombre.fw.png"))); // NOI18N
+            jScrollPaneCancionesConCaratula.setVisible(false);
         }
     }//GEN-LAST:event_jLabelModoVistaMouseReleased
 
