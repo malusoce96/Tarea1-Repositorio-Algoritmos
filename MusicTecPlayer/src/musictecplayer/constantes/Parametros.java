@@ -30,14 +30,14 @@ public class Parametros {
     
     /**
      * Constantes Globales:
-     * 
+     * Evalua el tipo de busqueda.
      */
     public final static int MODO_LISTA = 0;
     public final static int MODO_CARATULAS = 1;
 
     /**
      * Constantes Globales:
-     * 
+     * Evaluan el tipo de busqueda avanzada actual.
      */
     public final static String BUSQUEDA_POR_ARTISTA = "Artista";
     public final static String BUSQUEDA_POR_ALBUM = "Álbum";
