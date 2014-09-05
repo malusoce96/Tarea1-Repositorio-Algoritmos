@@ -148,87 +148,74 @@ public class ReproductorLogico {
             }
         }
     }
+    
     /**
-     * dsfjgdhljñgkh
+     * Comienza la ejecución del reproductor de musica 
      * @param ruta 
      */
     public void play(String ruta) {
         try {
+            //Iniciadores del reproductor
             FIS = new FileInputStream(ruta);
             BIS = new BufferedInputStream(FIS);
-
             player = new Player(BIS);
-
             songTotalLen = FIS.available();
-
+            
+            //Localización de la pista
             fileLocation = ruta + "";
 
         } catch (FileNotFoundException ex) {
-
             System.out.println("Error al cargar archivo: play");
-
         } catch (JavaLayerException ex) {
-
             System.out.println("Error al reproducir archivo: play");
-
         } catch (IOException ex) {
-
             System.out.println("Error al leer archivo: play");
-
         }
-
+        
+        //Ejecuta el reproductor
         new Thread() {
             @Override
             public void run() {
-                try {
-                    player.play();
+                try { player.play();
                 } catch (JavaLayerException ex) {
                     System.out.println("Error en el hilo reproductor: play");
                 }
-                
                 System.out.println("Termino el hilo de PLAY");
             }
         }.start();
-
     }
 
+    /**
+     * Continua la reproducción a partir de la posición de donde quedó
+     */
     public void resume() {
         try {
-
+            //Iniciadores del reproductor
             FIS = new FileInputStream(fileLocation);
             BIS = new BufferedInputStream(FIS);
-
             player = new Player(BIS);
-
+            
+            //Comienza en la posicion de la pausa
             FIS.skip(songTotalLen - pauseLocation);
 
         } catch (FileNotFoundException ex) {
-
             System.out.println("Error al cargar archivo: continuar");
-
         } catch (JavaLayerException ex) {
-
             System.out.println("Error al reproducir archivo: continuar");
-
         } catch (IOException ex) {
-
             System.out.println("Error al leer archivo: continuar");
-
         }
 
+        //Ejecuta el reproductor
         new Thread() {
             @Override
             public void run() {
-                try {
-                    player.play();
+                try { player.play();
                 } catch (JavaLayerException ex) {
                     System.out.println("Error en el hilo reproductor: play");
                 }
-                
                 System.out.println("Termino el hilo de RESUME");
             }
-            
-            
         }.start();
     }
 }

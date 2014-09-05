@@ -1,11 +1,16 @@
+/**
+ * @author Lucia Solis Ceciliano  
+ * @author Joseph Vega Vargas
+ * @author Miller Ruiz Urbina
+ */
+
 package musictecplayer;
 
-/**
- * @author Lucia  Solis
- * @author Joseph Vega
- * @author Miller Ruiz
- */
 public class MusicTecPlayer {
+    /**
+     * Método constructor del proyecto.
+     * @param args 
+     */
     public static void main(String[] args) {
     }   
 }
