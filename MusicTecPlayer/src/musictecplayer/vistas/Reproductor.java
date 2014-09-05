@@ -5,6 +5,7 @@
  */
 package musictecplayer.vistas;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -13,11 +14,14 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.Iterator;
 import java.util.Random;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
@@ -60,6 +64,27 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
     public Reproductor() {
         initComponents();
         crearReproductor();
+        
+        JPanel panelPrincipal = new JPanel();
+        
+        panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
+
+        PanelCancion panelCancion = new PanelCancion("Hola", "LU", "ALGO", "Roman", "2014");
+        
+        panelPrincipal.add(panelCancion);
+        
+        
+        
+        panelCancion = new PanelCancion("ADIOS", "LU", "ALGO", "Roman", "2014");
+        
+        panelPrincipal.add(panelCancion);
+        
+        
+        jScrollPaneCancionesConCaratula.getViewport().add(panelPrincipal);
+        
+        jScrollPaneCancionesConCaratula.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        
+        jScrollPaneCancionesConCaratula.setVisible(false);
 
 //        jListListaCanciones.addMouseListener(new MouseAdapter() {
 //            public void mousePressed(MouseEvent e) {
@@ -329,6 +354,7 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPaneCancionesConCaratula = new javax.swing.JScrollPane();
         jScrollPaneListaCanciones = new javax.swing.JScrollPane();
         jListListaCanciones = new javax.swing.JList();
         jScrollPaneListaCancionesReproduccion = new javax.swing.JScrollPane();
@@ -368,6 +394,8 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
         setPreferredSize(new java.awt.Dimension(643, 569));
         setResizable(false);
         getContentPane().setLayout(null);
+        getContentPane().add(jScrollPaneCancionesConCaratula);
+        jScrollPaneCancionesConCaratula.setBounds(310, 140, 310, 400);
 
         jListListaCanciones.setBackground(new java.awt.Color(0, 0, 0));
         jListListaCanciones.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
@@ -429,7 +457,7 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
         jSliderPosicionCancion.setValue(0);
         jSliderPosicionCancion.setOpaque(false);
         getContentPane().add(jSliderPosicionCancion);
-        jSliderPosicionCancion.setBounds(43, 457, 228, 23);
+        jSliderPosicionCancion.setBounds(43, 457, 228, 26);
 
         jSliderVolumen.setOrientation(javax.swing.JSlider.VERTICAL);
         jSliderVolumen.setToolTipText("");
@@ -859,6 +887,7 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jLabelVolumen;
     private javax.swing.JList jListListaCanciones;
     private javax.swing.JList jListListaCancionesPlaylist;
+    private javax.swing.JScrollPane jScrollPaneCancionesConCaratula;
     private javax.swing.JScrollPane jScrollPaneListaCanciones;
     private javax.swing.JScrollPane jScrollPaneListaCancionesReproduccion;
     private javax.swing.JSlider jSliderPosicionCancion;
