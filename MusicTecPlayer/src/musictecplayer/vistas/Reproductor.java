@@ -57,10 +57,8 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
     JMenuItem menuItemAgregarAPlaylist, menuItemEliminar, menuItemModificar, menuItemVerMetaData, menuItemBorrarPlaylist;
 
     int modoVista = Parametros.MODO_LISTA;
-
+    
     JPanel panelPrincipal = new JPanel();
-
-    PanelCancion panelCancionActual = null;
 
     /**
      * Creates new form Reproductor
@@ -68,13 +66,26 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
     public Reproductor() {
         initComponents();
         crearReproductor();
-
+        
+        
+        
         panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
 
+        PanelCancion panelCancion = new PanelCancion("Hola", "LU", "ALGO", "Roman", "2014");
+        
+        panelPrincipal.add(panelCancion);
+        
+        
+        
+        panelCancion = new PanelCancion("ADIOS", "LU", "ALGO", "Roman", "2014");
+        
+        panelPrincipal.add(panelCancion);
+        
+        
         jScrollPaneCancionesConCaratula.getViewport().add(panelPrincipal);
-
+        
         jScrollPaneCancionesConCaratula.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
+        
         jScrollPaneCancionesConCaratula.setVisible(false);
 
 //        jListListaCanciones.addMouseListener(new MouseAdapter() {
@@ -170,25 +181,11 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
         menuItemVerMetaData.addActionListener(this);
         menuItemBorrarPlaylist.addActionListener(this);
 
+        menuItemBorrarPlaylist.addActionListener(this);
+
         DefaultListModel modeloListaPlayList = new DefaultListModel();
 
         jListListaCancionesPlaylist.setModel(modeloListaPlayList);
-
-    }
-
-    public void actualizarPanelPrincipal() {
-        
-        panelPrincipal = new JPanel();
-
-        panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
-
-        jScrollPaneCancionesConCaratula.getViewport().add(panelPrincipal);
-
-        jScrollPaneCancionesConCaratula.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-        modoVista = Parametros.MODO_LISTA;
-        jLabelModoVista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/modoNombre.fw.png"))); // NOI18N
-        jScrollPaneCancionesConCaratula.setVisible(false);
 
     }
 
@@ -202,7 +199,7 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
 
     }
 
-    public void actualizarListaCanciones() {
+    public void actulizarListaCanciones() {
         Iterator elements = listaCanciones.getIteradorLista();
         jListListaCanciones.removeAll();
 
@@ -213,44 +210,19 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
             Cancion cancionActual = (Cancion) (objetoActual);
             String nombre = cancionActual.getNombre();
             modeloListaCanciones.addElement(nombre);
-
-            String cancion, artista, album, genero, año;
-
-            cancion = cancionActual.getNombre();
-            artista = cancionActual.getArtista();
-            album = cancionActual.getAlbum();
-            genero = cancionActual.getGenero();
-            año = cancionActual.getAño();
-
-            PanelCancion panelCancion = new PanelCancion(cancion, artista, album, genero, año);
-
-            panelCancion.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent me) {
-                    // if right mouse button clicked (or me.isPopupTrigger())
-                    if (SwingUtilities.isRightMouseButton(me)) {
-                        popupMenuListaTotalCanciones.show(panelCancion, me.getX(), me.getY());
-                        panelCancionActual = (PanelCancion) me.getSource();
-                        jListListaCanciones.setVisible(false);
-                    }
-                }
-            }
-            );
-
-            panelPrincipal.add(panelCancion);
-
+            
+            
+            
         }
 
         jListListaCanciones.setModel(modeloListaCanciones);
-        jListListaCanciones.setVisible(true);
     }
 
-    public void actualizarListaCancionesSegun(String tipoBusqueda, String valorABuscar) {
+    public void actulizarListaCancionesSegun(String tipoBusqueda, String valorABuscar) {
         Iterator elements = listaCanciones.getIteradorLista();
         jListListaCanciones.removeAll();
 
         DefaultListModel modeloListaCanciones = new DefaultListModel();
-
-        panelPrincipal.removeAll();
 
         if (tipoBusqueda.equals(Parametros.BUSQUEDA_POR_ALBUM)) {
 
@@ -261,31 +233,6 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
                 String nombreAlbum = cancionActual.getAlbum();
                 if (nombreAlbum.toUpperCase().contains(valorABuscar.toUpperCase())) {
                     modeloListaCanciones.addElement(nombreCancionActual);
-
-                    String cancion, artista, album, genero, año;
-
-                    cancion = cancionActual.getNombre();
-                    artista = cancionActual.getArtista();
-                    album = cancionActual.getAlbum();
-                    genero = cancionActual.getGenero();
-                    año = cancionActual.getAño();
-
-                    PanelCancion panelCancion = new PanelCancion(cancion, artista, album, genero, año);
-
-                    panelCancion.addMouseListener(new MouseAdapter() {
-                        public void mouseClicked(MouseEvent me) {
-                            // if right mouse button clicked (or me.isPopupTrigger())
-                            if (SwingUtilities.isRightMouseButton(me)) {
-                                popupMenuListaTotalCanciones.show(panelCancion, me.getX(), me.getY());
-                                panelCancionActual = (PanelCancion) me.getSource();
-                                jListListaCanciones.setVisible(false);
-                            }
-                        }
-                    }
-                    );
-
-                    panelPrincipal.add(panelCancion);
-
                 }
             }
 
@@ -298,30 +245,6 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
                 String nombreArtista = cancionActual.getArtista();
                 if (nombreArtista.toUpperCase().contains(valorABuscar.toUpperCase())) {
                     modeloListaCanciones.addElement(nombreCancionActual);
-
-                    String cancion, artista, album, genero, año;
-
-                    cancion = cancionActual.getNombre();
-                    artista = cancionActual.getArtista();
-                    album = cancionActual.getAlbum();
-                    genero = cancionActual.getGenero();
-                    año = cancionActual.getAño();
-
-                    PanelCancion panelCancion = new PanelCancion(cancion, artista, album, genero, año);
-
-                    panelCancion.addMouseListener(new MouseAdapter() {
-                        public void mouseClicked(MouseEvent me) {
-                            // if right mouse button clicked (or me.isPopupTrigger())
-                            if (SwingUtilities.isRightMouseButton(me)) {
-                                popupMenuListaTotalCanciones.show(panelCancion, me.getX(), me.getY());
-                                panelCancionActual = (PanelCancion) me.getSource();
-                            }
-                        }
-                    }
-                    );
-
-                    panelPrincipal.add(panelCancion);
-
                 }
             }
 
@@ -334,30 +257,6 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
 
                 if (nombreCancionActual.toUpperCase().contains(valorABuscar.toUpperCase())) {
                     modeloListaCanciones.addElement(nombreCancionActual);
-
-                    String cancion, artista, album, genero, año;
-
-                    cancion = cancionActual.getNombre();
-                    artista = cancionActual.getArtista();
-                    album = cancionActual.getAlbum();
-                    genero = cancionActual.getGenero();
-                    año = cancionActual.getAño();
-
-                    PanelCancion panelCancion = new PanelCancion(cancion, artista, album, genero, año);
-
-                    panelCancion.addMouseListener(new MouseAdapter() {
-                        public void mouseClicked(MouseEvent me) {
-                            // if right mouse button clicked (or me.isPopupTrigger())
-                            if (SwingUtilities.isRightMouseButton(me)) {
-                                popupMenuListaTotalCanciones.show(panelCancion, me.getX(), me.getY());
-                                panelCancionActual = (PanelCancion) me.getSource();
-                            }
-                        }
-                    }
-                    );
-
-                    panelPrincipal.add(panelCancion);
-
                 }
             }
 
@@ -370,30 +269,6 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
                 String nombreGenero = cancionActual.getGenero();
                 if (nombreGenero.toUpperCase().contains(valorABuscar.toUpperCase())) {
                     modeloListaCanciones.addElement(nombreCancionActual);
-
-                    String cancion, artista, album, genero, año;
-
-                    cancion = cancionActual.getNombre();
-                    artista = cancionActual.getArtista();
-                    album = cancionActual.getAlbum();
-                    genero = cancionActual.getGenero();
-                    año = cancionActual.getAño();
-
-                    PanelCancion panelCancion = new PanelCancion(cancion, artista, album, genero, año);
-
-                    panelCancion.addMouseListener(new MouseAdapter() {
-                        public void mouseClicked(MouseEvent me) {
-                            // if right mouse button clicked (or me.isPopupTrigger())
-                            if (SwingUtilities.isRightMouseButton(me)) {
-                                popupMenuListaTotalCanciones.show(panelCancion, me.getX(), me.getY());
-                                panelCancionActual = (PanelCancion) me.getSource();
-                            }
-                        }
-                    }
-                    );
-
-                    panelPrincipal.add(panelCancion);
-
                 }
             }
         }
@@ -421,30 +296,17 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
 
     private void modificarCancion() {
 
-        if (modoVista == Parametros.MODO_LISTA) {
+        if (jListListaCanciones.getSelectedIndex() < 0) {
+            return;
+        }
 
-            if (jListListaCanciones.getSelectedIndex() < 0) {
-                return;
-            }
+        Object nombreCancionActual = jListListaCanciones.getSelectedValue();
+        Cancion cancionObtenida = (Cancion) listaCanciones.getCancion((String) nombreCancionActual);
 
-            Object nombreCancionActual = jListListaCanciones.getSelectedValue();
-            Cancion cancionObtenida = (Cancion) listaCanciones.getCancion((String) nombreCancionActual);
+        if (cancionObtenida != null) {
+            ModificarCancion DC = new ModificarCancion(this, cancionObtenida);
 
-            if (cancionObtenida != null) {
-                ModificarCancion DC = new ModificarCancion(this, cancionObtenida);
-
-                DC.setVisible(true);
-            }
-
-        } else {
-            String nombreCancionActual = panelCancionActual.getCancion();
-            Cancion cancionObtenida = (Cancion) listaCanciones.getCancion((String) nombreCancionActual);
-            if (cancionObtenida != null) {
-                ModificarCancion DC = new ModificarCancion(this, cancionObtenida);
-
-                DC.setVisible(true);
-            }
-
+            DC.setVisible(true);
         }
 
     }
@@ -537,9 +399,6 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
         setPreferredSize(new java.awt.Dimension(643, 569));
         setResizable(false);
         getContentPane().setLayout(null);
-
-        jScrollPaneCancionesConCaratula.setBackground(new java.awt.Color(0, 0, 0));
-        jScrollPaneCancionesConCaratula.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(jScrollPaneCancionesConCaratula);
         jScrollPaneCancionesConCaratula.setBounds(310, 140, 310, 400);
 
@@ -932,9 +791,6 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
 
     private void jLabelMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseReleased
         escogerArchivo();
-        
-        actualizarPanelPrincipal();
-        actualizarListaCanciones();
     }//GEN-LAST:event_jLabelMenuMouseReleased
 
     private void jLabelIconoBuscarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelIconoBuscarMouseReleased
@@ -948,35 +804,23 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
             modoVista = Parametros.MODO_CARATULAS;
             jLabelModoVista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/modoCaratulas.fw.png"))); // NOI18N
             jScrollPaneCancionesConCaratula.setVisible(true);
-            jScrollPaneListaCanciones.setVisible(false);
         } else {
             modoVista = Parametros.MODO_LISTA;
             jLabelModoVista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/modoNombre.fw.png"))); // NOI18N
             jScrollPaneCancionesConCaratula.setVisible(false);
-            jScrollPaneListaCanciones.setVisible(true);
         }
     }//GEN-LAST:event_jLabelModoVistaMouseReleased
-
-    public void cambiarAModoLista() {
-        modoVista = Parametros.MODO_LISTA;
-        jLabelModoVista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/img/modoNombre.fw.png"))); // NOI18N
-        jScrollPaneCancionesConCaratula.setVisible(false);
-        jScrollPaneListaCanciones.setVisible(true);
-    }
 
     public void buscarCanciones() {
         String tipoBusqueda = jLabelTipoBusqueda.getText();
         String valorABuscar = jTextFieldTextoBusqueda.getText().trim();
         if (valorABuscar.equals(Parametros.SIN_ASIGNAR)) {
             //finalizarReproduccion();
+            actulizarListaCanciones();
 
-            actualizarPanelPrincipal();
-            actualizarListaCanciones();
         } else {
 
-            actualizarPanelPrincipal();
-            actualizarListaCancionesSegun(tipoBusqueda, valorABuscar);
-
+            actulizarListaCancionesSegun(tipoBusqueda, valorABuscar);
         }
     }
 
@@ -1060,62 +904,32 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-
-        System.out.println("Obteniendo click");
-
         if (ae.getSource() == menuItemAgregarAPlaylist) {
             // add
-            if (modoVista == Parametros.MODO_LISTA) {
-                DefaultListModel modeloLista = (DefaultListModel) jListListaCancionesPlaylist.getModel();
-                modeloLista.addElement(jListListaCanciones.getSelectedValue());
-            } else {
-                String cancion = panelCancionActual.getCancion();
-                DefaultListModel modeloLista = (DefaultListModel) jListListaCancionesPlaylist.getModel();
-                modeloLista.addElement(cancion);
-            }
-
+            DefaultListModel modeloLista = (DefaultListModel) jListListaCancionesPlaylist.getModel();
+            modeloLista.addElement(jListListaCanciones.getSelectedValue());
         } else if (ae.getSource() == menuItemEliminar) {
 
-            if (modoVista == Parametros.MODO_LISTA) {
-                int indiceSeleccionado = jListListaCanciones.getSelectedIndex();
+            int indiceSeleccionado = jListListaCanciones.getSelectedIndex();
 
-                String nombreCancionSeleccionada = (String) jListListaCanciones.getSelectedValue();
+            String nombreCancionSeleccionada = (String) jListListaCanciones.getSelectedValue();
 
-                System.out.println("Eliminar: " + indiceSeleccionado);
+            System.out.println("Eliminar: " + indiceSeleccionado);
 
-                listaCanciones.removerPrimeraConcidencia(nombreCancionSeleccionada);
+            listaCanciones.removerPrimeraConcidencia(nombreCancionSeleccionada);
 
-                jListListaCancionesPlaylist.removeAll();
+            jListListaCancionesPlaylist.removeAll();
 
-                DefaultListModel modeloListaCancionesPlaylist = new DefaultListModel();
-                jListListaCancionesPlaylist.setModel(modeloListaCancionesPlaylist);
-            } else {
-                String nombreCancionSeleccionada = panelCancionActual.getCancion();
+            DefaultListModel modeloListaCancionesPlaylist = new DefaultListModel();
+            jListListaCancionesPlaylist.setModel(modeloListaCancionesPlaylist);
 
-                listaCanciones.removerPrimeraConcidencia(nombreCancionSeleccionada);
-
-                jListListaCancionesPlaylist.removeAll();
-
-                DefaultListModel modeloListaCancionesPlaylist = new DefaultListModel();
-                jListListaCancionesPlaylist.setModel(modeloListaCancionesPlaylist);
-
-            }
-
-            actualizarPanelPrincipal();
-            actualizarListaCanciones();
-            cambiarAModoLista();
-
+            actulizarListaCanciones();
         } else if (ae.getSource() == menuItemBorrarPlaylist) {
             limpiarPlaylist();
         } else if (ae.getSource() == menuItemModificar) {
             modificarCancion();
-            actualizarPanelPrincipal();
-            actualizarListaCanciones();
-            cambiarAModoLista();
             System.out.println("Se desea modificar");
         }
-        
-        actualizarListaCanciones();
 
     }
 

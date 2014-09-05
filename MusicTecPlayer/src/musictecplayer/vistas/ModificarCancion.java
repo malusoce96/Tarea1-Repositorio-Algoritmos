@@ -216,7 +216,7 @@ public class ModificarCancion extends javax.swing.JFrame {
                 //FALTA LO DE LA FOTO
                 
 
-                reproductor.actualizarListaCanciones();
+                reproductor.actulizarListaCanciones();
 
                 JOptionPane.showMessageDialog(null, "La canción actualizada correctamente",
                         "MusicTECPlayer", JOptionPane.INFORMATION_MESSAGE);
