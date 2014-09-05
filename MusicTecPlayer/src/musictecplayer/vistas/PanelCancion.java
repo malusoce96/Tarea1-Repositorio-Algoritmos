@@ -5,7 +5,11 @@
  */
 package musictecplayer.vistas;
 
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import musictecplayer.constantes.Parametros;
 
 /**
  *
@@ -13,12 +17,12 @@ import javax.swing.JLabel;
  */
 public class PanelCancion extends javax.swing.JPanel {
 
-    String cancion, artista, album, genero, año;
+    String cancion, artista, album, genero, año, rutaImagen;
 
     /**
      * Creates new form PanelCancion
      */
-    public PanelCancion(String cancion, String artista, String album, String genero, String año) {
+    public PanelCancion(String cancion, String artista, String album, String genero, String año, String rutaImagen) {
         initComponents();
         jLabelValorCancion.setText(cancion);
         jLabelValorArtista.setText(artista);
@@ -27,15 +31,25 @@ public class PanelCancion extends javax.swing.JPanel {
         jLabelValorAño.setText(año);
         jLabelValorCancion.setToolTipText(cancion);
 
+        if (!rutaImagen.equals(Parametros.SIN_ASIGNAR)) {
+
+            //Inserta la imagen en la etiqueta
+            try {
+                ImageIcon icon = new ImageIcon(rutaImagen);
+                Icon icono = new ImageIcon(icon.getImage()
+                        .getScaledInstance(jLabelImagenCancion.getWidth(), jLabelImagenCancion.getHeight(), Image.SCALE_SMOOTH));
+                jLabelImagenCancion.setIcon(icono);
+
+            } catch (Exception ex) {
+            }
+        }
+
         this.cancion = cancion;
         this.artista = artista;
         this.album = album;
         this.genero = genero;
         this.año = año;
-        
-    }
-
-    public void crearPanelCancion() {
+        this.rutaImagen = rutaImagen;
 
     }
 
@@ -79,8 +93,6 @@ public class PanelCancion extends javax.swing.JPanel {
         this.año = año;
     }
 
-   
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -107,7 +119,6 @@ public class PanelCancion extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(305, 400));
         setLayout(null);
 
-        jLabelImagenCancion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/musictecplayer/vistas/caratulas/prince royce.jpg"))); // NOI18N
         jLabelImagenCancion.setToolTipText("");
         add(jLabelImagenCancion);
         jLabelImagenCancion.setBounds(60, 10, 170, 170);

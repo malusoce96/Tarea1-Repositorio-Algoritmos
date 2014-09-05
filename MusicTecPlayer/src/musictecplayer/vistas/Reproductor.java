@@ -5,19 +5,18 @@
  */
 package musictecplayer.vistas;
 
-import java.awt.BorderLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.util.Iterator;
 import java.util.Random;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
-import javax.swing.JFileChooser;
-import javax.swing.JList;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -26,8 +25,6 @@ import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import musictecplayer.administradores.Cancion;
 import musictecplayer.administradores.HiloReproductor;
 import musictecplayer.administradores.ListaDoblementeEnlazada;
@@ -151,6 +148,8 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
         }
         );
 
+        
+        
         jListListaCancionesPlaylist.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent me) {
                 // if right mouse button clicked (or me.isPopupTrigger())
@@ -177,7 +176,7 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
     }
 
     public void actualizarPanelPrincipal() {
-        
+
         panelPrincipal = new JPanel();
 
         panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
@@ -214,15 +213,16 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
             String nombre = cancionActual.getNombre();
             modeloListaCanciones.addElement(nombre);
 
-            String cancion, artista, album, genero, año;
+            String cancion, artista, album, genero, año, rutaImagen;
 
             cancion = cancionActual.getNombre();
             artista = cancionActual.getArtista();
             album = cancionActual.getAlbum();
             genero = cancionActual.getGenero();
             año = cancionActual.getAño();
+            rutaImagen = cancionActual.getRutaImagen();
 
-            PanelCancion panelCancion = new PanelCancion(cancion, artista, album, genero, año);
+            PanelCancion panelCancion = new PanelCancion(cancion, artista, album, genero, año, rutaImagen);
 
             panelCancion.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent me) {
@@ -262,15 +262,16 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
                 if (nombreAlbum.toUpperCase().contains(valorABuscar.toUpperCase())) {
                     modeloListaCanciones.addElement(nombreCancionActual);
 
-                    String cancion, artista, album, genero, año;
+                    String cancion, artista, album, genero, año, rutaImagen;
 
                     cancion = cancionActual.getNombre();
                     artista = cancionActual.getArtista();
                     album = cancionActual.getAlbum();
                     genero = cancionActual.getGenero();
                     año = cancionActual.getAño();
+                    rutaImagen = cancionActual.getRutaImagen();
 
-                    PanelCancion panelCancion = new PanelCancion(cancion, artista, album, genero, año);
+                    PanelCancion panelCancion = new PanelCancion(cancion, artista, album, genero, año, rutaImagen);
 
                     panelCancion.addMouseListener(new MouseAdapter() {
                         public void mouseClicked(MouseEvent me) {
@@ -299,15 +300,16 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
                 if (nombreArtista.toUpperCase().contains(valorABuscar.toUpperCase())) {
                     modeloListaCanciones.addElement(nombreCancionActual);
 
-                    String cancion, artista, album, genero, año;
+                    String cancion, artista, album, genero, año, rutaImagen;
 
                     cancion = cancionActual.getNombre();
                     artista = cancionActual.getArtista();
                     album = cancionActual.getAlbum();
                     genero = cancionActual.getGenero();
                     año = cancionActual.getAño();
+                    rutaImagen = cancionActual.getRutaImagen();
 
-                    PanelCancion panelCancion = new PanelCancion(cancion, artista, album, genero, año);
+                    PanelCancion panelCancion = new PanelCancion(cancion, artista, album, genero, año, rutaImagen);
 
                     panelCancion.addMouseListener(new MouseAdapter() {
                         public void mouseClicked(MouseEvent me) {
@@ -335,15 +337,16 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
                 if (nombreCancionActual.toUpperCase().contains(valorABuscar.toUpperCase())) {
                     modeloListaCanciones.addElement(nombreCancionActual);
 
-                    String cancion, artista, album, genero, año;
+                    String cancion, artista, album, genero, año, rutaImagen;
 
                     cancion = cancionActual.getNombre();
                     artista = cancionActual.getArtista();
                     album = cancionActual.getAlbum();
                     genero = cancionActual.getGenero();
                     año = cancionActual.getAño();
+                    rutaImagen = cancionActual.getRutaImagen();
 
-                    PanelCancion panelCancion = new PanelCancion(cancion, artista, album, genero, año);
+                    PanelCancion panelCancion = new PanelCancion(cancion, artista, album, genero, año, rutaImagen);
 
                     panelCancion.addMouseListener(new MouseAdapter() {
                         public void mouseClicked(MouseEvent me) {
@@ -371,15 +374,16 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
                 if (nombreGenero.toUpperCase().contains(valorABuscar.toUpperCase())) {
                     modeloListaCanciones.addElement(nombreCancionActual);
 
-                    String cancion, artista, album, genero, año;
+                    String cancion, artista, album, genero, año, rutaImagen;
 
                     cancion = cancionActual.getNombre();
                     artista = cancionActual.getArtista();
                     album = cancionActual.getAlbum();
                     genero = cancionActual.getGenero();
                     año = cancionActual.getAño();
+                    rutaImagen = cancionActual.getRutaImagen();
 
-                    PanelCancion panelCancion = new PanelCancion(cancion, artista, album, genero, año);
+                    PanelCancion panelCancion = new PanelCancion(cancion, artista, album, genero, año, rutaImagen);
 
                     panelCancion.addMouseListener(new MouseAdapter() {
                         public void mouseClicked(MouseEvent me) {
@@ -416,7 +420,7 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
     private void escogerArchivo() {
         DetallesCancion DC = new DetallesCancion(this);
         DC.BuscarCanción();
-        DC.show();
+        DC.setVisible(true);
     }
 
     private void modificarCancion() {
@@ -887,6 +891,21 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
 
                 if (!rutaCancionActual.equals("")) {
 
+                    String rutaImagen = cancionObtenida.getRutaImagen();
+                    if (!rutaImagen.equals(Parametros.SIN_ASIGNAR)) {
+
+                        //Inserta la imagen en la etiqueta
+                        try {
+                            ImageIcon icon = new ImageIcon(rutaImagen);
+                            Icon icono = new ImageIcon(icon.getImage()
+                                    .getScaledInstance(jLabelFondoAlbun.getWidth(), jLabelFondoAlbun.getHeight(), Image.SCALE_SMOOTH));
+                            jLabelFondoAlbun.setIcon(icono);
+
+                        } catch (Exception ex) {
+                        }
+
+                    }
+
                     if (estadoReproduccion == Parametros.DETENIDO) {
                         estadoReproduccion = Parametros.REPRODUCIENDO;
                         System.out.println("D-Reproducir");
@@ -932,7 +951,7 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
 
     private void jLabelMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseReleased
         escogerArchivo();
-        
+
         actualizarPanelPrincipal();
         actualizarListaCanciones();
     }//GEN-LAST:event_jLabelMenuMouseReleased
@@ -1114,7 +1133,7 @@ public class Reproductor extends javax.swing.JFrame implements ActionListener {
             cambiarAModoLista();
             System.out.println("Se desea modificar");
         }
-        
+
         actualizarListaCanciones();
 
     }

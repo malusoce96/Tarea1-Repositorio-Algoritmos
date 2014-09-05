@@ -3,7 +3,6 @@
  * @author Joseph Vega Vargas
  * @author Miller Ruiz Urbina
  */
-
 package musictecplayer.vistas;
 
 import java.awt.HeadlessException;
@@ -17,33 +16,31 @@ import musictecplayer.administradores.Cancion;
 import musictecplayer.constantes.Parametros;
 
 /**
- * Frame que permite agregar y modificar las propiedades de una canción y 
+ * Frame que permite agregar y modificar las propiedades de una canción y
  * agregarlos a una lista.
  */
 public class DetallesCancion extends javax.swing.JFrame {
 
     /**
-     * Variables Globales:
-     * Guardan las características del archivo buscado.
+     * Variables Globales: Guardan las características del archivo buscado.
      */
     JFileChooser SelectorArchivos = new JFileChooser();
     JFileChooser SelectorFotos = new JFileChooser();
-    
+
     /**
-     * Variables Globales:
-     * Almacenan la dirección del archivo por agregar.
+     * Variables Globales: Almacenan la dirección del archivo por agregar.
      */
-    String DireccionMusica;
-    String DireccionFoto;
-    
+    String DireccionMusica = null;
+    String DireccionFoto = "";
+
     /**
-     * Variables Globales:
-     * Asocia con el frame de Reproductor.java.
+     * Variables Globales: Asocia con el frame de Reproductor.java.
      */
     Reproductor reproductor;
 
     /**
      * Método constructor de la clase.
+     *
      * @param reproductor
      */
     public DetallesCancion(Reproductor reproductor) {
@@ -57,7 +54,7 @@ public class DetallesCancion extends javax.swing.JFrame {
     public void BuscarCanción() {
         //Filtra los datos a buscar y los asigna al selector.
         FileNameExtensionFilter Filtro = new FileNameExtensionFilter("Archivos "
-                + "MP3", "mp3", "mp3"); 
+                + "MP3", "mp3", "mp3");
         SelectorArchivos.setFileFilter(Filtro);
 
         //Ejecuta el explorador de archivos con el Filtro de música.
@@ -68,13 +65,22 @@ public class DetallesCancion extends javax.swing.JFrame {
             DireccionMusica = SelectorArchivos.getSelectedFile().getAbsolutePath();
             jTextFieldNombre.setText(SelectorArchivos.getSelectedFile()
                     .getName());
+        } else {
+            super.enable();
+            this.dispose();
+        }
+
+        if (DireccionMusica == null) {
+            //super.enable();
+            this.dispose();
         }
     }
 
     /**
      * Crea un mensaje de error en la interfaz gráfica
+     *
      * @param mensaje
-     * @param titulo 
+     * @param titulo
      */
     public void mostrarMensajeError(String mensaje, String titulo) {
         JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.ERROR_MESSAGE);
@@ -82,13 +88,14 @@ public class DetallesCancion extends javax.swing.JFrame {
 
     /**
      * Crea un mensaje de información en la interfaz gráfica
+     *
      * @param mensaje
-     * @param titulo 
+     * @param titulo
      */
     public void mostrarMensajeInformacion(String mensaje, String titulo) {
         JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -203,16 +210,18 @@ public class DetallesCancion extends javax.swing.JFrame {
 
     /**
      * Cierra la ventana y vuelve al menú principal.
+     *
      * @param evt
      */
     private void jLabelCancelarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCancelarMouseReleased
-        super.enable();
+        //super.enable();
         this.dispose();
     }//GEN-LAST:event_jLabelCancelarMouseReleased
 
     /**
-     * Almacena la canción en la clase y cierra luego la ventana para volver al 
+     * Almacena la canción en la clase y cierra luego la ventana para volver al
      * menú principal.
+     *
      * @param evt
      */
     private void jLabelAceptarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAceptarMouseReleased
@@ -223,31 +232,38 @@ public class DetallesCancion extends javax.swing.JFrame {
             String nombreArtista = jTextFieldArtista.getText().trim();
             String year = jFormattedTextFieldYear.getText().trim();
             String nombreGenero = jTextFieldGenero.getText().trim();
-            //String rutaImagenCancion = DireccionFoto.trim();
+            
+            
+            if (DireccionMusica==null){
+                
+                mostrarMensajeError("No seleccionó el archivo mp3", "MusicTECPlayer");
+                jLabelCancelarMouseReleased(evt);
+                return;
+            }
+            
             String rutaCancion = DireccionMusica.trim();
+            String rutaImagenCancion = DireccionFoto.trim();
 
             //Condiciona si los datos están bien scritos
-            if (nombreAlbum.equals(Parametros.SIN_ASIGNAR) 
+            if (nombreAlbum.equals(Parametros.SIN_ASIGNAR)
                     || nombreArtista.equals(Parametros.SIN_ASIGNAR)
                     || nombreCancion.equals(Parametros.SIN_ASIGNAR)
                     || nombreGenero.equals(Parametros.SIN_ASIGNAR)
-                    || year.equals(Parametros.SIN_ASIGNAR) 
+                    || year.equals(Parametros.SIN_ASIGNAR)
                     || rutaCancion.equals(Parametros.SIN_ASIGNAR)
-                    
                     || year.length() != 4) {
 
-                mostrarMensajeError("Por favor completar todos los datos", 
+                mostrarMensajeError("Por favor completar todos los datos",
                         "MusicTECPlayer");
             } else {
                 //Instancia a la clase para almacenar los datos.
-                Cancion nuevaCancion = new Cancion(nombreCancion, nombreArtista, 
-                        nombreGenero, nombreAlbum, year, rutaCancion, 
-                        Parametros.SIN_ASIGNAR);
-                
+                Cancion nuevaCancion = new Cancion(nombreCancion, nombreArtista,
+                        nombreGenero, nombreAlbum, year, rutaCancion,rutaImagenCancion);
+
                 //Funciones que se le asignan al frame Reproductor.java.
                 Reproductor.listaCanciones.agregarAlInicio(nuevaCancion);
                 reproductor.actualizarListaCanciones();
-                
+
                 mostrarMensajeInformacion("La canción fue agregada "
                         + "correctamente", "Correcto");
 
@@ -261,11 +277,12 @@ public class DetallesCancion extends javax.swing.JFrame {
 
     /**
      * Busca la portada en el sistema y almacena su dirección.
+     *
      * @param evt
      */
     private void jLabelBuscarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBuscarMouseReleased
         //Filtra los datos a buscar y los asigna al selector.
-        FileNameExtensionFilter Filtro =new FileNameExtensionFilter("jpg / png", 
+        FileNameExtensionFilter Filtro = new FileNameExtensionFilter("jpg / png",
                 "jpg", "png");
         SelectorFotos.setFileFilter(Filtro);
 

@@ -28,9 +28,6 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabelImagenCancion">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/musictecplayer/vistas/caratulas/prince royce.jpg"/>
-        </Property>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Constraints>
