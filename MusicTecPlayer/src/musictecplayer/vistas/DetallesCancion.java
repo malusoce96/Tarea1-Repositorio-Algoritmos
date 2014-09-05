@@ -246,7 +246,7 @@ public class DetallesCancion extends javax.swing.JFrame {
                 
                 //Funciones que se le asignan al frame Reproductor.java.
                 Reproductor.listaCanciones.agregarAlInicio(nuevaCancion);
-                reproductor.actulizarListaCanciones();
+                reproductor.actualizarListaCanciones();
                 
                 mostrarMensajeInformacion("La canción fue agregada "
                         + "correctamente", "Correcto");
